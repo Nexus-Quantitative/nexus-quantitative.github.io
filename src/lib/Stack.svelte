@@ -10,10 +10,10 @@
             >_ ARCHITECTURE
         </h3>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Card 1 -->
             <div
-                class="bg-[#0a0a0a] border border-white/5 p-8 hover:border-accent/40 transition-all duration-300 group hover:-translate-y-1"
+                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm"
             >
                 <div
                     class="font-mono text-accent mb-6 text-xs opacity-50 group-hover:opacity-100 flex justify-between"
@@ -39,7 +39,7 @@
 
             <!-- Card 2 -->
             <div
-                class="bg-[#0a0a0a] border border-white/5 p-8 hover:border-accent/40 transition-all duration-300 group hover:-translate-y-1"
+                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm"
             >
                 <div
                     class="font-mono text-accent mb-6 text-xs opacity-50 group-hover:opacity-100 flex justify-between"
@@ -65,7 +65,7 @@
 
             <!-- Card 3 -->
             <div
-                class="bg-[#0a0a0a] border border-white/5 p-8 hover:border-accent/40 transition-all duration-300 group hover:-translate-y-1"
+                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm"
             >
                 <div
                     class="font-mono text-accent mb-6 text-xs opacity-50 group-hover:opacity-100 flex justify-between"

@@ -4,14 +4,22 @@
 
 <section
     id="hero"
-    class="h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden"
+    class="h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden pt-32"
 >
-    <!-- Status Badge -->
+    <!-- Status Badge (Desktop) -->
     <div
-        class="absolute top-8 right-8 flex items-center gap-2 font-mono text-xs text-accent opacity-80 animate-pulse-glow"
+        class="hidden md:flex absolute top-8 right-8 items-center gap-2 font-mono text-xs text-accent opacity-90 animate-pulse-glow"
     >
         <div class="w-2 h-2 rounded-full bg-accent"></div>
         <span>SYSTEMS OPERATIONAL | UPTIME: 99.9%</span>
+    </div>
+
+    <!-- Status Badge (Mobile) -->
+    <div
+        class="md:hidden absolute top-8 flex items-center gap-2 font-mono text-[10px] text-accent opacity-90 animate-pulse-glow"
+    >
+        <div class="w-1.5 h-1.5 rounded-full bg-accent"></div>
+        <span>SYSTEMS ACTIVE</span>
     </div>
 
     <!-- Geometric Decos (Background) -->

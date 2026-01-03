@@ -20,7 +20,7 @@
         </div>
 
         <div
-            class="border border-white/10 font-mono text-xs md:text-sm w-full bg-[#050505] shadow-2xl"
+            class="border border-white/20 font-mono text-xs md:text-sm w-full bg-[#050505] shadow-2xl rounded-sm overflow-hidden"
         >
             <!-- Header -->
             <div
