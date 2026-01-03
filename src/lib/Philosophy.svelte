@@ -1,5 +1,5 @@
 <script lang="ts">
-    // Philosophy Section
+    import { t } from "svelte-i18n";
 </script>
 
 <section id="philosophy" class="py-32 px-4 bg-transparent">
@@ -8,7 +8,7 @@
     >
         <div class="sticky top-32">
             <h3 class="text-xl font-mono text-accent mb-2">
-                >_ MISSION DIRECTIVE
+                {$t("philosophy.title")}
             </h3>
             <div class="h-1 w-12 bg-accent/30"></div>
         </div>
@@ -17,15 +17,7 @@
             <p
                 class="text-xl md:text-2xl text-gray-300 leading-relaxed font-sans"
             >
-                We approach financial markets as <span
-                    class="text-white font-medium"
-                    >complex physical systems</span
-                >. By bridging
-                <span class="text-white font-medium">stochastic research</span>
-                with
-                <span class="text-white font-medium"
-                    >deterministic software engineering</span
-                >, we build decision engines that thrive in chaos.
+                {@html $t("philosophy.hero_text")}
             </p>
 
             <div
@@ -34,22 +26,28 @@
                 <div class="flex gap-4">
                     <span class="text-accent">[01]</span>
                     <p>
-                        <strong class="text-white">Precision:</strong> We prioritize
-                        data integrity and correctness over raw speculative speed.
+                        <strong class="text-white"
+                            >{$t("philosophy.p1.title")}:</strong
+                        >
+                        {$t("philosophy.p1.text")}
                     </p>
                 </div>
                 <div class="flex gap-4">
                     <span class="text-accent">[02]</span>
                     <p>
-                        <strong class="text-white">Automation:</strong> Removing
-                        human cognitive bias from critical execution workflows.
+                        <strong class="text-white"
+                            >{$t("philosophy.p2.title")}:</strong
+                        >
+                        {$t("philosophy.p2.text")}
                     </p>
                 </div>
                 <div class="flex gap-4">
                     <span class="text-accent">[03]</span>
                     <p>
-                        <strong class="text-white">Resilience:</strong> Systems designed
-                        to maintain 99.9% uptime in adversarial environments.
+                        <strong class="text-white"
+                            >{$t("philosophy.p3.title")}:</strong
+                        >
+                        {$t("philosophy.p3.text")}
                     </p>
                 </div>
             </div>

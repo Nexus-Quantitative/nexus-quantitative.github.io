@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { t } from "svelte-i18n";
+    import LanguageSwitcher from "./LanguageSwitcher.svelte";
+
     // Hero Section
     const scrollToPhilosophy = () => {
         document
@@ -11,12 +14,17 @@
     id="hero"
     class="h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden"
 >
+    <!-- Language Switcher -->
+    <div class="absolute top-24 md:top-8 left-1/2 -translate-x-1/2 z-20">
+        <LanguageSwitcher />
+    </div>
+
     <!-- Status Badge (Desktop) -->
     <div
         class="hidden md:flex absolute top-8 right-8 items-center gap-2 font-mono text-xs text-accent opacity-90 animate-pulse-glow"
     >
         <div class="w-2 h-2 rounded-full bg-accent"></div>
-        <span>SYSTEMS OPERATIONAL</span>
+        <span>{$t("hero.status")}</span>
     </div>
 
     <!-- Status Badge (Mobile) -->
@@ -24,7 +32,7 @@
         class="md:hidden absolute top-8 flex items-center gap-2 font-mono text-[10px] text-accent opacity-90 animate-pulse-glow"
     >
         <div class="w-1.5 h-1.5 rounded-full bg-accent"></div>
-        <span>SYSTEMS OPERATIONAL</span>
+        <span>{$t("hero.status")}</span>
     </div>
 
     <!-- Content -->
@@ -33,21 +41,21 @@
         <div
             class="text-accent font-mono text-xs md:text-sm tracking-widest mb-6 opacity-80"
         >
-            ● SYSTEMS OPERATIONAL
+            ● {$t("hero.status")}
         </div>
 
         <!-- Headline -->
         <h1
             class="text-5xl md:text-8xl font-bold tracking-tighter mb-6 text-white leading-none"
         >
-            NEXUS QUANT
+            {$t("hero.title")}
         </h1>
 
         <!-- Sub-headline -->
         <h2
             class="text-lg md:text-2xl text-secondary font-mono max-w-2xl mx-auto leading-relaxed mb-12"
         >
-            Proprietary Quantitative Research &<br />Automated Decision Systems.
+            {@html $t("hero.subtitle").replace("&", "&<br />")}
         </h2>
 
         <!-- CTA -->
@@ -61,7 +69,7 @@
             <span
                 class="relative text-xs font-mono text-white group-hover:text-accent tracking-wider"
             >
-                [ VIEW PHILOSOPHY ]
+                {$t("hero.cta")}
             </span>
         </button>
     </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    // Stack Section
+    import { t } from "svelte-i18n";
 </script>
 
 <section id="stack" class="py-32 px-4 bg-transparent">
@@ -8,7 +8,7 @@
         <h3
             class="text-xl font-mono text-accent mb-16 pl-4 border-l-2 border-accent"
         >
-            >_ ARCHITECTURE
+            {$t("stack.title")}
         </h3>
 
         <!-- Grid -->
@@ -24,14 +24,13 @@
                 </div>
 
                 <h4 class="text-2xl font-bold mb-4 text-white font-mono">
-                    QUANTITATIVE ANALYSIS
+                    {$t("stack.card1.title")}
                 </h4>
 
                 <p
                     class="text-secondary text-sm mb-8 leading-relaxed flex-grow"
                 >
-                    Rapid hypothesis testing, statistical modeling, and
-                    backtesting using the Python data science ecosystem.
+                    {$t("stack.card1.text")}
                 </p>
 
                 <div
@@ -57,15 +56,13 @@
                 </div>
 
                 <h4 class="text-2xl font-bold mb-4 text-white font-mono">
-                    PRODUCTION RUNTIME
+                    {$t("stack.card2.title")}
                 </h4>
 
                 <p
                     class="text-secondary text-sm mb-8 leading-relaxed flex-grow"
                 >
-                    Our proprietary execution engine. Built on functional
-                    programming principles to ensure concurrency safety and
-                    fault tolerance.
+                    {$t("stack.card2.text")}
                 </p>
 
                 <div
@@ -92,15 +89,13 @@
                 </div>
 
                 <h4 class="text-2xl font-bold mb-4 text-white font-mono">
-                    IMMUTABLE LEDGER
+                    {$t("stack.card3.title")}
                 </h4>
 
                 <p
                     class="text-secondary text-sm mb-8 leading-relaxed flex-grow"
                 >
-                    Full traceability of every decision state. We utilize
-                    time-travel database capabilities for rigorous post-trade
-                    auditing.
+                    {$t("stack.card3.text")}
                 </p>
 
                 <div

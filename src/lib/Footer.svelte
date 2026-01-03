@@ -1,5 +1,5 @@
 <script lang="ts">
-    // Footer Section
+    import { t } from "svelte-i18n";
     const year = new Date().getFullYear();
 </script>
 
@@ -23,8 +23,8 @@
         <div class="h-px w-12 bg-white/10 mx-auto"></div>
 
         <div class="opacity-40 font-sans tracking-wide">
-            © {year} Nexus Quant. All rights reserved.<br />
-            Rio de Janeiro, BR // Global Operations
+            {$t("footer.rights", { values: { year } })}<br />
+            {$t("footer.location")}
         </div>
     </div>
 </footer>

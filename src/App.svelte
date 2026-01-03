@@ -1,24 +1,39 @@
 <script lang="ts">
+  import { waitLocale, t } from "svelte-i18n";
   import ThreeBackground from "./lib/ThreeBackground.svelte";
   import Hero from "./lib/Hero.svelte";
   import Philosophy from "./lib/Philosophy.svelte";
   import Stack from "./lib/Stack.svelte";
   import Metrics from "./lib/Metrics.svelte";
   import Footer from "./lib/Footer.svelte";
+  import ThemeToggle from "./lib/ThemeToggle.svelte";
 </script>
 
-<main
-  class="bg-black min-h-screen text-white selection:bg-[#00FF94] selection:text-black overflow-hidden relative"
->
-  <!-- Global Three.js Background -->
-  <ThreeBackground />
+{#await waitLocale()}
+  <div class="bg-black min-h-screen flex items-center justify-center">
+    <div class="animate-pulse text-accent font-mono">
+      {$t("common.loading")}
+    </div>
+  </div>
+{:then}
+  <main
+    class="bg-black min-h-screen text-white selection:bg-[#00FF94] selection:text-black overflow-hidden relative"
+  >
+    <!-- Global Three.js Background -->
+    <ThreeBackground />
 
-  <Hero />
-  <Philosophy />
-  <Stack />
-  <Metrics />
-  <Footer />
-</main>
+    <Hero />
+    <Philosophy />
+    <Stack />
+    <Metrics />
+    <Footer />
+
+    <!-- Theme Toggle Floating -->
+    <div class="fixed bottom-8 right-8 z-50">
+      <ThemeToggle />
+    </div>
+  </main>
+{/await}
 
 <style>
   :global(html) {

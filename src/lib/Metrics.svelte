@@ -1,5 +1,5 @@
 <script lang="ts">
-    // Metrics Section
+    import { t } from "svelte-i18n";
 </script>
 
 <section id="metrics" class="py-24 px-4 bg-transparent">
@@ -8,7 +8,7 @@
         <h3
             class="text-center font-mono text-accent mb-8 tracking-widest text-sm opacity-80"
         >
-            :: SYSTEM STATUS ::
+            {$t("metrics.title")}
         </h3>
 
         <div
@@ -18,10 +18,14 @@
             <div
                 class="grid grid-cols-4 bg-white/[0.05] p-4 text-secondary/90 border-b border-white/10 tracking-wider font-bold"
             >
-                <div class="col-span-1">COMPONENT</div>
-                <div class="col-span-1">STATUS</div>
-                <div class="col-span-1 text-right">LATENCY</div>
-                <div class="col-span-1 text-right">HEARTBEAT</div>
+                <div class="col-span-1">{$t("metrics.header.component")}</div>
+                <div class="col-span-1">{$t("metrics.header.status")}</div>
+                <div class="col-span-1 text-right">
+                    {$t("metrics.header.latency")}
+                </div>
+                <div class="col-span-1 text-right">
+                    {$t("metrics.header.heartbeat")}
+                </div>
             </div>
 
             <!-- Rows -->
@@ -36,11 +40,11 @@
                     <div
                         class="text-emerald-400 col-span-1 flex items-center gap-2"
                     >
-                        CONNECTED
+                        {$t("metrics.status_labels.connected")}
                     </div>
                     <div class="text-right text-secondary col-span-1">42ms</div>
                     <div class="text-right text-secondary col-span-1">
-                        0s ago
+                        {$t("metrics.ago", { values: { n: 0 } })}
                     </div>
                 </div>
 
@@ -54,11 +58,11 @@
                     <div
                         class="text-emerald-400 col-span-1 flex items-center gap-2"
                     >
-                        RUNNING
+                        {$t("metrics.status_labels.running")}
                     </div>
                     <div class="text-right text-secondary col-span-1">12ms</div>
                     <div class="text-right text-secondary col-span-1">
-                        0s ago
+                        {$t("metrics.ago", { values: { n: 0 } })}
                     </div>
                 </div>
 
@@ -72,11 +76,11 @@
                     <div
                         class="text-emerald-400 col-span-1 flex items-center gap-2"
                     >
-                        GUARDED
+                        {$t("metrics.status_labels.guarded")}
                     </div>
                     <div class="text-right text-secondary col-span-1">0ms</div>
                     <div class="text-right text-secondary col-span-1">
-                        1s ago
+                        {$t("metrics.ago", { values: { n: 1 } })}
                     </div>
                 </div>
 
@@ -90,11 +94,11 @@
                     <div
                         class="text-blue-400 col-span-1 flex items-center gap-2"
                     >
-                        SYNCED
+                        {$t("metrics.status_labels.synced")}
                     </div>
                     <div class="text-right text-secondary col-span-1">-</div>
                     <div class="text-right text-secondary col-span-1">
-                        5s ago
+                        {$t("metrics.ago", { values: { n: 5 } })}
                     </div>
                 </div>
             </div>
