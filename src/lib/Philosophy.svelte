@@ -2,7 +2,7 @@
     // Philosophy Section
 </script>
 
-<section id="philosophy" class="py-32 px-4 bg-[#080808]">
+<section id="philosophy" class="py-32 px-4 bg-transparent">
     <div
         class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 items-start"
     >

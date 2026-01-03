@@ -2,7 +2,7 @@
     // Metrics Section
 </script>
 
-<section id="metrics" class="py-24 px-4 bg-[#050505]">
+<section id="metrics" class="py-24 px-4 bg-transparent">
     <div class="max-w-4xl mx-auto w-full group">
         <!-- Title -->
         <h3

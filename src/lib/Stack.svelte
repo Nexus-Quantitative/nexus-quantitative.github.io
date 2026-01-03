@@ -2,7 +2,7 @@
     // Stack Section
 </script>
 
-<section id="stack" class="py-32 px-4 bg-black">
+<section id="stack" class="py-32 px-4 bg-transparent">
     <div class="max-w-6xl mx-auto">
         <!-- Title -->
         <h3

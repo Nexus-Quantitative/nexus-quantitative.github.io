@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ThreeBackground from "./lib/ThreeBackground.svelte";
   import Hero from "./lib/Hero.svelte";
   import Philosophy from "./lib/Philosophy.svelte";
   import Stack from "./lib/Stack.svelte";
@@ -9,7 +10,8 @@
 <main
   class="bg-black min-h-screen text-white selection:bg-[#00FF94] selection:text-black overflow-hidden relative"
 >
-  <!-- Global Background Noise/Grain could go here -->
+  <!-- Global Three.js Background -->
+  <ThreeBackground />
 
   <Hero />
   <Philosophy />

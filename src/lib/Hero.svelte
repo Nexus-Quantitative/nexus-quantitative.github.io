@@ -9,7 +9,7 @@
 
 <section
     id="hero"
-    class="h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden bg-gradient-to-b from-[#111111] to-[#050505]"
+    class="h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden"
 >
     <!-- Status Badge (Desktop) -->
     <div
@@ -64,15 +64,5 @@
                 [ VIEW PHILOSOPHY ]
             </span>
         </button>
-    </div>
-
-    <!-- Geometric Decoration (Subtle) -->
-    <div class="absolute inset-0 pointer-events-none opacity-[0.03]">
-        <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white rounded-full"
-        ></div>
-        <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white rounded-full dashed"
-        ></div>
     </div>
 </section>
