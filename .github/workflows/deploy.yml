@@ -20,6 +20,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.52.0-noble
     
     steps:
       - name: Checkout
@@ -36,9 +38,6 @@ jobs:
         
       - name: Run unit tests
         run: npm run test:run
-        
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
         
       - name: Run E2E tests
         run: npm run e2e

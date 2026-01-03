@@ -12,7 +12,7 @@
     <script>
       // Aplicar tema imediatamente no carregamento inicial
       try {
-        const mode = localStorage.getItem('mode') || 'light';
+        const mode = localStorage.getItem('theme-mode') || 'dark';
         document.documentElement.setAttribute('data-mode', mode);
         
         if (mode === 'dark') {
@@ -23,8 +23,8 @@
           document.documentElement.setAttribute('data-theme', 'skeleton');
         }
       } catch (e) {
-        document.documentElement.setAttribute('data-mode', 'light');
-        document.documentElement.setAttribute('data-theme', 'skeleton');
+        document.documentElement.setAttribute('data-mode', 'dark');
+        document.documentElement.setAttribute('data-theme', 'vintage');
       }
     </script>
   </head>
