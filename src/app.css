@@ -1,66 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-bg-primary: #050505;
+  --color-text-primary: #E5E5E5;
+  --color-text-secondary: #A1A1AA;
+  --color-accent: #00FF94;
 
-:root {
-  --bg-primary: #050505;
-  --text-primary: #E5E5E5;
-  --text-secondary: #A1A1AA;
-  --accent: #00FF94;
-  
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-body: 'Inter', sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-body: "Inter", sans-serif;
 }
 
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+@layer base {
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
 }
 
-h1, h2, h3, h4, h5, h6, .font-mono {
-  font-family: var(--font-mono);
-}
+@layer utilities {
+  .text-accent {
+    color: var(--color-accent);
+  }
 
-::selection {
-  background: var(--accent);
-  color: var(--bg-primary);
-}
+  .border-accent {
+    border-color: var(--color-accent);
+  }
 
-/* Custom Utilities */
-.text-accent {
-  color: var(--accent);
-}
+  /* Pulse Animation */
+  @keyframes pulse-glow {
 
-.border-accent {
-  border-color: var(--accent);
-}
+    0%,
+    100% {
+      opacity: 1;
+      text-shadow: 0 0 10px rgba(0, 255, 148, 0.5);
+    }
 
-/* Pulse Animation */
-@keyframes pulse-glow {
-  0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(0, 255, 148, 0.5); }
-  50% { opacity: 0.7; text-shadow: 0 0 5px rgba(0, 255, 148, 0.2); }
-}
+    50% {
+      opacity: 0.7;
+      text-shadow: 0 0 5px rgba(0, 255, 148, 0.2);
+    }
+  }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .animate-pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--color-bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: #333;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

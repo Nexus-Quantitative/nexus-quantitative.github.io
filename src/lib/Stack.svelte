@@ -2,89 +2,115 @@
     // Stack Section
 </script>
 
-<section id="stack" class="py-32 px-4">
+<section id="stack" class="py-32 px-4 bg-black">
     <div class="max-w-6xl mx-auto">
+        <!-- Title -->
         <h3
             class="text-xl font-mono text-accent mb-16 pl-4 border-l-2 border-accent"
         >
             >_ ARCHITECTURE
         </h3>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Card 1 -->
+        <!-- Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- CARD 01: RESEARCH LAB -->
             <div
-                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm"
+                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
             >
                 <div
-                    class="font-mono text-accent mb-6 text-xs opacity-50 group-hover:opacity-100 flex justify-between"
+                    class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
                 >
-                    <span>01. RESEARCH</span>
-                    <span>// LAB</span>
+                    <span>[ PYTHON / JUPYTER ]</span>
                 </div>
-                <h4 class="text-2xl font-bold mb-3 text-white">
-                    Quantitative Analysis
+
+                <h4 class="text-2xl font-bold mb-4 text-white font-mono">
+                    QUANTITATIVE ANALYSIS
                 </h4>
-                <p class="text-secondary text-sm mb-6 leading-relaxed">
-                    Hypothesis testing, rigorous statistical modeling, and
-                    multi-timeframe strategy backtesting.
+
+                <p
+                    class="text-secondary text-sm mb-8 leading-relaxed flex-grow"
+                >
+                    Rapid hypothesis testing, statistical modeling, and
+                    backtesting using the Python data science ecosystem.
                 </p>
+
                 <div
                     class="flex flex-wrap gap-2 font-mono text-[10px] text-secondary tracking-wide uppercase"
                 >
-                    <span class="bg-white/5 px-2 py-1 rounded">Python</span>
-                    <span class="bg-white/5 px-2 py-1 rounded">Pandas</span>
-                    <span class="bg-white/5 px-2 py-1 rounded">Freqtrade</span>
+                    <span class="border border-white/10 px-2 py-1">Python</span>
+                    <span class="border border-white/10 px-2 py-1">Pandas</span>
+                    <span class="border border-white/10 px-2 py-1"
+                        >Freqtrade</span
+                    >
+                    <span class="border border-white/10 px-2 py-1">SciPy</span>
                 </div>
             </div>
 
-            <!-- Card 2 -->
+            <!-- CARD 02: ARK ENGINE -->
             <div
-                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm"
+                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
             >
                 <div
-                    class="font-mono text-accent mb-6 text-xs opacity-50 group-hover:opacity-100 flex justify-between"
+                    class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
                 >
-                    <span>02. EXECUTION</span>
-                    <span>// ENGINE</span>
+                    <span>[ CLOJURE / JVM ]</span>
                 </div>
-                <h4 class="text-2xl font-bold mb-3 text-white">
-                    Production Runtime
+
+                <h4 class="text-2xl font-bold mb-4 text-white font-mono">
+                    PRODUCTION RUNTIME
                 </h4>
-                <p class="text-secondary text-sm mb-6 leading-relaxed">
-                    High-concurrency event processing, lifecycle management, and
-                    reliable order routing.
+
+                <p
+                    class="text-secondary text-sm mb-8 leading-relaxed flex-grow"
+                >
+                    Our proprietary execution engine. Built on functional
+                    programming principles to ensure concurrency safety and
+                    fault tolerance.
                 </p>
+
                 <div
                     class="flex flex-wrap gap-2 font-mono text-[10px] text-secondary tracking-wide uppercase"
                 >
-                    <span class="bg-white/5 px-2 py-1 rounded">Clojure</span>
-                    <span class="bg-white/5 px-2 py-1 rounded">JVM</span>
-                    <span class="bg-white/5 px-2 py-1 rounded">Integrant</span>
+                    <span class="border border-white/10 px-2 py-1">Clojure</span
+                    >
+                    <span class="border border-white/10 px-2 py-1"
+                        >Integrant</span
+                    >
+                    <span class="border border-white/10 px-2 py-1">AWS</span>
                 </div>
             </div>
 
-            <!-- Card 3 -->
+            <!-- CARD 03: STATE & AUDIT -->
             <div
-                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm"
+                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
             >
                 <div
-                    class="font-mono text-accent mb-6 text-xs opacity-50 group-hover:opacity-100 flex justify-between"
+                    class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
                 >
-                    <span>03. INTEGRITY</span>
-                    <span>// LEDGER</span>
+                    <span>[ DATOMIC / MALLI ]</span>
                 </div>
-                <h4 class="text-2xl font-bold mb-3 text-white">
-                    State & Audit
+
+                <h4 class="text-2xl font-bold mb-4 text-white font-mono">
+                    IMMUTABLE LEDGER
                 </h4>
-                <p class="text-secondary text-sm mb-6 leading-relaxed">
-                    Immutable ledger with time-travel query capabilities and
-                    strict schema enforcement.
+
+                <p
+                    class="text-secondary text-sm mb-8 leading-relaxed flex-grow"
+                >
+                    Full traceability of every decision state. We utilize
+                    time-travel database capabilities for rigorous post-trade
+                    auditing.
                 </p>
+
                 <div
                     class="flex flex-wrap gap-2 font-mono text-[10px] text-secondary tracking-wide uppercase"
                 >
-                    <span class="bg-white/5 px-2 py-1 rounded">Datomic</span>
-                    <span class="bg-white/5 px-2 py-1 rounded">Malli</span>
+                    <span class="border border-white/10 px-2 py-1">Datomic</span
+                    >
+                    <span class="border border-white/10 px-2 py-1">Malli</span>
+                    <span class="border border-white/10 px-2 py-1"
+                        >Compliance</span
+                    >
                 </div>
             </div>
         </div>
