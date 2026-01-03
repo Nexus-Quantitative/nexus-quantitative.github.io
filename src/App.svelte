@@ -1,15 +1,26 @@
 <script lang="ts">
-  // Nexus Quant - System Building...
+  import Hero from "./lib/Hero.svelte";
+  import Philosophy from "./lib/Philosophy.svelte";
+  import Stack from "./lib/Stack.svelte";
+  import Metrics from "./lib/Metrics.svelte";
+  import Footer from "./lib/Footer.svelte";
 </script>
 
-<main class="min-h-screen bg-black text-white flex items-center justify-center font-mono">
-  <h1>NEXUS_QUANT // INITIALIZING...</h1>
+<main
+  class="bg-black min-h-screen text-white selection:bg-[#00FF94] selection:text-black overflow-hidden relative"
+>
+  <!-- Global Background Noise/Grain could go here -->
+
+  <Hero />
+  <Philosophy />
+  <Stack />
+  <Metrics />
+  <Footer />
 </main>
 
 <style>
-  :global(body) {
-    margin: 0;
-    padding: 0;
+  :global(html) {
+    scroll-behavior: smooth;
     background: #000;
   }
 </style>
