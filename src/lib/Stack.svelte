@@ -20,7 +20,7 @@
                 <div
                     class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
                 >
-                    <span>[ PYTHON / JUPYTER ]</span>
+                    <span>[ PYTHON ]</span>
                 </div>
 
                 <h4 class="text-2xl font-bold mb-4 text-white font-mono">
@@ -73,6 +73,7 @@
                 >
                     <span class="border border-white/10 px-2 py-1">Clojure</span
                     >
+                    <span class="border border-white/10 px-2 py-1">EDA</span>
                     <span class="border border-white/10 px-2 py-1"
                         >Integrant</span
                     >
@@ -87,7 +88,7 @@
                 <div
                     class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
                 >
-                    <span>[ DATOMIC / MALLI ]</span>
+                    <span>[ DATOMIC / XTDB / MALLI ]</span>
                 </div>
 
                 <h4 class="text-2xl font-bold mb-4 text-white font-mono">
@@ -107,6 +108,7 @@
                 >
                     <span class="border border-white/10 px-2 py-1">Datomic</span
                     >
+                    <span class="border border-white/10 px-2 py-1">XTDB</span>
                     <span class="border border-white/10 px-2 py-1">Malli</span>
                     <span class="border border-white/10 px-2 py-1"
                         >Compliance</span

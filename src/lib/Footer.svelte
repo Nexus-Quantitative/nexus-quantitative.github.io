@@ -22,9 +22,9 @@
 
         <div class="h-px w-12 bg-white/10 mx-auto"></div>
 
-        <div class="opacity-40">
-            © {year} NEXUS QUANT. ALL SYSTEMS NOMINAL.<br />
-            EST. 2025 // RIO DE JANEIRO, BRAZIL
+        <div class="opacity-40 font-sans tracking-wide">
+            © {year} Nexus Quant. All rights reserved.<br />
+            Rio de Janeiro, BR // Global Operations
         </div>
     </div>
 </footer>

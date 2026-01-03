@@ -1,8 +1,8 @@
 <script lang="ts">
     // Hero Section
-    const scrollToStack = () => {
+    const scrollToPhilosophy = () => {
         document
-            .getElementById("stack")
+            .getElementById("philosophy")
             ?.scrollIntoView({ behavior: "smooth" });
     };
 </script>
@@ -52,7 +52,7 @@
 
         <!-- CTA -->
         <button
-            on:click={scrollToStack}
+            on:click={scrollToPhilosophy}
             class="group relative px-8 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-accent/50 transition-all duration-300"
         >
             <div
@@ -61,7 +61,7 @@
             <span
                 class="relative text-xs font-mono text-white group-hover:text-accent tracking-wider"
             >
-                [ VIEW ARCHITECTURE ]
+                [ VIEW PHILOSOPHY ]
             </span>
         </button>
     </div>
