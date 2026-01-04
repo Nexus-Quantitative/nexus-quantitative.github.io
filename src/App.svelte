@@ -6,7 +6,7 @@
   import Stack from "./lib/Stack.svelte";
   import Metrics from "./lib/Metrics.svelte";
   import Footer from "./lib/Footer.svelte";
-  import ThemeToggle from "./lib/ThemeToggle.svelte";
+
   import AudioPlayer from "./lib/AudioPlayer.svelte";
 </script>
 
@@ -30,11 +30,6 @@
     <Stack />
     <Metrics />
     <Footer />
-
-    <!-- Theme Toggle Floating -->
-    <div class="fixed bottom-8 right-8 z-50">
-      <ThemeToggle />
-    </div>
   </main>
 {/await}
 

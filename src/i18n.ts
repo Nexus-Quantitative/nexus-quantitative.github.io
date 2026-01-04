@@ -4,7 +4,7 @@ import { derived } from 'svelte/store';
 const en = {
     common: {
         change_language: 'Change language to {name}',
-        toggle_theme: 'Toggle light/dark theme',
+
         loading: 'LOADING...'
     },
     hero: {
@@ -46,7 +46,7 @@ const en = {
 const pt = {
     common: {
         change_language: 'Alterar idioma para {name}',
-        toggle_theme: 'Alternar tema claro/escuro',
+
         loading: 'CARREGANDO...'
     },
     hero: {
@@ -88,7 +88,7 @@ const pt = {
 const es = {
     common: {
         change_language: 'Cambiar idioma a {name}',
-        toggle_theme: 'Alternar tema claro/oscuro',
+
         loading: 'CARGANDO...'
     },
     hero: {
@@ -130,7 +130,7 @@ const es = {
 const ru = {
     common: {
         change_language: 'Сменить язык на {name}',
-        toggle_theme: 'Переключить светлую/темную тему',
+
         loading: 'ЗАГРУЗКА...'
     },
     hero: {
@@ -172,7 +172,7 @@ const ru = {
 const uk = {
     common: {
         change_language: 'Змінити мову на {name}',
-        toggle_theme: 'Перемкнути світлу/темну тему',
+
         loading: 'ЗАВАНТАЖЕННЯ...'
     },
     hero: {
@@ -214,7 +214,7 @@ const uk = {
 const zh = {
     common: {
         change_language: '更改语言为 {name}',
-        toggle_theme: '切换亮/暗主题',
+
         loading: '加载中...'
     },
     hero: {
@@ -256,7 +256,7 @@ const zh = {
 const ja = {
     common: {
         change_language: '言語を{name}に変更',
-        toggle_theme: 'ライト/ダークテーマの切り替え',
+
         loading: '読み込み中...'
     },
     hero: {
@@ -298,7 +298,7 @@ const ja = {
 const de = {
     common: {
         change_language: 'Sprache ändern zu {name}',
-        toggle_theme: 'Helles/Dunkles Design umschalten',
+
         loading: 'LÄDT...'
     },
     hero: {

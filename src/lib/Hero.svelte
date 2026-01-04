@@ -37,12 +37,12 @@
 
     <!-- Content -->
     <div class="relative z-10 flex flex-col items-center max-w-4xl mx-auto">
-        <!-- Pre-Header -->
+        <!-- Pre-Header
         <div
             class="text-accent font-mono text-xs md:text-sm tracking-widest mb-6 opacity-80"
         >
             ● {$t("hero.status")}
-        </div>
+        </div>  -->
 
         <!-- Headline -->
         <h1
