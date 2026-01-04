@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <title>Nexus Quant | Algorithmic Trading Lab</title>
-    <meta name="description" content="Proprietary Quantitative Research & Automated Decision Systems." />
-    <meta property="og:title" content="Nexus Quant | Algorithmic Trading Lab" />
-    <meta property="og:description" content="Proprietary Quantitative Research & Automated Decision Systems." />
-    <meta property="og:type" content="website" />
-    <script>
-      // Aplicar tema imediatamente no carregamento inicial
-      try {
-        const mode = localStorage.getItem('theme-mode') || 'dark';
-        document.documentElement.setAttribute('data-mode', mode);
-        
-        if (mode === 'dark') {
-          document.documentElement.classList.add('dark');
-          document.documentElement.setAttribute('data-theme', 'vintage');
-        } else {
-          document.documentElement.classList.remove('dark');
-          document.documentElement.setAttribute('data-theme', 'skeleton');
-        }
-      } catch (e) {
-        document.documentElement.setAttribute('data-mode', 'dark');
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>Nexus Quant | Algorithmic Trading Lab</title>
+  <meta name="description" content="Proprietary Quantitative Research & Automated Decision Systems." />
+  <meta property="og:title" content="Nexus Quant | Algorithmic Trading Lab" />
+  <meta property="og:description" content="Proprietary Quantitative Research & Automated Decision Systems." />
+  <meta property="og:type" content="website" />
+  <script>
+    // Aplicar tema imediatamente no carregamento inicial
+    try {
+      const mode = localStorage.getItem('theme-mode') || 'dark';
+      document.documentElement.setAttribute('data-mode', mode);
+
+      if (mode === 'dark') {
+        document.documentElement.classList.add('dark');
         document.documentElement.setAttribute('data-theme', 'vintage');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.setAttribute('data-theme', 'skeleton');
       }
-    </script>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    } catch (e) {
+      document.documentElement.setAttribute('data-mode', 'dark');
+      document.documentElement.setAttribute('data-theme', 'vintage');
+    }
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
