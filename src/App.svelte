@@ -7,6 +7,7 @@
   import Metrics from "./lib/Metrics.svelte";
   import Footer from "./lib/Footer.svelte";
   import ThemeToggle from "./lib/ThemeToggle.svelte";
+  import AudioPlayer from "./lib/AudioPlayer.svelte";
 </script>
 
 {#await waitLocale()}
@@ -21,6 +22,8 @@
   >
     <!-- Global Three.js Background -->
     <ThreeBackground />
+
+    <AudioPlayer />
 
     <Hero />
     <Philosophy />
