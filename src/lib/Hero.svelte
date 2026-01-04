@@ -46,7 +46,7 @@
 
         <!-- Headline -->
         <h1
-            class="text-5xl md:text-8xl font-bold tracking-tighter mb-6 text-white leading-none"
+            class="text-5xl md:text-8xl font-bold tracking-tighter mb-6 text-gradient-nexus leading-none drop-shadow-lg"
         >
             {$t("hero.title")}
         </h1>
@@ -61,7 +61,7 @@
         <!-- CTA -->
         <button
             on:click={scrollToPhilosophy}
-            class="group relative px-8 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-accent/50 transition-all duration-300"
+            class="group relative px-8 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-accent hover:shadow-[0_0_20px_var(--color-quantum-cyan)] transition-all duration-300"
         >
             <div
                 class="absolute inset-0 w-0 bg-accent/10 transition-all duration-[250ms] ease-out group-hover:w-full"

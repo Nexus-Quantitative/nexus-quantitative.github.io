@@ -59,7 +59,7 @@
         // Using a cyan/blueish tint common in the design
         const material = new THREE.PointsMaterial({
             size: 0.05,
-            color: 0x00ff94, // Accent color from design system
+            color: 0x00f0ff, // Quantum Cyan
             transparent: true,
             opacity: 0.6,
         });

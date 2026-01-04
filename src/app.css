@@ -1,14 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #050505;
-  --color-text-primary: #E5E5E5;
-  --color-text-secondary: #A1A1AA;
-  --color-accent: #00FF94;
+  /* Event Horizon Palette */
+  --color-void-black: #000000;
+  --color-deep-abyss: #050508;
+  --color-quantum-cyan: #00F0FF;
+  --color-electric-blue: #4CC9F0;
+  --color-synth-violet: #7209B7;
+  --color-magenta-neon: #F72585;
+  --color-starlight-white: #FFFFFF;
+  --color-ghost-grey: #333333;
+
+  /* Semantic Mappings */
+  --color-bg-primary: var(--color-void-black);
+  --color-text-primary: var(--color-starlight-white);
+  --color-text-secondary: var(--color-electric-blue);
+  --color-accent: var(--color-quantum-cyan);
 
   --font-mono: "JetBrains Mono", monospace;
   --font-body: "Inter", sans-serif;
 }
+
 
 
 
@@ -47,25 +59,45 @@
     border-color: var(--color-accent);
   }
 
-  /* Pulse Animation */
+  /* Nexus Gradient (Left: Purple/Magenta -> Right: Cyan) */
+  .text-gradient-nexus {
+    background: linear-gradient(to right, var(--color-synth-violet), var(--color-magenta-neon), var(--color-quantum-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-nexus {
+    background: linear-gradient(to right, var(--color-synth-violet), var(--color-magenta-neon), var(--color-quantum-cyan));
+  }
+
+  /* Pulse Animation optimized for Neon */
   @keyframes pulse-glow {
 
     0%,
     100% {
       opacity: 1;
-      text-shadow: 0 0 10px rgba(0, 255, 148, 0.5);
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+      /* Quantum Cyan */
     }
 
     50% {
-      opacity: 0.7;
-      text-shadow: 0 0 5px rgba(0, 255, 148, 0.2);
+      opacity: 0.8;
+      text-shadow: 0 0 20px rgba(247, 37, 133, 0.5);
+      /* Magenta Neon */
     }
   }
 
   .animate-pulse-glow {
-    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .neon-border {
+    box-shadow: 0 0 5px var(--color-quantum-cyan), inset 0 0 5px var(--color-quantum-cyan);
   }
 }
+
 
 /* Scrollbar */
 ::-webkit-scrollbar {
