@@ -3,7 +3,7 @@
 </script>
 
 <section id="metrics" class="py-24 px-4 bg-transparent">
-    <div class="max-w-4xl mx-auto w-full group">
+    <div class="max-w-4xl mx-auto w-full group relative z-10">
         <!-- Title -->
         <h3
             class="text-center font-mono text-accent mb-8 tracking-widest text-sm opacity-80"
@@ -12,7 +12,7 @@
         </h3>
 
         <div
-            class="border border-white/20 font-mono text-xs md:text-sm w-full bg-[#080808] shadow-2xl rounded-sm overflow-hidden"
+            class="border border-white/20 font-mono text-xs md:text-sm w-full bg-black/80 backdrop-blur-md shadow-2xl rounded-sm overflow-hidden"
         >
             <!-- Header -->
             <div

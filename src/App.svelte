@@ -1,6 +1,6 @@
 <script lang="ts">
   import { waitLocale, t } from "svelte-i18n";
-  import ThreeBackground from "./lib/ThreeBackground.svelte";
+  import EventHorizonBackground from "./lib/EventHorizonBackground.svelte";
   import Hero from "./lib/Hero.svelte";
   import Philosophy from "./lib/Philosophy.svelte";
   import Stack from "./lib/Stack.svelte";
@@ -21,7 +21,7 @@
     class="bg-black min-h-screen text-white selection:bg-[#00FF94] selection:text-black overflow-hidden relative"
   >
     <!-- Global Three.js Background -->
-    <ThreeBackground />
+    <EventHorizonBackground />
 
     <AudioPlayer />
 

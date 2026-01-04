@@ -3,7 +3,7 @@
 </script>
 
 <section id="stack" class="py-32 px-4 bg-transparent">
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto relative z-10">
         <!-- Title -->
         <h3
             class="text-xl font-mono text-accent mb-16 pl-4 border-l-2 border-accent"
@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- CARD 01: RESEARCH LAB -->
             <div
-                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
+                class="bg-black/60 backdrop-blur-md border border-white/10 p-8 hover:border-accent/40 hover:bg-black/80 transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
             >
                 <div
                     class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
@@ -47,7 +47,7 @@
 
             <!-- CARD 02: ARK ENGINE -->
             <div
-                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
+                class="bg-black/60 backdrop-blur-md border border-white/10 p-8 hover:border-accent/40 hover:bg-black/80 transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
             >
                 <div
                     class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
@@ -80,7 +80,7 @@
 
             <!-- CARD 03: STATE & AUDIT -->
             <div
-                class="bg-white/[0.03] border border-white/10 p-8 hover:border-accent/40 hover:bg-white/[0.05] transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
+                class="bg-black/60 backdrop-blur-md border border-white/10 p-8 hover:border-accent/40 hover:bg-black/80 transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
             >
                 <div
                     class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
