@@ -1,13 +1,22 @@
 <script lang="ts">
   import { waitLocale, t } from "svelte-i18n";
+  import { onMount } from "svelte";
   import EventHorizonBackground from "./lib/EventHorizonBackground.svelte";
   import Hero from "./lib/Hero.svelte";
   import Philosophy from "./lib/Philosophy.svelte";
   import Stack from "./lib/Stack.svelte";
   import Metrics from "./lib/Metrics.svelte";
   import Footer from "./lib/Footer.svelte";
-
   import AudioPlayer from "./lib/AudioPlayer.svelte";
+  import Presentation from "./lib/Presentation.svelte";
+
+  let hash = window.location.hash;
+
+  onMount(() => {
+    const updateHash = () => (hash = window.location.hash);
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  });
 </script>
 
 {#await waitLocale()}
@@ -25,11 +34,15 @@
 
     <AudioPlayer />
 
-    <Hero />
-    <Philosophy />
-    <Stack />
-    <Metrics />
-    <Footer />
+    {#if hash === "#/presentation"}
+      <Presentation />
+    {:else}
+      <Hero />
+      <Philosophy />
+      <Stack />
+      <Metrics />
+      <Footer />
+    {/if}
   </main>
 {/await}
 

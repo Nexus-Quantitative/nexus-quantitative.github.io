@@ -104,13 +104,18 @@ test.describe('Language Selector Accessibility Tests', () => {
     const ptButton = page.getByRole('button').filter({ hasText: 'Português' });
     const enButton = page.getByRole('button').filter({ hasText: 'English' });
 
+    // First ensure we are in a known state (English default usually)
+    // But since we can't guarantee previous test state unless we force it, let's just click PT and verify.
+    // The beforeEach does goto('/') which should reset state to default (usually auto-detected).
+
     await ptButton.click();
 
     // Wait for the change to class 'active' on PT button
     await expect(ptButton).toHaveClass(/active/, { timeout: 10000 });
 
     // Check if the EN button does not have the 'active' class
-    await expect(enButton).not.toHaveClass(/active/);
+    // We wait for it to confirm it does NOT have the class.
+    await expect(enButton).not.toHaveClass(/active/, { timeout: 10000 });
   });
 
 });

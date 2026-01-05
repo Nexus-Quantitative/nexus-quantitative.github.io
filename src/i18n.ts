@@ -40,6 +40,98 @@ const en = {
     footer: {
         rights: '© {year} Nexus Quant. All rights reserved.',
         location: 'Rio de Janeiro, BR // Global Operations'
+    },
+    presentation: {
+        title: 'From Physics to Fintech to Healthcare',
+        subtitle: 'Engineering Resilient Systems',
+        section1: {
+            title: 'Hi, I\'m Patrick Serrano.',
+            text: "I am a Senior Software Engineer with a background in Physics. That scientific foundation is crucial to who I am as a developer. It taught me to view software not just as lines of code, but as complex, physical systems that have limits, entropy, and a need for absolute determinism. For the past 7 years, I’ve been applying this scientific method to build high-stakes financial systems using Clojure. Today, I want to walk you through that journey and explain why I'm ready to apply this rigor to the Healthcare domain."
+        },
+        section2: {
+            title: 'THE BRIDGE',
+            subtitle: 'Fintech ↔ Healthcare',
+            intro: "For the last seven years, I worked at Moleque de Ideias , a software boutique where I grew from an intern to a Lead Software Engineer. My main focus there was orchestrating complex financial flows. The biggest challenge wasn't just processing payments, but handling the chaos of integrating multiple external actors like VTEX, Adyen, Mercado Pago, and others.",
+            part1: {
+                title: 'THE CHAOS (Ingestion)',
+                intro: "In Fintech, this 'Chaos' was VTEX, Cielo, and legacy ERPs sending messy data. In Healthcare, this is your EMRs, Lab Results, and Wearables. The problem is the same: High fragmentation, low consistency."
+            },
+            part2: {
+                title: 'THE REFINERY (Processing)',
+                intro: "Here we use Malli to act as the immune system, rejecting bad data. We use Datomic to create an immutable patient timeline. We never overwrite reality."
+            },
+            part3: {
+                title: 'THE VALUE (Intelligence)',
+                intro: "Outputting raw data is useless. In Fintech, we turned data into UBLE—revenue recovery alerts. In your platform, this translates to Clinical Decision Support. We take the clean data and push actionable insights to the doctor."
+            }
+        },
+        section3: {
+            title: 'THE PURSUIT OF BITEMPORALITY',
+            role: 'Nexus Quant Pivot',
+            subtitle: 'Architecting Safety-Critical Systems via Isolation & Bitemporality.',
+            subtitle2: 'Engineered to react to the world in real-time, maintaining a perfect and auditable memory of the past.',
+            intro: "In July 2025, after 7 years, I felt I had completed a full cycle there. I had a burning desire to build a high-frequency trading system from scratch to test specific architectural theories I had—specifically around Event Sourcing and Bitemporality.",
+            intro2: "So I founded Nexus Quant to solve a critical engineering problem: How to run automated trading bots with real, significant capital without losing sleep.",
+            step1: {
+                title: 'Strategy Engine (The Brain)',
+                what: 'This is the \'Brain\'. It ingests market data and suggests trades.',
+                parallel: 'In your world, this is the AI Diagnostic Tool or a Doctor inputting a prescription. It\'s intelligent, but it can make mistakes based on bad data.'
+            },
+            step2: {
+                title: 'Risk Guard + Execution (The Shield)',
+                what: 'This is the Ark Core. It is physically isolated using Polylith. It doesn\'t care why the strategy wants to buy; it checks if it is safe to buy.',
+                magic: 'If the Strategy \'hallucinates\' and tries to bet 100% of the capital, this Guard cuts the circuit. It creates a hard boundary.',
+                parallel: 'This is exactly what a Clinical Decision Support System does. If a doctor prescribes a dosage that is 10x too high (fatal error), the system intercepts it before it reaches the patient (Execution).'
+            },
+            step3: {
+                title: 'Capital / Assets (The Vault)',
+                what: 'The immutable state. The real money.',
+                parallel: 'This is the Patient\'s Health. We treat it as the ultimate resource that must be protected from \'software bugs\'.'
+            },
+            bitemporality: {
+                title: 'Why XTDB? Bitemporality in Action',
+                intro: 'Because in high-frequency environments, data arrives late.',
+                trading: 'In Trading: A price correction arrives 5ms late.',
+                healthcare: 'In Healthcare: A lab result is updated 2 hours after the diagnosis.',
+                conclusion: 'With Ark Engine\'s Bitemporality, I can insert that late data into the past (Valid Time) without breaking the audit trail of what the system knew at that moment (Transaction Time). This allows for Retroactive Correction of patient records—a crucial feature for medical legal compliance.'
+            },
+            demo: {
+                instruction: 'Click "INJECT RISK" to see the architecture in action:',
+                step1: 'The Strategy (Brain) turns RED (Error!)',
+                step2: 'The Risk Guard (Shield) PULSES and blocks the flow',
+                step3: 'The Capital (Vault) remains GREEN and SAFE',
+                conclusion: 'See this? The Strategy failed. It tried to execute a disastrous trade. But because of the Polylith isolation, the Risk Guard caught it. The Capital is untouched. This architecture buys you safety. Whether it\'s protecting a portfolio or flagging a drug interaction, the mechanism is identical.'
+            }
+        },
+        section4: {
+            title: 'THE CONVERGENCE',
+            subtitle: 'Engineering Continuity',
+            text: "The engineering problems in Trading and Fintech are identical to the problems in Healthcare.",
+            headers: ['FINTECH REALITY (My Background)', 'HEALTHCARE REALITY (Your Challenge)'],
+            rows: {
+                source: {
+                    fintech: { title: 'Fragmented Ecosystems', detail: '(VTEX, Getnet, Adyen, ClearSale)' },
+                    healthcare: { title: 'Disparate Sources', detail: '(EMR, Lab Results, different hospitals, physician offices)' }
+                },
+                norm: {
+                    fintech: { title: 'Strict Contract Enforcement', detail: '(Malli Schemas at the Edge)' },
+                    healthcare: { title: 'Protocol Standardization', detail: '(FHIR / HL7 Interoperability)' }
+                },
+                audit: {
+                    fintech: { title: 'Immutable Ledger', detail: '(Datomic Transaction Log)' },
+                    healthcare: { title: 'Longitudinal Patient Records', detail: '(Auditability & Legal Compliance)' }
+                },
+                decision: {
+                    fintech: { title: 'Revenue Recovery Algorithms', detail: '(Real-time Superset Dashboards)' },
+                    healthcare: { title: 'Clinical Decision Support', detail: '(Evidence-Based Alerts & Insights)' }
+                }
+            },
+            closing: "I am looking to transplant the architectural heart of a high-frequency mission-critical system into your healthcare platform."
+        },
+        section5: {
+            title: 'READY TO DEPLOY',
+            text: "I am ready to bring architectural maturity to your team, helping you turn messy data into a resilient Clinical Decision Platform starting Day 1."
+        }
     }
 };
 
