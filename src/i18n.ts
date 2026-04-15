@@ -42,95 +42,95 @@ const en = {
         location: 'Rio de Janeiro, BR // Global Operations'
     },
     presentation: {
-        title: 'From Physics to Fintech to Healthcare',
-        subtitle: 'Engineering Resilient Systems',
+        title: 'Tech Interview',
+        subtitle: 'Quantitative Trading Engine in Clojure',
         section1: {
-            title: 'Hi, I\'m Patrick Serrano.',
-            text: "I am a Senior Software Engineer with a background in Physics. That scientific foundation is crucial to who I am as a developer. It taught me to view software not just as lines of code, but as complex, physical systems that have limits, entropy, and a need for absolute determinism. For the past 7 years, I’ve been applying this scientific method to build high-stakes financial systems using Clojure. Today, I want to walk you through that journey and explain why I'm ready to apply this rigor to the Healthcare domain."
+            title: 'Project Overview',
+            text: "Ark Engine is a quantitative trading engine built in Clojure, following a Polylith architecture for modularity and testability. It operates in the Crypto/Binance domain using a Functional, Event-Driven, and Asynchronous paradigm."
         },
         section2: {
-            title: 'THE BRIDGE',
-            subtitle: 'Fintech ↔ Healthcare',
-            intro: "For the last seven years, I worked at Moleque de Ideias , a software boutique where I grew from an intern to a Lead Software Engineer. My main focus there was orchestrating complex financial flows. The biggest challenge wasn't just processing payments, but handling the chaos of integrating multiple external actors like VTEX, Adyen, Mercado Pago, and others.",
+            title: 'Architecture Deep Dive',
+            subtitle: 'Polylith: Bases, Components, Projects',
+            intro: "The system is structured into Bases (cli-runner), Components (orchestrator, strategy-engine, connector, temporal-db), and Projects. This decoupling ensures the strategy engine is pure logic, knowing nothing about Binance, enabling REPL-Driven Development.",
             part1: {
-                title: 'THE CHAOS (Ingestion)',
-                intro: "In Fintech, this 'Chaos' was VTEX, Cielo, and legacy ERPs sending messy data. In Healthcare, this is your EMRs, Lab Results, and Wearables. The problem is the same: High fragmentation, low consistency."
+                title: 'Orchestrator (The Brain)',
+                intro: "Coordinates data, strategy, and execution. It manages the main application loop using core.async and recursion."
             },
             part2: {
-                title: 'THE REFINERY (Processing)',
-                intro: "Here we use Malli to act as the immune system, rejecting bad data. We use Datomic to create an immutable patient timeline. We never overwrite reality."
+                title: 'Strategy Engine (The Logic)',
+                intro: "Pure functions taking immutable data (Candles) and returning results (Signals) with no side effects. Extremely testable."
             },
             part3: {
-                title: 'THE VALUE (Intelligence)',
-                intro: "Outputting raw data is useless. In Fintech, we turned data into UBLE—revenue recovery alerts. In your platform, this translates to Clinical Decision Support. We take the clean data and push actionable insights to the doctor."
+                title: 'Connector (The Hands)',
+                intro: "Handles side effects: talking to exchanges (Binance) to execute orders based on the strategy's decisions."
             }
         },
         section3: {
-            title: 'THE PURSUIT OF BITEMPORALITY',
-            role: 'Nexus Quant Pivot',
-            subtitle: 'Architecting Safety-Critical Systems via Isolation & Bitemporality.',
-            subtitle2: 'Engineered to react to the world in real-time, maintaining a perfect and auditable memory of the past.',
-            intro: "In July 2025, after 7 years, I felt I had completed a full cycle there. I had a burning desire to build a high-frequency trading system from scratch to test specific architectural theories I had—specifically around Event Sourcing and Bitemporality.",
-            intro2: "So I founded Nexus Quant to solve a critical engineering problem: How to run automated trading bots with real, significant capital without losing sleep.",
+            title: 'Code Walkthrough',
+            role: 'Mental Model',
+            subtitle: 'Tick -> Fetch -> Compute -> Decide -> Act -> Recur',
+            subtitle2: 'A non-blocking event loop that wakes up on candle close, processes data purely, executes side effects, and recurs with new state.',
+            intro: "1. Tick: Time boundaries trigger wake-up. 2. Fetch: Pull history from Temporal DB. 3. Compute: Run indicators (TA4J) via pure functions.",
+            intro2: "4. Decide: Logic determines buy/sell. 5. Act: Connector executes order. 6. Recur: New position state passed to next loop iteration.",
             step1: {
-                title: 'Strategy Engine (The Brain)',
-                what: 'This is the \'Brain\'. It ingests market data and suggests trades.',
-                parallel: 'In your world, this is the AI Diagnostic Tool or a Doctor inputting a prescription. It\'s intelligent, but it can make mistakes based on bad data.'
+                title: 'Orchestrator',
+                what: 'The coordinator. Manages the lifecycle and state recursion.',
+                parallel: 'Like a Conductor ensuring all instruments play in time.'
             },
             step2: {
-                title: 'Risk Guard + Execution (The Shield)',
-                what: 'This is the Ark Core. It is physically isolated using Polylith. It doesn\'t care why the strategy wants to buy; it checks if it is safe to buy.',
-                magic: 'If the Strategy \'hallucinates\' and tries to bet 100% of the capital, this Guard cuts the circuit. It creates a hard boundary.',
-                parallel: 'This is exactly what a Clinical Decision Support System does. If a doctor prescribes a dosage that is 10x too high (fatal error), the system intercepts it before it reaches the patient (Execution).'
+                title: 'Strategy Engine',
+                what: 'The pure logic. Calculates indicators and signals.',
+                magic: 'Referential Transparency: Same input always equals same output.',
+                parallel: 'Like a Calculator: 2+2 is always 4, regardless of the weather.'
             },
             step3: {
-                title: 'Capital / Assets (The Vault)',
-                what: 'The immutable state. The real money.',
-                parallel: 'This is the Patient\'s Health. We treat it as the ultimate resource that must be protected from \'software bugs\'.'
+                title: 'Connector',
+                what: 'The side-effect handler. Executes trades.',
+                parallel: 'The hands that actually move the chips on the table.'
             },
             bitemporality: {
-                title: 'Why XTDB? Bitemporality in Action',
-                intro: 'Because in high-frequency environments, data arrives late.',
-                trading: 'In Trading: A price correction arrives 5ms late.',
-                healthcare: 'In Healthcare: A lab result is updated 2 hours after the diagnosis.',
-                conclusion: 'With Ark Engine\'s Bitemporality, I can insert that late data into the past (Valid Time) without breaking the audit trail of what the system knew at that moment (Transaction Time). This allows for Retroactive Correction of patient records—a crucial feature for medical legal compliance.'
+                title: 'State Management (Recursion)',
+                intro: 'We avoid global atoms for the main loop state.',
+                trading: 'State exists only on the stack via (loop [state init] ... (recur new-state)).',
+                healthcare: 'This ensures the state lifecycle is tightly bound to the process.',
+                conclusion: 'Data consistency is maintained through immutability. Each iteration creates a fresh state map derived from the previous one, without mutation.'
             },
             demo: {
-                instruction: 'Click "INJECT RISK" to see the architecture in action:',
-                step1: 'The Strategy (Brain) turns RED (Error!)',
-                step2: 'The Risk Guard (Shield) PULSES and blocks the flow',
-                step3: 'The Capital (Vault) remains GREEN and SAFE',
-                conclusion: 'See this? The Strategy failed. It tried to execute a disastrous trade. But because of the Polylith isolation, the Risk Guard caught it. The Capital is untouched. This architecture buys you safety. Whether it\'s protecting a portfolio or flagging a drug interaction, the mechanism is identical.'
+                instruction: 'Click "INJECT VOLATILITY" to see the engine handle load:',
+                step1: 'The Orchestrator maintains the loop.',
+                step2: 'The Strategy computes signals purely.',
+                step3: 'The Connector executes safely.',
+                conclusion: 'This architecture allows us to test the Strategy in isolation using just data maps, without mocking complex exchange APIs.'
             }
         },
         section4: {
-            title: 'THE CONVERGENCE',
-            subtitle: 'Engineering Continuity',
-            text: "The engineering problems in Trading and Fintech are identical to the problems in Healthcare.",
-            headers: ['FINTECH REALITY (My Background)', 'HEALTHCARE REALITY (Your Challenge)'],
+            title: 'Libraries & Talking Points',
+            subtitle: 'Key Tech Stack & Interview Answers',
+            text: "Core technologies and standard responses for technical questions.",
+            headers: ['KEY LIBRARY / CONCEPT', 'ROLE / APPLICATION'],
             rows: {
                 source: {
-                    fintech: { title: 'Fragmented Ecosystems', detail: '(VTEX, Getnet, Adyen, ClearSale)' },
-                    healthcare: { title: 'Disparate Sources', detail: '(EMR, Lab Results, different hospitals, physician offices)' }
+                    fintech: { title: 'core.async', detail: '(Concurrency)' },
+                    healthcare: { title: 'CSP (Communicating Sequential Processes)', detail: '(Non-blocking management of the main loop)' }
                 },
                 norm: {
-                    fintech: { title: 'Strict Contract Enforcement', detail: '(Malli Schemas at the Edge)' },
-                    healthcare: { title: 'Protocol Standardization', detail: '(FHIR / HL7 Interoperability)' }
+                    fintech: { title: 'Tick', detail: '(Time)' },
+                    healthcare: { title: 'Better Time Intepretation', detail: '(Superior to Java 8 Date/Time for intervals)' }
                 },
                 audit: {
-                    fintech: { title: 'Immutable Ledger', detail: '(Datomic Transaction Log)' },
-                    healthcare: { title: 'Longitudinal Patient Records', detail: '(Auditability & Legal Compliance)' }
+                    fintech: { title: 'Carmine', detail: '(Redis)' },
+                    healthcare: { title: 'Hot State / Pub-Sub', detail: '(Telemetry and fast persistence)' }
                 },
                 decision: {
-                    fintech: { title: 'Revenue Recovery Algorithms', detail: '(Real-time Superset Dashboards)' },
-                    healthcare: { title: 'Clinical Decision Support', detail: '(Evidence-Based Alerts & Insights)' }
+                    fintech: { title: 'Polylith', detail: '(Architecture)' },
+                    healthcare: { title: 'Monorepo Tooling', detail: '(Enforces strict component isolation)' }
                 }
             },
-            closing: "I am looking to transplant the architectural heart of a high-frequency mission-critical system into your healthcare platform."
+            closing: "Why Clojure? Data processing fits naturally with immutable maps. REPL allows interactive debugging against real market data."
         },
         section5: {
-            title: 'READY TO DEPLOY',
-            text: "I am ready to bring architectural maturity to your team, helping you turn messy data into a resilient Clinical Decision Platform starting Day 1."
+            title: 'READY FOR QUESTIONS',
+            text: "Ready to discuss Architecture, Concurrency, or Strategy Implementation details."
         }
     }
 };

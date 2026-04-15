@@ -149,7 +149,7 @@
                         : 'bg-gray-500'}"
                 ></span>
             </span>
-            INJECT RISK (BUG)
+            INJECT VOLATILITY
         </button>
     </div>
 
@@ -203,7 +203,7 @@
             <div
                 class="absolute top-4 left-4 text-xs text-cyan-500 tracking-widest"
             >
-                MODULE: STRATEGY ENGINE
+                MODULE: ORCHESTRATOR (BRAIN)
             </div>
 
             <!-- Visual -->
@@ -236,12 +236,10 @@
                         ? 'text-red-400'
                         : 'text-cyan-400'}"
                 >
-                    {mode === "danger" ? "CRITICAL ERROR" : "ALGORITHM ACTIVE"}
+                    {mode === 'danger' ? 'VOLATILITY SPIKE' : 'ACTIVE LOOP'}
                 </div>
                 <div class="text-xs text-gray-500 mt-1">
-                    {mode === "danger"
-                        ? "Detecting anomalous signal..."
-                        : "Generating orders..."}
+                    core.async / Recur
                 </div>
             </div>
         </div>
@@ -255,7 +253,7 @@
             <div
                 class="absolute top-4 left-4 text-xs text-orange-500 tracking-widest"
             >
-                MODULE: RISK GUARD + EXECUTION
+                MODULE: STRATEGY ENGINE (LOGIC)
             </div>
 
             <!-- The Gate/Shield Visual -->
@@ -296,15 +294,15 @@
             <div class="mt-8 text-center z-10">
                 <div
                     class="text-lg font-bold {isShieldActive
-                        ? 'text-red-400'
+                        ? 'text-red-400 animate-pulse'
                         : 'text-orange-400'} transition-colors"
                 >
                     {isShieldActive
-                        ? "CIRCUIT BREAKER: TRIPPED"
-                        : "SYSTEM: ARMED"}
+                        ? "COMPUTING INDICATORS"
+                        : "PURE LOGIC"}
                 </div>
                 <div class="text-xs text-gray-500 mt-1">
-                    Polylith Isolation Layer
+                    Referential Transparency
                 </div>
             </div>
         </div>
@@ -318,7 +316,7 @@
             <div
                 class="absolute top-4 left-4 text-xs text-green-500 tracking-widest"
             >
-                MODULE: CAPITAL
+                MODULE: CONNECTOR
             </div>
 
             <div
@@ -331,9 +329,9 @@
 
             <div class="mt-6 text-center">
                 <div class="text-lg font-bold text-green-400">
-                    ASSETS SECURED
+                    ORDERS EXECUTED
                 </div>
-                <div class="text-xs text-gray-500 mt-1">Direct-to-Exchange</div>
+                <div class="text-xs text-gray-500 mt-1">Side-Effect Handler</div>
             </div>
         </div>
 
@@ -380,9 +378,9 @@
     <div
         class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-500 font-mono text-center"
     >
-        <div>Algorithm (Volatility)</div>
-        <div class="text-orange-400">Security Layer (Immutable Rules)</div>
-        <div>Execution (Real Money)</div>
+        <div>Orchestrator (Loop)</div>
+        <div class="text-orange-400">Strategy (Pure Logic)</div>
+        <div>Connector (Side Effects)</div>
     </div>
 
     <!-- Technical Pillars Section -->
@@ -394,7 +392,7 @@
         >
             <div class="flex items-center justify-center gap-4">
                 <h3 class="text-2xl font-bold text-white">
-                    The 5 Technical Pillars
+                    Core Clojure & FP Concepts
                 </h3>
                 <svg
                     class="w-6 h-6 text-purple-400 transition-transform duration-300 {showTechnicalPillars
@@ -413,204 +411,163 @@
                 </svg>
             </div>
             <p class="text-sm text-gray-400 mt-2">
-                What makes Ark Engine a platform, not just a trading bot
+                Key Concepts: Immutability, Pure Functions, Concurrency, Recursion
             </p>
         </button>
 
         {#if showTechnicalPillars}
             <div class="space-y-6" transition:slide={{ duration: 400 }}>
-                <!-- Pillar 1: Bitemporality -->
+                <!-- Concept 1: Immutability -->
                 <div
                     class="bg-gradient-to-r from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-xl p-6 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300"
                 >
                     <div class="flex items-start gap-4">
-                        <div class="text-4xl">⏰</div>
+                        <div class="text-4xl">💎</div>
                         <div class="flex-1">
                             <h4 class="text-xl font-bold text-purple-300 mb-2">
-                                1. Bitemporality: "The Honest Time Machine"
+                                1. Immutability & Data-Driven Design
                             </h4>
                             <p class="text-sm text-gray-300 mb-3">
                                 <strong class="text-purple-200"
                                     >The Concept:</strong
-                                > The system knows the difference between when an
-                                event happened (Valid Time) and when the system learned
-                                about it (Transaction Time).
+                                > The entire system relies on passing immutable maps. There are almost no mutable objects.
                             </p>
                             <div
                                 class="bg-black/40 border-l-4 border-purple-500 p-3 mb-3 rounded"
                             >
                                 <p class="text-sm text-purple-100 italic">
-                                    "We eliminate Look-ahead Bias. We can go
-                                    back to 2:00 PM last Tuesday and see the
-                                    world exactly as the algorithm saw it at
-                                    that second, ignoring data that arrived
-                                    late. This guarantees mathematically perfect
-                                    simulations."
+                                    "Candles (Map) -> Indicators (Value) -> Signal (Map) -> Order (Map).
+                                    State is updated via recur, creating a new state for the next iteration without mutating the old one."
                                 </p>
                             </div>
                             <p class="text-xs text-gray-400">
                                 <strong class="text-purple-300"
-                                    >Application:</strong
-                                > Backtests that reflect production reality, forensic
-                                failure auditing, and automatic regulatory compliance.
+                                    >Code Ref:</strong
+                                > Orchestrator Loop.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pillar 2: Mechanical Causality -->
+                <!-- Concept 2: Pure Functions -->
                 <div
                     class="bg-gradient-to-r from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-400/50 transition-all duration-300"
                 >
                     <div class="flex items-start gap-4">
-                        <div class="text-4xl">🔬</div>
+                        <div class="text-4xl">🧪</div>
                         <div class="flex-1">
                             <h4 class="text-xl font-bold text-cyan-300 mb-2">
-                                2. Mechanical Causality: "Glass Box Trading"
+                                2. Pure Functions (Referential Transparency)
                             </h4>
                             <p class="text-sm text-gray-300 mb-3">
                                 <strong class="text-cyan-200"
                                     >The Concept:</strong
-                                > The system operates based on Cause and Effect (Market
-                                Mechanics), not statistical hope. Opposing the industry's
-                                "Black Box" approach based on unexplainable AI.
+                                > The strategy-engine largely consists of pure functions that take data and return a calculated result, with no side effects.
                             </p>
                             <div
                                 class="bg-black/40 border-l-4 border-cyan-500 p-3 mb-3 rounded"
                             >
                                 <p class="text-sm text-cyan-100 italic">
-                                    "Our platform doesn't 'think' the market
-                                    will go up. It detects the cause (e.g.,
-                                    Liquidity Asymmetry + Buy Aggression in
-                                    Flow) and executes the effect (Buy Order).
-                                    Everything is visible, traceable, and
-                                    logical."
+                                    "(ema candles period): Takes immutable data, returns a number. No external state is read or modified."
                                 </p>
                             </div>
                             <p class="text-xs text-gray-400">
                                 <strong class="text-cyan-300"
-                                    >Application:</strong
-                                > Real-time dashboard showing the bot's "brain,"
-                                allowing humans to validate machine logic.
+                                    >Benefit:</strong
+                                > Extremely easy to test. You just pass a vector of maps and assert the return value.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pillar 3: Event Sourcing -->
+                <!-- Concept 3: Concurrency -->
                 <div
                     class="bg-gradient-to-r from-orange-900/20 to-red-900/20 border border-orange-500/30 rounded-xl p-6 backdrop-blur-sm hover:border-orange-400/50 transition-all duration-300"
                 >
                     <div class="flex items-start gap-4">
-                        <div class="text-4xl">📼</div>
+                        <div class="text-4xl">⚡</div>
                         <div class="flex-1">
                             <h4 class="text-xl font-bold text-orange-300 mb-2">
-                                3. Event-Oriented Architecture (Event Sourcing)
+                                3. Concurrency & Asynchrony (core.async)
                             </h4>
                             <p class="text-sm text-gray-300 mb-3">
                                 <strong class="text-orange-200"
                                     >The Concept:</strong
-                                > System state (balance, position, signal) is ephemeral;
-                                it's just the sum of all past events. The database
-                                is an immutable log of facts.
+                                > CSP (Communicating Sequential Processes). The system "parks" (cheaply sleeps) until a timeout or a stop signal is received.
                             </p>
                             <div
                                 class="bg-black/40 border-l-4 border-orange-500 p-3 mb-3 rounded"
                             >
                                 <p class="text-sm text-orange-100 italic">
-                                    "We never delete data. If there's an error,
-                                    we don't fix the database; we emit a
-                                    compensation event. This means we can
-                                    rebuild the system from scratch at any time
-                                    by simply 'replaying the tape' of events.
-                                    It's indestructible."
+                                    "The Orchestrator uses core.async to manage the main application loop without blocking threads."
                                 </p>
                             </div>
                             <p class="text-xs text-gray-400">
                                 <strong class="text-orange-300"
-                                    >Application:</strong
-                                > Instant disaster recovery, market replay for debugging,
-                                and perfect accounting audit.
+                                    >Code Ref:</strong
+                                > com.nexus-quant.ark-engine.orchestrator.core/start!
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pillar 4: Complex Event Processing -->
+                <!-- Concept 4: Recursion -->
                 <div
                     class="bg-gradient-to-r from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-xl p-6 backdrop-blur-sm hover:border-green-400/50 transition-all duration-300"
                 >
                     <div class="flex items-start gap-4">
-                        <div class="text-4xl">⚡</div>
+                        <div class="text-4xl">🔄</div>
                         <div class="flex-1">
                             <h4 class="text-xl font-bold text-green-300 mb-2">
-                                4. The Complex Event Reactor (Generalist CEP)
+                                4. Recursion for State Management
                             </h4>
                             <p class="text-sm text-gray-300 mb-3">
                                 <strong class="text-green-200"
                                     >The Concept:</strong
-                                > An agnostic engine that ingests raw signals, detects
-                                complex patterns over time, and emits reactions.
-                                This positions Ark Engine as a Tech Platform, not
-                                just FinTech.
+                                > Instead of wrapping the application state in a global atom, the Orchestrator maintains state on the stack via recursion.
                             </p>
                             <div
                                 class="bg-black/40 border-l-4 border-green-500 p-3 mb-3 rounded"
                             >
                                 <p class="text-sm text-green-100 italic">
-                                    "Today, the 'sensors' are crypto exchanges
-                                    and the 'reaction' is buying Bitcoin.
-                                    Tomorrow, sensors could be IoT thermostats
-                                    and the reaction is shutting down a turbine,
-                                    or bank transactions and the reaction is
-                                    blocking fraud. The logical core is
-                                    separated from the business domain."
+                                    "(loop [state init] ... (recur new-state)). The 'state' exists only within the lifecycle of the loop."
                                 </p>
                             </div>
                             <p class="text-xs text-gray-400">
                                 <strong class="text-green-300"
-                                    >Application:</strong
-                                > Horizontal scalability of Nexus Quant's business
-                                model to other sectors (Logistics, Healthcare, Security).
+                                    >Why?:</strong
+                                > Avoids mutable shared state bugs.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pillar 5: Functional Determinism -->
+                <!-- Concept 5: Java Interop -->
                 <div
                     class="bg-gradient-to-r from-indigo-900/20 to-violet-900/20 border border-indigo-500/30 rounded-xl p-6 backdrop-blur-sm hover:border-indigo-400/50 transition-all duration-300"
                 >
                     <div class="flex items-start gap-4">
-                        <div class="text-4xl">λ</div>
+                        <div class="text-4xl">☕</div>
                         <div class="flex-1">
                             <h4 class="text-xl font-bold text-indigo-300 mb-2">
-                                5. Functional Determinism (Clojure)
+                                5. Java Interoperability
                             </h4>
                             <p class="text-sm text-gray-300 mb-3">
                                 <strong class="text-indigo-200"
                                     >The Concept:</strong
-                                > Use of immutable data structures and pure functions.
-                                Input A always generates Output B, without hidden
-                                side effects. The language choice isn't aesthetic,
-                                it's structural.
+                                > Clojure's strength is its access to the JVM ecosystem. Ark Engine leverages ta4j for technical analysis.
                             </p>
                             <div
                                 class="bg-black/40 border-l-4 border-indigo-500 p-3 mb-3 rounded"
                             >
                                 <p class="text-sm text-indigo-100 italic">
-                                    "We eliminate entire classes of bugs common
-                                    in financial systems (Race Conditions, State
-                                    Mutability). Our system is mathematically
-                                    verifiable and easy to test, which is
-                                    critical when managing capital or risk."
+                                    "(-> obj .method args) macros for clean Java calls. Converting Clojure maps (keywords) to Java Objects efficiently."
                                 </p>
                             </div>
                             <p class="text-xs text-gray-400">
                                 <strong class="text-indigo-300"
-                                    >Application:</strong
-                                > Predictable behavior, easier debugging, and confidence
-                                in production deployments.
+                                    >Lib:</strong
+                                > ta4j (Technical Analysis for Java).
                             </p>
                         </div>
                     </div>
