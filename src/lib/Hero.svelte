@@ -22,6 +22,10 @@
     <!-- Nav links (Desktop) -->
     <div class="hidden md:flex absolute top-8 right-8 items-center gap-6 font-mono text-xs">
         <a
+            href="#/ark-streams"
+            class="text-white/40 hover:text-[#00F0FF] transition-colors duration-300 tracking-widest"
+        >[ TECH TALK ]</a>
+        <a
             href="#/relatorios"
             class="text-white/40 hover:text-accent transition-colors duration-300 tracking-widest"
         >{$t("nav.reports")}</a>
@@ -63,18 +67,34 @@
         </h2>
 
         <!-- CTA -->
-        <button
-            on:click={scrollToPhilosophy}
-            class="group relative px-8 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-accent hover:shadow-[0_0_20px_var(--color-quantum-cyan)] transition-all duration-300"
-        >
-            <div
-                class="absolute inset-0 w-0 bg-accent/10 transition-all duration-[250ms] ease-out group-hover:w-full"
-            ></div>
-            <span
-                class="relative text-xs font-mono text-white group-hover:text-accent tracking-wider"
+        <div class="flex flex-col md:flex-row gap-4">
+            <button
+                on:click={scrollToPhilosophy}
+                class="group relative px-8 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-accent hover:shadow-[0_0_20px_var(--color-quantum-cyan)] transition-all duration-300 w-full md:w-auto"
             >
-                {$t("hero.cta")}
-            </span>
-        </button>
+                <div
+                    class="absolute inset-0 w-0 bg-accent/10 transition-all duration-[250ms] ease-out group-hover:w-full"
+                ></div>
+                <span
+                    class="relative text-xs font-mono text-white group-hover:text-accent tracking-wider"
+                >
+                    {$t("hero.cta")}
+                </span>
+            </button>
+
+            <a
+                href="#/ark-streams"
+                class="group relative px-8 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-[#00F0FF] hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all duration-300 flex items-center justify-center w-full md:w-auto"
+            >
+                <div
+                    class="absolute inset-0 w-0 bg-[#00F0FF]/10 transition-all duration-[250ms] ease-out group-hover:w-full"
+                ></div>
+                <span
+                    class="relative text-xs font-mono text-white group-hover:text-[#00F0FF] tracking-wider text-center"
+                >
+                    {$t("hero.cta_ark")}
+                </span>
+            </a>
+        </div>
     </div>
 </section>

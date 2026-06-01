@@ -94,7 +94,8 @@ const en = {
         status: 'SYSTEMS OPERATIONAL',
         title: 'NEXUS QUANT',
         subtitle: 'Proprietary Quantitative Research & Automated Decision Systems.',
-        cta: '[ VIEW PHILOSOPHY ]'
+        cta: '[ VIEW PHILOSOPHY ]',
+        cta_ark: '[ ARK STREAMS PRESENTATION ]'
     },
     philosophy: {
         title: '>_ MISSION DIRECTIVE',
@@ -106,8 +107,23 @@ const en = {
     stack: {
         title: '>_ ARCHITECTURE',
         card1: { title: 'QUANTITATIVE ANALYSIS', text: 'Rapid hypothesis testing, statistical modeling, and backtesting using the Python data science ecosystem.' },
-        card2: { title: 'PRODUCTION RUNTIME', text: 'Our proprietary execution engine. Built on functional programming principles to ensure concurrency safety and fault tolerance.' },
+        card2: { title: 'PRODUCTION RUNTIME', text: 'Our proprietary event-driven intelligence platform. Built in Go and powered by NATS JetStream to ensure ultra-low latency, native persistence, and seamless scalability.' },
         card3: { title: 'IMMUTABLE LEDGER', text: 'Full traceability of every decision state. We utilize time-travel database capabilities for rigorous post-trade auditing.' }
+    },
+    evolution: {
+        title: '>_ SYSTEM EVOLUTION',
+        phase1: {
+            period: '2023 - 2025',
+            name: 'Phase 1: Functional Foundation',
+            tech: 'Clojure / JVM / Polylith',
+            description: 'Focus on mathematical correctness, immutable data structures, and REPL-driven development. Proved the viability of our Bill Williams-based strategy logic.'
+        },
+        phase2: {
+            period: '2026 - Present',
+            name: 'Phase 2: Event-Driven Scale',
+            tech: 'Go / NATS JetStream / Wails',
+            description: 'Transition to a high-concurrency, low-latency streaming architecture. Decoupled collectors, processors, and strategies through a persistent event bus.'
+        }
     },
     metrics: {
         title: ':: SYSTEM STATUS ::',
@@ -211,6 +227,30 @@ const en = {
             },
             closing: "Why Clojure? Data processing fits naturally with immutable maps. REPL allows interactive debugging against real market data."
         },
+        arkStreams: {
+            title: 'Ark Streams: Reactive Intelligence',
+            subtitle: 'The Evolution from Functional Loops to Event-Driven Streams',
+            intro: 'A deep dive into why we migrated our core engine from Clojure to Go + NATS JetStream, and how this redefined our operational efficiency.',
+            sections: {
+                transition: {
+                    title: 'The Architectural Shift',
+                    text: 'While Clojure provided mathematical correctness via core.async, we hit the "JVM Tax". Migrating to Go allowed us to reduce memory footprint by 70% and eliminate unpredictable GC pauses during high-volatility events.'
+                },
+                nats: {
+                    title: 'NATS: The Single Source of Truth',
+                    text: 'State no longer lives in a recursive loop stack. It lives in the stream. NATS JetStream provides native persistence, backpressure management, and instant state recovery via replayability.'
+                },
+                efficiency: {
+                    title: 'Cloud & Operational Cost',
+                    text: 'Binary portability and instant cold starts allow us to deploy on lightweight ARM instances. What required a cluster in Phase 1 now runs on a single edge node, significantly reducing overhead.'
+                },
+                terminal: {
+                    title: 'Wails & Native IPC',
+                    text: 'Unifying the engine and the UI layer in Go via Wails eliminated data serialization bottlenecks. The Nexus Terminal talks directly to the Go core with zero-latency IPC.'
+                }
+            },
+            conclusion: 'Clojure was our tool for discovery. Go is our tool for global scale.'
+        },
         section5: {
             title: 'READY FOR QUESTIONS',
             text: "Ready to discuss Architecture, Concurrency, or Strategy Implementation details."
@@ -311,7 +351,8 @@ const pt = {
         status: 'SISTEMAS OPERACIONAIS',
         title: 'NEXUS QUANT',
         subtitle: 'Pesquisa Quantitativa Proprietária e Sistemas de Decisão Automatizados.',
-        cta: '[ VER FILOSOFIA ]'
+        cta: '[ VER FILOSOFIA ]',
+        cta_ark: '[ APRESENTAÇÃO ARK STREAMS ]'
     },
     philosophy: {
         title: '>_ DIRETRIZ DA MISSÃO',
@@ -323,8 +364,23 @@ const pt = {
     stack: {
         title: '>_ ARQUITETURA',
         card1: { title: 'ANÁLISE QUANTITATIVA', text: 'Teste rápido de hipóteses, modelagem estatística e backtesting usando o ecossistema de ciência de dados Python.' },
-        card2: { title: 'RUNTIME DE PRODUÇÃO', text: 'Nosso motor de execução proprietário. Construído sobre princípios de programação funcional para garantir segurança de concorrência e tolerância a falhas.' },
+        card2: { title: 'RUNTIME DE PRODUÇÃO', text: 'Nossa plataforma proprietária de inteligência orientada a eventos. Construída em Go e movida por NATS JetStream para garantir latência ultra-baixa, persistência nativa e escalabilidade contínua.' },
         card3: { title: 'LEDGER IMUTÁVEL', text: 'Rastreabilidade total de cada estado de decisão. Utilizamos recursos de banco de dados de viagem no tempo para auditoria pós-trade rigorosa.' }
+    },
+    evolution: {
+        title: '>_ EVOLUÇÃO DO SISTEMA',
+        phase1: {
+            period: '2023 - 2025',
+            name: 'Fase 1: Fundação Funcional',
+            tech: 'Clojure / JVM / Polylith',
+            description: 'Foco em corretude matemática, estruturas de dados imutáveis e desenvolvimento orientado a REPL. Provou a viabilidade da nossa lógica de estratégia baseada em Bill Williams.'
+        },
+        phase2: {
+            period: '2026 - Presente',
+            name: 'Fase 2: Escala Orientada a Eventos',
+            tech: 'Go / NATS JetStream / Wails',
+            description: 'Transição para uma arquitetura de streaming de alta concorrência e baixa latência. Coletores, processadores e estratégias desacoplados através de um barramento de eventos persistente.'
+        }
     },
     metrics: {
         title: ':: STATUS DO SISTEMA ::',
@@ -340,6 +396,30 @@ const pt = {
     footer: {
         rights: '© {year} Nexus Quant. Todos os direitos reservados.',
         location: 'Rio de Janeiro, BR // Operações Globais'
+    },
+    arkStreams: {
+        title: 'Ark Streams: Inteligência Reativa',
+        subtitle: 'A Evolução de Loops Funcionais para Streams Orientados a Eventos',
+        intro: 'Uma análise profunda de por que migramos nosso motor principal de Clojure para Go + NATS JetStream, e como isso redefiniu nossa eficiência operacional.',
+        sections: {
+            transition: {
+                title: 'A Mudança Arquitetural',
+                text: 'Embora o Clojure tenha fornecido corretude matemática via core.async, atingimos a "Taxa da JVM". Migrar para Go nos permitiu reduzir o consumo de memória em 70% e eliminar pausas imprevisíveis de GC durante eventos de alta volatilidade.'
+            },
+            nats: {
+                title: 'NATS: A Única Fonte da Verdade',
+                text: 'O estado não vive mais em uma pilha de loop recursiva. Ele vive no stream. O NATS JetStream fornece persistência nativa, gerenciamento de contrapressão e recuperação instantânea de estado via replayability.'
+            },
+            efficiency: {
+                title: 'Custo de Nuvem e Operacional',
+                text: 'A portabilidade de binários e os cold starts instantâneos nos permitem implantar em instâncias ARM leves. O que exigia um cluster na Fase 1 agora roda em um único nó de borda, reduzindo drasticamente o overhead.'
+            },
+            terminal: {
+                title: 'Wails e IPC Nativo',
+                text: 'Unificar o motor e a camada de UI em Go através do Wails eliminou gargalos de serialização de dados. O Nexus Terminal fala diretamente com o core em Go com IPC de latência zero.'
+            }
+        },
+        conclusion: 'Clojure foi nossa ferramenta de descoberta. Go é nossa ferramenta de escala global.'
     }
 };
 

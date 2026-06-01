@@ -5,10 +5,12 @@
   import Hero from "./lib/Hero.svelte";
   import Philosophy from "./lib/Philosophy.svelte";
   import Stack from "./lib/Stack.svelte";
+  import Evolution from "./lib/Evolution.svelte";
   import Metrics from "./lib/Metrics.svelte";
   import Footer from "./lib/Footer.svelte";
   import AudioPlayer from "./lib/AudioPlayer.svelte";
   import Presentation from "./lib/Presentation.svelte";
+  import ArkStreamsPresentation from "./lib/ArkStreamsPresentation.svelte";
   import OperationalReport from "./lib/OperationalReport.svelte";
 
   // Called once — storing the promise prevents Svelte from re-calling it when
@@ -41,12 +43,15 @@
 
     {#if hash === "#/presentation"}
       <Presentation />
+    {:else if hash === "#/ark-streams"}
+      <ArkStreamsPresentation />
     {:else if hash === "#/relatorios"}
       <OperationalReport />
     {:else}
       <Hero />
       <Philosophy />
       <Stack />
+      <Evolution />
       <Metrics />
       <Footer />
     {/if}

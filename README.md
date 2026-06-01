@@ -29,7 +29,7 @@ We approach financial markets as **complex physical systems**. By bridging **sto
 - **Mouse Gravity Well:** Subtle localized depressions on the topographic mesh that follow the user's cursor.
 
 ### Interactive System Architecture
-- **Ark Engine Reactor:** A real-time simulation of our core Clojure-based trading engine, demonstrating the interaction between the Orchestrator, Strategy Engine, and execution Connectors.
+- **Ark Streams Engine:** A real-time, event-driven trading intelligence platform built in Go, utilizing NATS JetStream as a persistent event bus for high-performance data processing.
 - **Data Refinery:** A visual representation of data ingestion and processing pipelines.
 
 ### Global Accessibility

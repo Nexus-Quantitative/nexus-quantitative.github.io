@@ -45,14 +45,14 @@
                 </div>
             </div>
 
-            <!-- CARD 02: ARK ENGINE -->
+            <!-- CARD 02: ARK STREAMS -->
             <div
                 class="bg-black/60 backdrop-blur-md border border-white/10 p-8 hover:border-accent/40 hover:bg-black/80 transition-all duration-300 group hover:-translate-y-1 rounded-sm flex flex-col h-full"
             >
                 <div
                     class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
                 >
-                    <span>[ CLOJURE / JVM ]</span>
+                    <span>[ GO / NATS JETSTREAM ]</span>
                 </div>
 
                 <h4 class="text-2xl font-bold mb-4 text-white font-mono">
@@ -68,13 +68,12 @@
                 <div
                     class="flex flex-wrap gap-2 font-mono text-[10px] text-secondary tracking-wide uppercase"
                 >
-                    <span class="border border-white/10 px-2 py-1">Clojure</span
-                    >
-                    <span class="border border-white/10 px-2 py-1">EDA</span>
+                    <span class="border border-white/10 px-2 py-1">Go</span>
+                    <span class="border border-white/10 px-2 py-1">NATS</span>
                     <span class="border border-white/10 px-2 py-1"
-                        >Integrant</span
+                        >Wails</span
                     >
-                    <span class="border border-white/10 px-2 py-1">AWS</span>
+                    <span class="border border-white/10 px-2 py-1">Svelte</span>
                 </div>
             </div>
 
@@ -85,7 +84,7 @@
                 <div
                     class="font-mono text-accent mb-6 text-xs flex justify-between items-center opacity-70 group-hover:opacity-100"
                 >
-                    <span>[ DATOMIC / XTDB / MALLI ]</span>
+                    <span>[ NATS JETSTREAM / KV BUCKETS ]</span>
                 </div>
 
                 <h4 class="text-2xl font-bold mb-4 text-white font-mono">
@@ -101,10 +100,10 @@
                 <div
                     class="flex flex-wrap gap-2 font-mono text-[10px] text-secondary tracking-wide uppercase"
                 >
-                    <span class="border border-white/10 px-2 py-1">Datomic</span
+                    <span class="border border-white/10 px-2 py-1">JetStream</span
                     >
-                    <span class="border border-white/10 px-2 py-1">XTDB</span>
-                    <span class="border border-white/10 px-2 py-1">Malli</span>
+                    <span class="border border-white/10 px-2 py-1">KV Store</span>
+                    <span class="border border-white/10 px-2 py-1">Audit Trail</span>
                     <span class="border border-white/10 px-2 py-1"
                         >Compliance</span
                     >

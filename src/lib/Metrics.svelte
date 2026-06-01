@@ -35,7 +35,7 @@
                     class="grid grid-cols-4 p-4 hover:bg-white/[0.02] transition-colors"
                 >
                     <div class="text-white col-span-1 font-bold">
-                        MARKET_DATA_STREAM
+                        MARKET_COLLECTORS
                     </div>
                     <div
                         class="text-emerald-400 col-span-1 flex items-center gap-2"
@@ -53,7 +53,7 @@
                     class="grid grid-cols-4 p-4 hover:bg-white/[0.02] transition-colors"
                 >
                     <div class="text-white col-span-1 font-bold">
-                        STRATEGY_ENGINE
+                        FRACTAL_ENGINE
                     </div>
                     <div
                         class="text-emerald-400 col-span-1 flex items-center gap-2"
@@ -71,7 +71,7 @@
                     class="grid grid-cols-4 p-4 hover:bg-white/[0.02] transition-colors"
                 >
                     <div class="text-white col-span-1 font-bold">
-                        RISK_CONTROLLER
+                        JETSTREAM_PERSISTENCE
                     </div>
                     <div
                         class="text-emerald-400 col-span-1 flex items-center gap-2"
@@ -89,7 +89,7 @@
                     class="grid grid-cols-4 p-4 hover:bg-white/[0.02] transition-colors"
                 >
                     <div class="text-white col-span-1 font-bold">
-                        AUDIT_LOG_SYNC
+                        NEXUS_TERMINAL_IPC
                     </div>
                     <div
                         class="text-blue-400 col-span-1 flex items-center gap-2"
