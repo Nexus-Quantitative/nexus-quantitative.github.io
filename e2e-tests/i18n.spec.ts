@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './helpers/fixtures';
 
 test.describe('Internationalization (i18n) Tests', () => {
   test.beforeEach(async ({ page }) => {
@@ -101,7 +101,7 @@ test.describe('Internationalization (i18n) Tests', () => {
     await page.reload();
 
     // Wait for the page to fully load after reload
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // Check if the text is still in Portuguese after reload
     const titleAfterReload = await page.getByRole('heading', { level: 1 }).textContent();

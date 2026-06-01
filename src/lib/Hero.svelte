@@ -19,12 +19,16 @@
         <LanguageSwitcher />
     </div>
 
-    <!-- Status Badge (Desktop) -->
-    <div
-        class="hidden md:flex absolute top-8 right-8 items-center gap-2 font-mono text-xs text-accent opacity-90 animate-pulse-glow"
-    >
-        <div class="w-2 h-2 rounded-full bg-accent"></div>
-        <span>{$t("hero.status")}</span>
+    <!-- Nav links (Desktop) -->
+    <div class="hidden md:flex absolute top-8 right-8 items-center gap-6 font-mono text-xs">
+        <a
+            href="#/relatorios"
+            class="text-white/40 hover:text-accent transition-colors duration-300 tracking-widest"
+        >{$t("nav.reports")}</a>
+        <div class="flex items-center gap-2 text-accent opacity-90 animate-pulse-glow">
+            <div class="w-2 h-2 rounded-full bg-accent"></div>
+            <span>{$t("hero.status")}</span>
+        </div>
     </div>
 
     <!-- Status Badge (Mobile) -->

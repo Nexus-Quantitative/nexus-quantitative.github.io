@@ -9,6 +9,11 @@
   import Footer from "./lib/Footer.svelte";
   import AudioPlayer from "./lib/AudioPlayer.svelte";
   import Presentation from "./lib/Presentation.svelte";
+  import OperationalReport from "./lib/OperationalReport.svelte";
+
+  // Called once — storing the promise prevents Svelte from re-calling it when
+  // $locale changes, which would briefly unmount <main> on every language switch.
+  const localeReady = waitLocale();
 
   let hash = window.location.hash;
 
@@ -19,7 +24,7 @@
   });
 </script>
 
-{#await waitLocale()}
+{#await localeReady}
   <div class="bg-black min-h-screen flex items-center justify-center">
     <div class="animate-pulse text-accent font-mono">
       {$t("common.loading")}
@@ -36,6 +41,8 @@
 
     {#if hash === "#/presentation"}
       <Presentation />
+    {:else if hash === "#/relatorios"}
+      <OperationalReport />
     {:else}
       <Hero />
       <Philosophy />

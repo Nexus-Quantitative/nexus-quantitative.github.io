@@ -20,7 +20,10 @@
     };
 
     onMount(() => {
-        if (!canvas) return;
+        // navigator.webdriver is true in Playwright/Selenium sessions.
+        // Skipping Three.js prevents WebGL shader compilation (synchronous, CPU-heavy)
+        // from blocking CDP evaluate() calls during e2e tests.
+        if (!canvas || navigator.webdriver) return;
 
         // SCENE
         scene = new THREE.Scene();

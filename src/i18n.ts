@@ -4,8 +4,91 @@ import { derived } from 'svelte/store';
 const en = {
     common: {
         change_language: 'Change language to {name}',
-
         loading: 'LOADING...'
+    },
+    nav: {
+        reports: '[ REPORTS ]'
+    },
+    report: {
+        nav_back: '← NEXUS QUANT',
+        nav_title: 'OPERATIONAL REPORTS',
+        nav_week: 'WEEK',
+        generated_label: 'GENERATED',
+        page_title: 'Trading Desk',
+        methodology_label: 'METHODOLOGY',
+        indicators_label: 'INDICATORS',
+        font_decrease: 'A−',
+        font_increase: 'A+',
+
+        warning_title: 'Data validity:',
+        warning_text: 'Revalidate all prices, moving averages, and oscillators at the weekly open before arming any order. This report is a risk-defined decision framework — not a forecast or guarantee of results. Only trade on a <strong>closed bar</strong> of the relevant screen.',
+
+        priority_title: 'Monitoring Queue · by Priority',
+        scoreboard_title: 'Bias Scoreboard · Triple Screen',
+
+        role_primary: 'PRIMARY',
+        role_macro: 'MACRO',
+
+        impulse_red: '● RED',
+        impulse_green: '● GREEN',
+        impulse_blue_red: '◑ BLUE → RED',
+
+        zone_neutral_up: 'Neutral rising',
+        zone_rising_overbought: 'Rising → overbought',
+        zone_overbought: 'Overbought',
+        zone_low_k_below_d: 'Low, K < D',
+        zone_rising: 'Rising',
+        zone_oversold: 'Oversold',
+
+        btc_note: 'Pending impulse confirmation. Conditional short.',
+        xau_note: 'Short maturing. Stochastic at resistance.',
+        sp_note: 'Await pullback to 7,369. No buying overbought.',
+        bovespa_note: 'Cleanest trend. Both screens aligned.',
+        usdbrl_note: 'Sell bounce near 5.11 (weekly EMA underside).',
+        brent_note: 'Do not sell oversold. Await bounce to 101.',
+
+        playbook_title: 'BTC/USD — Primary Playbook',
+        tide_label: 'TIDE (WEEKLY)',
+        wave_label: 'WAVE (DAILY)',
+        tide_text: 'Price <span class="text-white">75,708.00</span> below MME(17) <span class="text-rose-400">76,533.35</span>. MACD histogram positive but decelerating — new weekly bar lower than previous (lower high). Impulse <span class="text-amber-400">blue in transition</span>; turns red when histogram confirms weekly close.',
+        wave_text: 'Price below descending MME. Stochastic %K <span class="text-[#4CC9F0]">42.08</span> / %D <span class="text-[#4CC9F0]">28.63</span>, rising (upper band 89.03). Counter-trend bounce in progress — <strong class="text-white">not yet overbought</strong>. Conviction scales to FULL after red weekly close.',
+        trigger_label: 'TRIGGER',
+        action_label: 'ACTION',
+        stop_label: 'STOP',
+        sc_a_name: 'SELL THE BOUNCE',
+        sc_a_condition: 'Price retraces to zone 76,533–76,606 + 1h stochastic overbought and turning + breaks prior 15m low',
+        sc_a_target_label: 'SUPPORT',
+        sc_b_name: 'CONTINUATION SELL',
+        sc_b_condition: 'Close below 73,936 + rejected retest from below + breaks prior 15m low',
+        sc_b_target_label: 'PARTIAL → RUNNER',
+        sc_c_label: 'NO TRADE',
+        sc_c_text: 'Condition: tide turns non-bearish <strong>or</strong> reclaim/close above 76,533. Action: <span class="text-[#00F0FF]/60">CancelSetups</span> — pull pending orders, remain ARMED with no entries.',
+        sc_a_invalidation: 'Close above 76,533',
+        sc_b_invalidation: 'Recovers and closes back above 73,936',
+
+        macro_implication_title: 'MACRO IMPLICATION',
+        macro_implication_text: 'The bearish BTC bias lacks broad macro risk-off support (strong S&P is the counterweight). Treat the short as a <strong class="text-white">correction within trend</strong>, not the start of a macro bear: modest targets, heightened vigilance on invalidation by reclaim.',
+
+        risk_title: 'Risk Management · Non-Negotiable Rules',
+        rule_2pct_id: '2%',
+        rule_2pct_title: 'THE 2% RULE',
+        rule_2pct_body: 'Never risk more than 2% of account per trade. Define the stop first; size the position from the stop.',
+        rule_6pct_id: '6%',
+        rule_6pct_title: 'THE 6% RULE',
+        rule_6pct_body: 'If monthly losses reach 6% of account, close all operations until month-end.',
+        rule_conv_id: 'CONV',
+        rule_conv_title: 'CONVICTION & SIZE',
+        rule_conv_body: 'HALF = half size (unconfirmed weekly impulse). FULL = full size (confirmed weekly impulse).',
+        rule_hier_id: 'HIER',
+        rule_hier_title: 'SCREEN HIERARCHY',
+        rule_hier_body: 'Never trade against the tide. Long only where tide is bullish. Stop defined at entry — non-negotiable.',
+
+        legend_armed: 'active permission; awaiting trigger',
+        legend_standby: 'no permission; do not trade',
+        legend_in_position: 'open position (runtime)',
+        legend_full: 'confirmed weekly impulse · full size',
+        legend_half: 'week in transition · half size',
+        zone_label: 'ZONE',
     },
     hero: {
         status: 'SYSTEMS OPERATIONAL',
@@ -138,8 +221,91 @@ const en = {
 const pt = {
     common: {
         change_language: 'Alterar idioma para {name}',
-
         loading: 'CARREGANDO...'
+    },
+    nav: {
+        reports: '[ RELATÓRIOS ]'
+    },
+    report: {
+        nav_back: '← NEXUS QUANT',
+        nav_title: 'RELATÓRIOS OPERACIONAIS',
+        nav_week: 'SEMANA',
+        generated_label: 'GERADO',
+        page_title: 'Mesa de Operações',
+        methodology_label: 'METODOLOGIA',
+        indicators_label: 'INDICADORES',
+        font_decrease: 'A−',
+        font_increase: 'A+',
+
+        warning_title: 'Validade dos dados:',
+        warning_text: 'Revalidar todos os preços, médias e osciladores na abertura semanal antes de armar qualquer ordem. Este relatório é um framework de decisão com risco definido — não previsão nem garantia de resultado. Somente operar em <strong>barra fechada</strong> do screen relevante.',
+
+        priority_title: 'Fila de Monitoramento · por Prioridade',
+        scoreboard_title: 'Scoreboard de Viés · Triple Screen',
+
+        role_primary: 'PRIMÁRIO',
+        role_macro: 'MACRO',
+
+        impulse_red: '● VERMELHO',
+        impulse_green: '● VERDE',
+        impulse_blue_red: '◑ AZUL → VERMELHO',
+
+        zone_neutral_up: 'Neutro subindo',
+        zone_rising_overbought: 'Subindo → sobrecompra',
+        zone_overbought: 'Sobrecomprado',
+        zone_low_k_below_d: 'Baixo, K < D',
+        zone_rising: 'Subindo',
+        zone_oversold: 'Sobrevendido',
+
+        btc_note: 'Impulso pendente confirmação. Short condicional.',
+        xau_note: 'Short amadurecendo. Estocástico na resistência.',
+        sp_note: 'Aguardar pullback a 7.369. Não comprar sobrecompra.',
+        bovespa_note: 'Tendência mais limpa. Duas telas alinhadas.',
+        usdbrl_note: 'Vender repique perto de 5,11 (EMA semanal underside).',
+        brent_note: 'Não vender sobrevendido. Aguardar repique a 101.',
+
+        playbook_title: 'BTC/USD — Playbook Primário',
+        tide_label: 'MARÉ (SEMANAL)',
+        wave_label: 'ONDA (DIÁRIO)',
+        tide_text: 'Preço <span class="text-white">75.708,00</span> abaixo da MME(17) <span class="text-rose-400">76.533,35</span>. Histograma MACD positivo porém desacelerando — barra semanal nova menor que a anterior (topo mais baixo). Impulso <span class="text-amber-400">azul em transição</span>; vira vermelho quando histograma confirmar fechamento semanal.',
+        wave_text: 'Preço abaixo da MME descendente. Estocástico %K <span class="text-[#4CC9F0]">42,08</span> / %D <span class="text-[#4CC9F0]">28,63</span>, subindo (banda sup. 89,03). Repique contra-tendência em curso — <strong class="text-white">ainda não sobrecomprado</strong>. Convicção escala para FULL após fechamento semanal vermelho.',
+        trigger_label: 'GATILHO',
+        action_label: 'AÇÃO',
+        stop_label: 'STOP',
+        sc_a_name: 'VENDA NO REPIQUE',
+        sc_a_condition: 'Preço repica à zona 76.533–76.606 + estocástico 1h sobrecomprado e virando + rompe mínima 15m',
+        sc_a_target_label: 'SUPORTE',
+        sc_b_name: 'VENDA NA CONTINUAÇÃO',
+        sc_b_condition: 'Fechamento abaixo de 73.936 + reteste por baixo rejeitado + rompe mínima 15m',
+        sc_b_target_label: 'PARCIAL → RUNNER',
+        sc_c_label: 'SEM TRADE',
+        sc_c_text: 'Condição: maré deixa de ser baixista <strong>ou</strong> reclaim/fechamento acima de 76.533. Ação: <span class="text-[#00F0FF]/60">CancelSetups</span> — puxar ordens pendentes, seguir ARMED sem entradas.',
+        sc_a_invalidation: 'Fechamento acima de 76.533',
+        sc_b_invalidation: 'Recompõe e fecha de volta acima de 73.936',
+
+        macro_implication_title: 'IMPLICAÇÃO MACRO',
+        macro_implication_text: 'O viés vendedor do BTC não tem risk-off macro amplo por trás (S&P forte é o contrapeso). Tratar o short como <strong class="text-white">correção dentro de tendência</strong>, não início de bear macro: alvos mais modestos, vigilância redobrada na invalidação por reclaim.',
+
+        risk_title: 'Gestão de Risco · Regras Não-Negociáveis',
+        rule_2pct_id: '2%',
+        rule_2pct_title: 'REGRA DOS 2%',
+        rule_2pct_body: 'Nunca arriscar mais que 2% da conta por trade. Definir o stop primeiro; dimensionar a posição pelo stop.',
+        rule_6pct_id: '6%',
+        rule_6pct_title: 'REGRA DOS 6%',
+        rule_6pct_body: 'Se as perdas do mês atingirem 6% da conta, encerrar o operacional até virar o mês.',
+        rule_conv_id: 'CONV',
+        rule_conv_title: 'CONVICÇÃO & TAMANHO',
+        rule_conv_body: 'HALF = meia mão (impulso não confirmado). FULL = mão cheia (impulso semanal confirmado).',
+        rule_hier_id: 'HIER',
+        rule_hier_title: 'HIERARQUIA DE TELAS',
+        rule_hier_body: 'Nunca operar contra a maré. Long somente onde a maré é de alta. Stop definido na entrada — não-negociável.',
+
+        legend_armed: 'permissão ativa; aguardando gatilho',
+        legend_standby: 'sem permissão; não operar',
+        legend_in_position: 'posição aberta (runtime)',
+        legend_full: 'impulso semanal confirmado · mão cheia',
+        legend_half: 'semana em transição · meia mão',
+        zone_label: 'ZONA',
     },
     hero: {
         status: 'SISTEMAS OPERACIONAIS',

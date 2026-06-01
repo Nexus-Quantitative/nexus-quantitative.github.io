@@ -5,7 +5,7 @@
 
 <footer class="py-12 px-4 border-t border-white/5 text-center bg-transparent">
     <div class="font-mono text-xs text-secondary space-y-6">
-        <div class="flex justify-center gap-8">
+        <div class="flex justify-center gap-8 flex-wrap">
             <a
                 href="https://linkedin.com/company/nexus-quant"
                 aria-label="LinkedIn"
@@ -17,6 +17,12 @@
                 aria-label="GitHub"
                 class="hover:text-accent transition-colors duration-300"
                 >[ GITHUB ]</a
+            >
+            <a
+                href="#/relatorios"
+                aria-label="Relatórios Operacionais"
+                class="hover:text-accent transition-colors duration-300"
+                >[ RELATÓRIOS ]</a
             >
         </div>
 

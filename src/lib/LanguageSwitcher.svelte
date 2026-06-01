@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { locale, locales, t } from "svelte-i18n";
+    import { locale, t } from "svelte-i18n";
 
-    const languages = [
+    const allLanguages = [
         { code: "en", name: "English" },
         { code: "pt", name: "Português" },
         { code: "es", name: "Español" },
@@ -12,13 +12,17 @@
         { code: "de", name: "Deutsch" },
     ];
 
+    /** When provided, only these language codes are shown. */
+    export let only: string[] | undefined = undefined;
+
+    $: languages = only
+        ? allLanguages.filter((l) => only!.includes(l.code))
+        : allLanguages;
+
     function setLanguage(code: string) {
         $locale = code;
         localStorage.setItem("preferred-locale", code);
     }
-
-    // Sync with localStorage on init if available
-    // (Handled in i18n.ts detectBestLocale now)
 </script>
 
 <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 font-mono text-xs">
