@@ -292,7 +292,7 @@
 </script>
 
 <div
-    class="w-full h-[400px] relative rounded-xl overflow-hidden border border-zinc-800 bg-black/60"
+    class="w-full h-[400px] relative rounded-xl overflow-hidden border border-zinc-800 bg-black/20"
     bind:this={container}
 >
     <canvas bind:this={canvas} class="w-full h-full block"></canvas>

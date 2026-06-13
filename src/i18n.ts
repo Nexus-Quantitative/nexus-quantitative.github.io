@@ -120,9 +120,9 @@ const en = {
         },
         phase2: {
             period: '2026 - Present',
-            name: 'Phase 2: Event-Driven Scale',
+            name: 'Phase 2: Hybrid Ecosystem',
             tech: 'Go / NATS JetStream / Wails',
-            description: 'Transition to a high-concurrency, low-latency streaming architecture. Decoupled collectors, processors, and strategies through a persistent event bus.'
+            description: 'Expansion to a high-concurrency, low-latency hybrid architecture. Integrating Go for production edge nodes while maintaining Clojure for strategy modeling, unified by a persistent NATS event bus.'
         }
     },
     metrics: {
@@ -227,34 +227,82 @@ const en = {
             },
             closing: "Why Clojure? Data processing fits naturally with immutable maps. REPL allows interactive debugging against real market data."
         },
-        arkStreams: {
-            title: 'Ark Streams: Reactive Intelligence',
-            subtitle: 'The Evolution from Functional Loops to Event-Driven Streams',
-            intro: 'A deep dive into why we migrated our core engine from Clojure to Go + NATS JetStream, and how this redefined our operational efficiency.',
-            sections: {
-                transition: {
-                    title: 'The Architectural Shift',
-                    text: 'While Clojure provided mathematical correctness via core.async, we hit the "JVM Tax". Migrating to Go allowed us to reduce memory footprint by 70% and eliminate unpredictable GC pauses during high-volatility events.'
-                },
-                nats: {
-                    title: 'NATS: The Single Source of Truth',
-                    text: 'State no longer lives in a recursive loop stack. It lives in the stream. NATS JetStream provides native persistence, backpressure management, and instant state recovery via replayability.'
-                },
-                efficiency: {
-                    title: 'Cloud & Operational Cost',
-                    text: 'Binary portability and instant cold starts allow us to deploy on lightweight ARM instances. What required a cluster in Phase 1 now runs on a single edge node, significantly reducing overhead.'
-                },
-                terminal: {
-                    title: 'Wails & Native IPC',
-                    text: 'Unifying the engine and the UI layer in Go via Wails eliminated data serialization bottlenecks. The Nexus Terminal talks directly to the Go core with zero-latency IPC.'
-                }
-            },
-            conclusion: 'Clojure was our tool for discovery. Go is our tool for global scale.'
-        },
         section5: {
             title: 'READY FOR QUESTIONS',
             text: "Ready to discuss Architecture, Concurrency, or Strategy Implementation details."
         }
+    },
+    arkStreams: {
+        title: 'Ark Streams',
+        subtitle: 'Real-time trading intelligence. Every event durable. Every decision replayable.',
+        section1: {
+            title: 'The Problem',
+            text: 'Most trading tools are stateless: they poll an API, compute an indicator, and forget. Ark Streams publishes every candle, every indicator update, every signal as a durable NATS event — making the entire pipeline replayable from day one.',
+            cap1: 'Watch live strategy decisions form in real time, timeframe by timeframe',
+            cap2: 'Replay historical market sessions through the same engine that runs live',
+            cap3: 'Run grid searches over strategy parameters against stored data',
+            cap4: 'Observe macro context (WTI, DXY, SP500, IBOV) alongside crypto price action'
+        },
+        section2: {
+            title: 'NATS JetStream — The Backbone',
+            subtitle: 'Collectors // FractalEngine // Strategy // API',
+            intro: 'Every component is fully decoupled. Collectors publish raw candles. The FractalEngine enriches them with indicators. Strategies consume the enriched stream and emit signals. Nothing talks directly — everything flows through NATS subjects.',
+            part1: {
+                title: 'Data Ingestion',
+                intro: 'Bitget WebSocket (OHLCV, liquidations, private positions), Binance (funding rate, OI), Yahoo Finance REST — polling WTI, BRENT, SP500, DXY, IBOV, USDBRL every hour.'
+            },
+            part2: {
+                title: 'Processing Pipeline',
+                intro: 'FractalEngine runs one instance per symbol × timeframe. Publishes AnalyzedEvent to market.analyzed.* and writes the latest snapshot to KV: MARKET_STATE.'
+            },
+            part3: {
+                title: 'Persistent Streams',
+                intro: 'MARKET_DATA (7d) · SIGNALS (30d) · POSITIONS (30d) · STRATEGY (365d) · KV: MARKET_STATE + STRATEGY_STATE (last 50 transitions).'
+            }
+        },
+        section3: {
+            title: 'FractalEngine — The Analytical Core',
+            role: 'Bill Williams Indicator Suite',
+            subtitle: 'Raw Candle → Enriched AnalyzedEvent → market.analyzed.*',
+            subtitle2: 'One engine instance per symbol × timeframe. Warms up from REST history before subscribing to the live stream — indicators are fully converged before any strategy sees data.',
+            step1: { title: 'Collectors', what: 'Ingest raw OHLCV from Bitget, Binance, and Yahoo Finance.', parallel: '' },
+            step2: { title: 'FractalEngine', what: 'Compute the full Bill Williams suite. Publish AnalyzedEvent to NATS.', magic: '', parallel: '' },
+            step3: { title: 'Strategy', what: 'Subscribe to market.analyzed.*. Emit TradeSignal to signals.trade.*.', parallel: '' }
+        },
+        section4: {
+            title: 'AlligatorTrend — The Strategy',
+            subtitle: 'All 6 entry filters must pass simultaneously before a signal is emitted',
+            headers: ['FILTER', 'LONG', 'SHORT'],
+            rows: {
+                runtime: {
+                    fintech: { title: 'Alligator Transition', detail: 'Bias just turned Bullish' },
+                    healthcare: { title: 'Alligator Transition', detail: 'Bias just turned Bearish' }
+                },
+                messaging: {
+                    fintech: { title: 'Alligator Spread', detail: 'Jaw/teeth/lips spread > threshold' },
+                    healthcare: { title: 'Alligator Spread', detail: 'Same' }
+                },
+                ui: {
+                    fintech: { title: 'BB Squeeze Gate', detail: 'BB width > 50th pct (300 bars)' },
+                    healthcare: { title: 'BB Squeeze Gate', detail: 'Same' }
+                },
+                deployment: {
+                    fintech: { title: 'Awesome Oscillator', detail: 'AO > 0, accelerating (green bar)' },
+                    healthcare: { title: 'Awesome Oscillator', detail: 'AO < 0, accelerating (red bar)' }
+                }
+            },
+            closing: 'Exit: 2×ATR(14) TP/SL · Alligator trend reversal · Teeth touch (2-bar debounce) · PaperBroker with pyramiding, MFE/MAE, FixedFractionalRM'
+        },
+        section5: {
+            title: 'GROWTH PATH',
+            text: 'Symbol-agnostic by design — every new collector auto-feeds all downstream consumers via wildcard NATS subscriptions.'
+        },
+        footer: {
+            memory: 'Events: Durable',
+            latency: 'Latency: Ultra-Low',
+            stack: 'Stack: Go + NATS'
+        },
+        conclusion: 'Every candle matters.\nEvery signal survives.\nBuilt to scale.'
     }
 };
 
@@ -376,10 +424,10 @@ const pt = {
             description: 'Foco em corretude matemática, estruturas de dados imutáveis e desenvolvimento orientado a REPL. Provou a viabilidade da nossa lógica de estratégia baseada em Bill Williams.'
         },
         phase2: {
-            period: '2026 - Presente',
-            name: 'Fase 2: Escala Orientada a Eventos',
+            period: '2026 - Present',
+            name: 'Fase 2: Ecossistema Híbrido',
             tech: 'Go / NATS JetStream / Wails',
-            description: 'Transição para uma arquitetura de streaming de alta concorrência e baixa latência. Coletores, processadores e estratégias desacoplados através de um barramento de eventos persistente.'
+            description: 'Expansão para uma arquitetura híbrida de alta concorrência e baixa latência. Integração de Go para nós de borda em produção, mantendo Clojure para modelagem de estratégias, unificados por um barramento NATS persistente.'
         }
     },
     metrics: {
@@ -398,28 +446,76 @@ const pt = {
         location: 'Rio de Janeiro, BR // Operações Globais'
     },
     arkStreams: {
-        title: 'Ark Streams: Inteligência Reativa',
-        subtitle: 'A Evolução de Loops Funcionais para Streams Orientados a Eventos',
-        intro: 'Uma análise profunda de por que migramos nosso motor principal de Clojure para Go + NATS JetStream, e como isso redefiniu nossa eficiência operacional.',
-        sections: {
-            transition: {
-                title: 'A Mudança Arquitetural',
-                text: 'Embora o Clojure tenha fornecido corretude matemática via core.async, atingimos a "Taxa da JVM". Migrar para Go nos permitiu reduzir o consumo de memória em 70% e eliminar pausas imprevisíveis de GC durante eventos de alta volatilidade.'
+        title: 'Ark Streams',
+        subtitle: 'Inteligência de trading em tempo real. Todo evento durável. Toda decisão reproduzível.',
+        section1: {
+            title: 'O Problema',
+            text: 'A maioria das ferramentas de trading é stateless: consultam uma API, calculam um indicador e esquecem. O Ark Streams publica cada candle, cada atualização de indicador, cada sinal como um evento durável no NATS — tornando o pipeline inteiramente reproduzível desde o primeiro dia.',
+            cap1: 'Acompanhe decisões da estratégia se formando em tempo real, timeframe por timeframe',
+            cap2: 'Reproduza sessões históricas pelo mesmo engine que roda ao vivo',
+            cap3: 'Execute grid searches sobre parâmetros da estratégia contra dados armazenados',
+            cap4: 'Observe contexto macro (WTI, DXY, SP500, IBOV) ao lado do price action crypto'
+        },
+        section2: {
+            title: 'NATS JetStream — O Backbone',
+            subtitle: 'Collectors // FractalEngine // Strategy // API',
+            intro: 'Cada componente é totalmente desacoplado. Collectors publicam candles brutos. O FractalEngine os enriquece com indicadores. Estratégias consomem o stream enriquecido e emitem sinais. Nada se fala diretamente — tudo flui por subjects NATS.',
+            part1: {
+                title: 'Ingestão de Dados',
+                intro: 'Bitget WebSocket (OHLCV, liquidações, posições privadas), Binance (funding rate, OI), Yahoo Finance REST — polling de WTI, BRENT, SP500, DXY, IBOV, USDBRL a cada hora.'
             },
-            nats: {
-                title: 'NATS: A Única Fonte da Verdade',
-                text: 'O estado não vive mais em uma pilha de loop recursiva. Ele vive no stream. O NATS JetStream fornece persistência nativa, gerenciamento de contrapressão e recuperação instantânea de estado via replayability.'
+            part2: {
+                title: 'Pipeline de Processamento',
+                intro: 'FractalEngine roda uma instância por símbolo × timeframe. Publica AnalyzedEvent em market.analyzed.* e escreve o snapshot mais recente em KV: MARKET_STATE.'
             },
-            efficiency: {
-                title: 'Custo de Nuvem e Operacional',
-                text: 'A portabilidade de binários e os cold starts instantâneos nos permitem implantar em instâncias ARM leves. O que exigia um cluster na Fase 1 agora roda em um único nó de borda, reduzindo drasticamente o overhead.'
-            },
-            terminal: {
-                title: 'Wails e IPC Nativo',
-                text: 'Unificar o motor e a camada de UI em Go através do Wails eliminou gargalos de serialização de dados. O Nexus Terminal fala diretamente com o core em Go com IPC de latência zero.'
+            part3: {
+                title: 'Streams Persistentes',
+                intro: 'MARKET_DATA (7d) · SIGNALS (30d) · POSITIONS (30d) · STRATEGY (365d) · KV: MARKET_STATE + STRATEGY_STATE (últimas 50 transições).'
             }
         },
-        conclusion: 'Clojure foi nossa ferramenta de descoberta. Go é nossa ferramenta de escala global.'
+        section3: {
+            title: 'FractalEngine — O Núcleo Analítico',
+            role: 'Suite de Indicadores Bill Williams',
+            subtitle: 'Candle Bruto → AnalyzedEvent Enriquecido → market.analyzed.*',
+            subtitle2: 'Uma instância por símbolo × timeframe. Aquece via REST antes de assinar o stream ao vivo — indicadores totalmente convergidos antes de qualquer estratégia ver dados.',
+            step1: { title: 'Collectors', what: 'Ingestão de OHLCV bruto via Bitget, Binance e Yahoo Finance.', parallel: '' },
+            step2: { title: 'FractalEngine', what: 'Calcula a suite completa Bill Williams. Publica AnalyzedEvent no NATS.', magic: '', parallel: '' },
+            step3: { title: 'Strategy', what: 'Assina market.analyzed.*. Emite TradeSignal em signals.trade.*.', parallel: '' }
+        },
+        section4: {
+            title: 'AlligatorTrend — A Estratégia',
+            subtitle: 'Todos os 6 filtros de entrada devem passar simultaneamente antes de um sinal ser emitido',
+            headers: ['FILTRO', 'LONG', 'SHORT'],
+            rows: {
+                runtime: {
+                    fintech: { title: 'Transição Alligator', detail: 'Bias acabou de virar Bullish' },
+                    healthcare: { title: 'Transição Alligator', detail: 'Bias acabou de virar Bearish' }
+                },
+                messaging: {
+                    fintech: { title: 'Spread Alligator', detail: 'Jaw/teeth/lips spread > threshold' },
+                    healthcare: { title: 'Spread Alligator', detail: 'Mesmo' }
+                },
+                ui: {
+                    fintech: { title: 'BB Squeeze Gate', detail: 'Largura BB > percentil 50 (300 barras)' },
+                    healthcare: { title: 'BB Squeeze Gate', detail: 'Mesmo' }
+                },
+                deployment: {
+                    fintech: { title: 'Awesome Oscillator', detail: 'AO > 0, acelerando (barra verde)' },
+                    healthcare: { title: 'Awesome Oscillator', detail: 'AO < 0, acelerando (barra vermelha)' }
+                }
+            },
+            closing: 'Saída: 2×ATR(14) TP/SL · Reversão de tendência Alligator · Toque nos dentes (debounce 2 barras) · PaperBroker com pirâmide, MFE/MAE, FixedFractionalRM'
+        },
+        section5: {
+            title: 'PLANO DE CRESCIMENTO',
+            text: 'Agnóstico a símbolo por design — cada novo collector alimenta automaticamente todos os consumidores downstream via assinaturas wildcard no NATS.'
+        },
+        footer: {
+            memory: 'Eventos: Duráveis',
+            latency: 'Latência: Ultra-Baixa',
+            stack: 'Stack: Go + NATS'
+        },
+        conclusion: 'Todo candle importa.\nTodo sinal sobrevive.\nConstruído para escalar.'
     }
 };
 
