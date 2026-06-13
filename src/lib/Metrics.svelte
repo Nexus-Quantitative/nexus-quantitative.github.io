@@ -3,8 +3,9 @@
     import { onMount } from "svelte";
 
     let showLive = false;
-    let grafanaUrl = "";
-    let inputUrl = "";
+    let defaultUrl = "https://zestytarragon1335.grafana.net/public-dashboards/3f1e338bcdfd420ca595b79e8c32d640";
+    let grafanaUrl = defaultUrl;
+    let inputUrl = defaultUrl;
     let isEditing = false;
 
     onMount(() => {
@@ -34,8 +35,8 @@
 
     const resetUrl = () => {
         localStorage.removeItem("NEXUS_GRAFANA_URL");
-        grafanaUrl = "";
-        inputUrl = "";
+        grafanaUrl = defaultUrl;
+        inputUrl = defaultUrl;
         isEditing = true;
     };
 </script>
