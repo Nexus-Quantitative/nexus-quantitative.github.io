@@ -53,6 +53,8 @@
                         frameborder="0"
                         title="Grafana Live Metrics"
                         class="w-full bg-black"
+                        credentialless
+                        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                     ></iframe>
                 </div>
 
