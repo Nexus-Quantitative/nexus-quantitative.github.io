@@ -40,26 +40,21 @@ test.describe('Language Selector Accessibility Tests', () => {
     // Locate buttons by their visible text content first to ensure we find the correct element
     const enButton = page.getByRole('button').filter({ hasText: 'English' });
     const ptButton = page.getByRole('button').filter({ hasText: 'Português' });
-    const esButton = page.getByRole('button').filter({ hasText: 'Español' });
 
     // Wait for the buttons to be identifyingly visible
     await expect(enButton).toBeVisible();
     await expect(ptButton).toBeVisible();
-    await expect(esButton).toBeVisible();
 
     // Check if buttons have aria-label configured (which handles accessibility name)
     const enLabel = await enButton.getAttribute('aria-label');
     const ptLabel = await ptButton.getAttribute('aria-label');
-    const esLabel = await esButton.getAttribute('aria-label');
 
     expect(enLabel, 'The EN button should have aria-label').toBeTruthy();
     expect(ptLabel, 'The PT button should have aria-label').toBeTruthy();
-    expect(esLabel, 'The ES button should have aria-label').toBeTruthy();
 
     // Validate that the label actually contains the language name (ensuring translation worked)
     expect(enLabel).toContain('English');
     expect(ptLabel).toContain('Português');
-    expect(esLabel).toContain('Español');
   });
 
 
@@ -75,7 +70,7 @@ test.describe('Language Selector Accessibility Tests', () => {
     await ptButton.click();
 
     // Wait for text change - verify subtitle changes to Portuguese
-    // "Pesquisa Quantitativa Proprietária..."
+    // "Pesquisa Quantitativa..."
     const subtitle = page.getByRole('heading', { level: 2 });
     await expect(subtitle).toContainText('Pesquisa Quantitativa', { timeout: 10000 });
 
@@ -83,18 +78,6 @@ test.describe('Language Selector Accessibility Tests', () => {
     await a11y.expectValidHeadingStructure();
 
     // Check color contrast after change
-    await a11y.expectSufficientColorContrast(page.getByRole('heading', { level: 1 }));
-
-    // Click on the ES button
-    const esButton = page.getByRole('button', { name: /Español/i });
-    await esButton.click();
-
-    // Wait for text change - verify subtitle changes to Spanish
-    // "Investigación Cuantitativa Propietaria..."
-    await expect(subtitle).toContainText('Investigación Cuantitativa', { timeout: 10000 });
-
-    // Repeat checks
-    await a11y.expectValidHeadingStructure();
     await a11y.expectSufficientColorContrast(page.getByRole('heading', { level: 1 }));
   });
 

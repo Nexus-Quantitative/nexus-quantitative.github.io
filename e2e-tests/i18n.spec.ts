@@ -10,11 +10,9 @@ test.describe('Internationalization (i18n) Tests', () => {
     // Check if language buttons are present
     const enButton = page.getByRole('button', { name: 'English' });
     const ptButton = page.getByRole('button', { name: 'Português' });
-    const esButton = page.getByRole('button', { name: 'Español' });
 
     await expect(enButton).toBeVisible();
     await expect(ptButton).toBeVisible();
-    await expect(esButton).toBeVisible();
   });
 
   test('should allow changing the language', async ({ page }) => {
@@ -32,17 +30,16 @@ test.describe('Internationalization (i18n) Tests', () => {
     const subtitleAfterChange = await page.getByRole('heading', { level: 2 }).textContent();
     expect(subtitleAfterChange).not.toBe(initialSubtitle);
 
-    // Change to Spanish
-    const esButton = page.getByRole('button', { name: 'Español' });
-    await esButton.click();
+    // Change back to English
+    const enButton = page.getByRole('button', { name: 'English' });
+    await enButton.click();
 
     // Wait for the text to change
     await page.waitForTimeout(500);
 
     // Check if the subtitle has been updated again
     const subtitleAfterSecondChange = await page.getByRole('heading', { level: 2 }).textContent();
-    expect(subtitleAfterSecondChange).not.toBe(initialSubtitle);
-    expect(subtitleAfterSecondChange).not.toBe(subtitleAfterChange);
+    expect(subtitleAfterSecondChange).toBe(initialSubtitle);
   });
 
   test('should display texts corresponding to the selected language', async ({ page }) => {
@@ -55,18 +52,13 @@ test.describe('Internationalization (i18n) Tests', () => {
       pt: {
         title: 'NEXUS QUANT',
         subtitle: 'Pesquisa Quantitativa Proprietária e Sistemas de Decisão Automatizados.'
-      },
-      es: {
-        title: 'NEXUS QUANT',
-        subtitle: 'Investigación Cuantitativa Propietaria y Sistemas de Decisión Automatizados.'
       }
     };
 
     // Test each language
     const languages = [
       { code: 'en', button: page.getByRole('button', { name: 'English' }) },
-      { code: 'pt', button: page.getByRole('button', { name: 'Português' }) },
-      { code: 'es', button: page.getByRole('button', { name: 'Español' }) }
+      { code: 'pt', button: page.getByRole('button', { name: 'Português' }) }
     ];
 
     for (const lang of languages) {
