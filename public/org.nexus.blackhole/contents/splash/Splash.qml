@@ -153,7 +153,7 @@ Rectangle {
                 
                 // Add a glowing effect using standard Text properties
                 style: Text.Outline
-                styleColor: "rgba(0, 240, 255, 0.4)"
+                styleColor: "#6600f0ff"
             }
 
             Text {
