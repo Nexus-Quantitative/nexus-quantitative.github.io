@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { waitLocale, t } from "svelte-i18n";
+  import { t } from "svelte-i18n";
   import { onMount } from "svelte";
   import EventHorizonBackground from "./lib/EventHorizonBackground.svelte";
   import Hero from "./lib/Hero.svelte";
@@ -13,10 +13,6 @@
   import ArkStreamsPresentation from "./lib/ArkStreamsPresentation.svelte";
   import OperationalReport from "./lib/OperationalReport.svelte";
 
-  // Called once — storing the promise prevents Svelte from re-calling it when
-  // $locale changes, which would briefly unmount <main> on every language switch.
-  const localeReady = waitLocale();
-
   let hash = window.location.hash;
 
   onMount(() => {
@@ -26,37 +22,29 @@
   });
 </script>
 
-{#await localeReady}
-  <div class="bg-black min-h-screen flex items-center justify-center">
-    <div class="animate-pulse text-accent font-mono">
-      {$t("common.loading")}
-    </div>
-  </div>
-{:then}
-  <main
-    class="bg-black min-h-screen text-white selection:bg-[#00FF94] selection:text-black overflow-hidden relative"
-  >
-    <!-- Global Three.js Background -->
-    <EventHorizonBackground />
+<main
+  class="bg-black min-h-screen text-white selection:bg-[#00FF94] selection:text-black overflow-hidden relative"
+>
+  <!-- Global Three.js Background -->
+  <EventHorizonBackground />
 
-    <AudioPlayer />
+  <AudioPlayer />
 
-    {#if hash === "#/presentation"}
-      <Presentation />
-    {:else if hash === "#/ark-streams"}
-      <ArkStreamsPresentation />
-    {:else if hash === "#/relatorios"}
-      <OperationalReport />
-    {:else}
-      <Hero />
-      <Philosophy />
-      <Stack />
-      <Evolution />
-      <Metrics />
-      <Footer />
-    {/if}
-  </main>
-{/await}
+  {#if hash === "#/presentation"}
+    <Presentation />
+  {:else if hash === "#/ark-streams"}
+    <ArkStreamsPresentation />
+  {:else if hash === "#/relatorios"}
+    <OperationalReport />
+  {:else}
+    <Hero />
+    <Philosophy />
+    <Stack />
+    <Evolution />
+    <Metrics />
+    <Footer />
+  {/if}
+</main>
 
 <style>
   :global(html) {
