@@ -21,12 +21,46 @@
   <meta property="og:type" content="website" />
   
   <style>
-    /* Prevent initial white page flash (FOUC) and set baseline background/color */
+    /* Critical CSS to render typography, theme colors, and gradients instantly on first paint */
+    :root {
+      --color-void-black: #000000;
+      --color-deep-abyss: #050508;
+      --color-quantum-cyan: #00F0FF;
+      --color-electric-blue: #4CC9F0;
+      --color-synth-violet: #7209B7;
+      --color-magenta-neon: #F72585;
+      --color-starlight-white: #FFFFFF;
+
+      --color-bg-primary: var(--color-void-black);
+      --color-text-primary: var(--color-starlight-white);
+      --color-text-secondary: var(--color-electric-blue);
+      --color-accent: var(--color-quantum-cyan);
+
+      --font-mono: "JetBrains Mono", monospace;
+      --font-body: "Inter", sans-serif;
+    }
+
     html, body {
-      background-color: #000000;
-      color: #ffffff;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-body);
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6, .font-mono {
+      font-family: var(--font-mono);
+    }
+
+    /* Style the main typography gradient immediately */
+    .text-gradient-nexus {
+      background: linear-gradient(to right, var(--color-synth-violet), var(--color-magenta-neon), var(--color-quantum-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
     }
   </style>
 
