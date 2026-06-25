@@ -33,3 +33,8 @@ Desktop.ini
 # Test reports
 playwright-report/
 test-results/
+
+# Local env (never commit)
+.env
+.env.local
+.env.*.local

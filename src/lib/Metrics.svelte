@@ -1,84 +1,52 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
 
-  // ── Config ─────────────────────────────────────────────────────────────────
-  let apiUrl = "";
-  let apiToken = "";
-  let isConfiguring = true;
-  let inputUrl = "";
-  let inputToken = "";
+  const API_URL: string = import.meta.env.VITE_ARK_API_URL ?? "";
+  const API_KEY: string = import.meta.env.VITE_ARK_API_KEY ?? "";
+  const enabled = !!API_URL;
 
-  // ── Health ─────────────────────────────────────────────────────────────────
-  let health: { status: string } | null = null;
+  // ── BTC ticker ─────────────────────────────────────────────────────────────
+  let btcPrice = 0;
+  let btcOI = 0;
+  let btcFunding = 0;
+  let btcNextFunding = 0;
+  let btcUpdatedAt = 0;
 
-  // ── Collector streams ──────────────────────────────────────────────────────
-  type CollectorStatus = { stream: string; status: string; exchange: string; ts: number };
-  let collectorStatuses: Record<string, CollectorStatus> = {};
+  // ── System health ──────────────────────────────────────────────────────────
+  let natsOk: boolean | null = null;
+  let streamsOnline = 0;
+  let streamsTotal = 0;
 
-  // ── Confluence ─────────────────────────────────────────────────────────────
-  type ConfluenceRow = { symbol: string; timeframes: Record<string, string> };
-  let confluence: ConfluenceRow[] = [];
+  // ── Recent BTC liquidations ────────────────────────────────────────────────
+  type Liq = { side: string; usd_value: number; price: number; ts: number };
+  let recentLiqs: Liq[] = [];
 
-  // ── Strategy FSM ───────────────────────────────────────────────────────────
-  type StrategyState = { ts: number; symbol: string; tf: string; strategy: string; to_state: string; trigger: string; price: number };
-  let strategyStates: Record<string, StrategyState> = {};
-
-  // ── Market status ──────────────────────────────────────────────────────────
-  type TickerData = { symbol: string; mark: number; oi: number; funding: number; next_funding: number; ts: number };
-  let marketStatus: Record<string, TickerData> = {};
-
-  // ── Liquidations ───────────────────────────────────────────────────────────
-  type LiqEvent = { symbol: string; side: string; price: number; usd_value: number; ts: number };
-  let liquidations: LiqEvent[] = [];
-
-  // ── Connection management ──────────────────────────────────────────────────
+  // ── Connection internals ───────────────────────────────────────────────────
   let openSockets: WebSocket[] = [];
   let reconnectTimers: ReturnType<typeof setTimeout>[] = [];
-  let pollTimers: ReturnType<typeof setInterval>[] = [];
+  let healthTimer: ReturnType<typeof setInterval>;
   let destroyed = false;
 
-  const TFS = ["1w", "1d", "4h", "1h", "15m", "5m", "1m"];
-  const MAX_LIQS = 40;
-
-  function wsBase(url: string): string {
+  function wsBase(url: string) {
     return url.replace(/^https/, "wss").replace(/^http/, "ws");
   }
 
-  function authHeaders(): HeadersInit {
-    return apiToken ? { Authorization: `Bearer ${apiToken}` } : {};
-  }
-
-  // ── REST polling ───────────────────────────────────────────────────────────
   async function fetchHealth() {
     try {
-      const r = await fetch(`${apiUrl}/api/health`, { headers: authHeaders() });
-      health = await r.json();
+      const r = await fetch(`${API_URL}/api/health`, {
+        headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
+      });
+      const d = await r.json();
+      natsOk = d.status === "ok";
     } catch {
-      health = null;
+      natsOk = false;
     }
   }
 
-  async function fetchConfluence() {
-    try {
-      const r = await fetch(`${apiUrl}/api/confluence`, { headers: authHeaders() });
-      const data = await r.json();
-      if (Array.isArray(data)) confluence = data;
-    } catch {}
-  }
-
-  async function fetchStrategy() {
-    try {
-      const r = await fetch(`${apiUrl}/api/strategy/state`, { headers: authHeaders() });
-      const data = await r.json();
-      if (data && typeof data === "object") strategyStates = data;
-    } catch {}
-  }
-
-  // ── WebSocket ──────────────────────────────────────────────────────────────
-  function connectWs(path: string, onMsg: (data: unknown) => void) {
-    if (destroyed) return;
-    const q = apiToken ? `?token=${encodeURIComponent(apiToken)}` : "";
-    const ws = new WebSocket(`${wsBase(apiUrl)}${path}${q}`);
+  function connectWs(path: string, onMsg: (d: unknown) => void) {
+    if (destroyed || !API_URL) return;
+    const q = API_KEY ? `?token=${encodeURIComponent(API_KEY)}` : "";
+    const ws = new WebSocket(`${wsBase(API_URL)}${path}${q}`);
     openSockets.push(ws);
     ws.onmessage = (e) => {
       try { onMsg(JSON.parse(e.data)); } catch {}
@@ -92,101 +60,59 @@
     };
   }
 
-  function startConnections() {
-    connectWs("/ws/status", (raw) => {
-      const ev = raw as CollectorStatus;
-      if (ev.stream) {
-        collectorStatuses = { ...collectorStatuses, [ev.stream]: { ...ev, ts: Date.now() } };
+  onMount(() => {
+    if (!enabled) return;
+
+    connectWs("/ws/market_status", (raw) => {
+      const ev = raw as { symbol: string; mark: number; oi: number; funding: number; next_funding: number };
+      if (ev.symbol === "BTCUSDT") {
+        btcPrice = ev.mark ?? 0;
+        btcOI = ev.oi ?? 0;
+        btcFunding = ev.funding ?? 0;
+        btcNextFunding = ev.next_funding ?? 0;
+        btcUpdatedAt = Date.now();
       }
     });
 
-    connectWs("/ws/market_status", (raw) => {
-      const ev = raw as TickerData;
-      if (ev.symbol) marketStatus = { ...marketStatus, [ev.symbol]: ev };
+    connectWs("/ws/status", (raw) => {
+      const ev = raw as { status: string };
+      streamsTotal = Math.max(streamsTotal, streamsOnline + 1);
+      if (ev.status === "connected") streamsOnline++;
+      else if (ev.status === "disconnected") streamsOnline = Math.max(0, streamsOnline - 1);
     });
 
     connectWs("/ws/liquidations", (raw) => {
-      const ev = raw as LiqEvent;
-      if (ev.symbol) liquidations = [ev, ...liquidations].slice(0, MAX_LIQS);
+      const ev = raw as Liq & { symbol: string };
+      if (ev.symbol?.startsWith("BTC")) {
+        recentLiqs = [ev, ...recentLiqs].slice(0, 6);
+      }
     });
 
-    pollTimers.push(setInterval(fetchHealth, 30_000));
-    pollTimers.push(setInterval(fetchConfluence, 60_000));
-    pollTimers.push(setInterval(fetchStrategy, 30_000));
-
     fetchHealth();
-    fetchConfluence();
-    fetchStrategy();
-  }
-
-  function stopConnections() {
-    destroyed = true;
-    openSockets.forEach((ws) => ws.close());
-    openSockets = [];
-    reconnectTimers.forEach(clearTimeout);
-    reconnectTimers = [];
-    pollTimers.forEach(clearInterval);
-    pollTimers = [];
-  }
-
-  // ── Config actions ─────────────────────────────────────────────────────────
-  function saveConfig() {
-    const url = inputUrl.trim().replace(/\/$/, "");
-    if (!url) return;
-    localStorage.setItem("ARK_API_URL", url);
-    localStorage.setItem("ARK_API_TOKEN", inputToken.trim());
-    apiUrl = url;
-    apiToken = inputToken.trim();
-    isConfiguring = false;
-    startConnections();
-  }
-
-  function disconnect() {
-    stopConnections();
-    localStorage.removeItem("ARK_API_URL");
-    localStorage.removeItem("ARK_API_TOKEN");
-    health = null;
-    confluence = [];
-    strategyStates = {};
-    marketStatus = {};
-    liquidations = [];
-    collectorStatuses = {};
-    destroyed = false;
-    isConfiguring = true;
-  }
-
-  onMount(() => {
-    const savedUrl = localStorage.getItem("ARK_API_URL");
-    const savedToken = localStorage.getItem("ARK_API_TOKEN") ?? "";
-    if (savedUrl) {
-      apiUrl = savedUrl;
-      apiToken = savedToken;
-      inputUrl = savedUrl;
-      inputToken = savedToken;
-      isConfiguring = false;
-      startConnections();
-    }
+    healthTimer = setInterval(fetchHealth, 30_000);
   });
 
-  onDestroy(stopConnections);
+  onDestroy(() => {
+    destroyed = true;
+    openSockets.forEach((ws) => ws.close());
+    reconnectTimers.forEach(clearTimeout);
+    clearInterval(healthTimer);
+  });
 
-  // ── Display helpers ────────────────────────────────────────────────────────
-  function trendColor(t: string): string {
-    if (t === "BULLISH") return "text-emerald-400";
-    if (t === "BEARISH") return "text-rose-400";
-    return "text-white/20";
+  // ── Formatters ─────────────────────────────────────────────────────────────
+  function fmtPrice(p: number): string {
+    return p.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
-  function trendGlyph(t: string): string {
-    if (t === "BULLISH") return "▲";
-    if (t === "BEARISH") return "▼";
-    return "·";
+  function fmtFunding(r: number): string {
+    const pct = r * 100;
+    return `${pct >= 0 ? "+" : ""}${pct.toFixed(4)}%`;
   }
 
-  function streamDotColor(s: string): string {
-    if (s === "connected") return "bg-emerald-400 animate-pulse";
-    if (s === "disconnected") return "bg-rose-400";
-    return "bg-amber-400 animate-pulse";
+  function fmtOI(v: number): string {
+    if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(2)}M`;
+    if (v >= 1_000) return `${(v / 1_000).toFixed(0)}K`;
+    return v.toFixed(0);
   }
 
   function fmtUSD(v: number): string {
@@ -195,267 +121,127 @@
     return `$${v.toFixed(0)}`;
   }
 
-  function fmtFunding(r: number): string {
-    return `${(r * 100).toFixed(4)}%`;
+  function fmtNextFunding(ms: number): string {
+    if (!ms) return "—";
+    const diff = ms - Date.now();
+    if (diff <= 0) return "now";
+    const h = Math.floor(diff / 3_600_000);
+    const m = Math.floor((diff % 3_600_000) / 60_000);
+    return h > 0 ? `${h}h ${m}m` : `${m}m`;
   }
 
-  function fmtPrice(p: number): string {
-    if (p >= 1000) return p.toLocaleString("en-US", { maximumFractionDigits: 2 });
-    if (p >= 1) return p.toFixed(4);
-    return p.toFixed(6);
-  }
-
-  function timeAgo(ms: number): string {
-    const s = Math.floor((Date.now() - ms) / 1000);
-    if (s < 60) return `${s}s`;
-    return `${Math.floor(s / 60)}m`;
-  }
-
-  $: sortedStreams = Object.values(collectorStatuses).sort((a, b) =>
-    a.stream.localeCompare(b.stream)
-  );
-
-  $: sortedTickers = Object.values(marketStatus).sort((a, b) =>
-    a.symbol.localeCompare(b.symbol)
-  );
-
-  $: sortedStrategies = Object.entries(strategyStates).sort(([a], [b]) =>
-    a.localeCompare(b)
-  );
-
-  $: hasData =
-    sortedStreams.length > 0 ||
-    confluence.length > 0 ||
-    sortedTickers.length > 0 ||
-    liquidations.length > 0;
+  $: fundingPositive = btcFunding > 0;
+  $: fresh = btcUpdatedAt > 0 && Date.now() - btcUpdatedAt < 60_000;
 </script>
 
+{#if enabled}
 <section id="metrics" class="py-24 px-4 bg-transparent">
-  <div class="max-w-6xl mx-auto w-full relative z-10">
+  <div class="max-w-4xl mx-auto w-full relative z-10">
 
-    {#if isConfiguring}
-      <!-- ── Config form ────────────────────────────────────────────────────── -->
-      <div class="border border-white/20 p-6 md:p-8 bg-black/95 backdrop-blur-md shadow-2xl rounded-sm max-w-2xl mx-auto">
-        <h4 class="font-mono text-accent text-sm mb-4 tracking-widest text-center border-b border-white/10 pb-3">
-          :: CONECTAR ARK STREAMS ::
-        </h4>
-
-        <form on:submit|preventDefault={saveConfig} class="space-y-4 font-mono">
-          <div>
-            <label for="ark-url" class="block text-[10px] text-white/40 uppercase tracking-wider mb-2">
-              API URL
-            </label>
-            <input
-              id="ark-url"
-              type="url"
-              bind:value={inputUrl}
-              placeholder="https://api.nexusquant.com"
-              required
-              class="w-full bg-black/90 border border-white/20 text-accent font-mono p-3 focus:outline-none focus:border-accent focus:shadow-[0_0_10px_rgba(0,240,255,0.4)] transition-all duration-300 text-xs"
-            />
-          </div>
-          <div>
-            <label for="ark-token" class="block text-[10px] text-white/40 uppercase tracking-wider mb-2">
-              ARK_API_KEY
-            </label>
-            <input
-              id="ark-token"
-              type="password"
-              bind:value={inputToken}
-              placeholder="Bearer token"
-              class="w-full bg-black/90 border border-white/20 text-white/60 font-mono p-3 focus:outline-none focus:border-accent transition-all duration-300 text-xs"
-            />
-          </div>
-          <button
-            type="submit"
-            class="group relative w-full px-6 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-accent hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 cursor-pointer"
-          >
-            <div class="absolute inset-0 w-0 bg-accent/10 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-            <span class="relative text-xs text-white group-hover:text-accent tracking-wider font-bold">
-              [ CONECTAR ]
-            </span>
-          </button>
-        </form>
+    <!-- Section label -->
+    <div class="font-mono text-[10px] text-white/20 tracking-[0.3em] uppercase mb-8 flex items-center gap-3">
+      <span>:: LIVE TELEMETRY</span>
+      <div class="flex-1 h-px bg-white/5"></div>
+      <div class="flex items-center gap-1.5">
+        <div class="w-1 h-1 rounded-full {natsOk === true ? 'bg-emerald-400 animate-pulse' : natsOk === false ? 'bg-rose-400' : 'bg-white/20'}"></div>
+        <span class="{natsOk === true ? 'text-emerald-400/60' : natsOk === false ? 'text-rose-400/60' : 'text-white/20'}">
+          {natsOk === true ? "CONNECTED" : natsOk === false ? "OFFLINE" : "…"}
+        </span>
       </div>
+    </div>
 
-    {:else}
-      <!-- ── Dashboard ──────────────────────────────────────────────────────── -->
-      <div class="flex items-center justify-between mb-8 flex-wrap gap-3">
-        <div class="font-mono text-[10px] text-white/30 tracking-widest uppercase">
-          :: ARK STREAMS · LIVE TELEMETRY ::
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+      <!-- BTC Price -->
+      <div class="md:col-span-2 border border-accent/20 bg-black/80 p-5 rounded-sm shadow-[0_0_20px_rgba(0,240,255,0.06)]">
+        <div class="flex items-start justify-between mb-4">
+          <div>
+            <div class="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-1">BTC / USDT · PERPETUAL</div>
+            {#if btcPrice > 0}
+              <div class="font-mono font-bold text-white tracking-tight" style="font-size: clamp(1.8rem, 4vw, 2.6rem)">
+                ${fmtPrice(btcPrice)}
+              </div>
+            {:else}
+              <div class="font-mono text-white/10 text-4xl">——————</div>
+            {/if}
+          </div>
+          <div class="flex items-center gap-1.5 pt-1">
+            <div class="w-1.5 h-1.5 rounded-full {fresh ? 'bg-accent animate-pulse' : 'bg-white/10'}"></div>
+            <span class="font-mono text-[9px] text-white/20 tracking-widest">LIVE</span>
+          </div>
         </div>
-        <div class="flex items-center gap-4">
-          {#if health}
-            <div class="flex items-center gap-1.5">
-              <div class="w-1.5 h-1.5 rounded-full {health.status === 'ok' ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}"></div>
-              <span class="font-mono text-[10px] {health.status === 'ok' ? 'text-emerald-400' : 'text-rose-400'} tracking-widest">
-                NATS {health.status?.toUpperCase()}
-              </span>
+
+        <div class="grid grid-cols-3 gap-3 border-t border-white/5 pt-4">
+          <div>
+            <div class="font-mono text-[9px] text-white/25 uppercase tracking-widest mb-1">Open Interest</div>
+            <div class="font-mono text-xs text-white/70">{btcOI > 0 ? fmtOI(btcOI) : "—"}</div>
+          </div>
+          <div>
+            <div class="font-mono text-[9px] text-white/25 uppercase tracking-widest mb-1">Funding Rate</div>
+            <div class="font-mono text-xs {btcFunding !== 0 ? (fundingPositive ? 'text-rose-400' : 'text-emerald-400') : 'text-white/40'}">
+              {btcFunding !== 0 ? fmtFunding(btcFunding) : "—"}
             </div>
-          {/if}
-          <button
-            on:click={() => (isConfiguring = true)}
-            class="font-mono text-[10px] text-white/20 hover:text-white/50 transition-colors"
-          >
-            [ EDITAR ]
-          </button>
-          <button
-            on:click={disconnect}
-            class="font-mono text-[10px] text-white/20 hover:text-rose-400/50 transition-colors"
-          >
-            [ DESCONECTAR ]
-          </button>
+          </div>
+          <div>
+            <div class="font-mono text-[9px] text-white/25 uppercase tracking-widest mb-1">Next Funding</div>
+            <div class="font-mono text-xs text-white/50">{fmtNextFunding(btcNextFunding)}</div>
+          </div>
         </div>
       </div>
 
-      <div class="space-y-4">
+      <!-- System Status -->
+      <div class="border border-white/10 bg-black/60 p-5 rounded-sm flex flex-col gap-4">
+        <div class="font-mono text-[10px] text-white/30 tracking-widest uppercase">SYSTEM</div>
 
-        <!-- 1. Collector Streams -->
-        {#if sortedStreams.length > 0}
-          <div class="border border-white/10 bg-black/60 p-4 rounded-sm">
-            <div class="text-[10px] text-white/30 tracking-widest uppercase mb-3">COLETORES</div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-2 gap-x-3">
-              {#each sortedStreams as c}
-                <div class="flex items-center gap-2 min-w-0">
-                  <div class="w-1.5 h-1.5 rounded-full flex-shrink-0 {streamDotColor(c.status)}"></div>
-                  <span class="font-mono text-[10px] text-white/50 truncate" title="{c.stream} ({c.exchange})">
-                    {c.stream}
-                  </span>
-                </div>
-              {/each}
-            </div>
-          </div>
-        {/if}
-
-        <!-- 2. Market Status (OI + Funding) -->
-        {#if sortedTickers.length > 0}
-          <div class="border border-white/10 bg-black/60 p-4 rounded-sm">
-            <div class="text-[10px] text-white/30 tracking-widest uppercase mb-3">MARKET STATUS</div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {#each sortedTickers as tick}
-                <div class="border border-white/5 bg-black/40 p-3 rounded-sm font-mono">
-                  <div class="flex justify-between items-baseline mb-2">
-                    <span class="text-xs text-white font-bold">{tick.symbol}</span>
-                    <span class="text-xs text-accent">${fmtPrice(tick.mark ?? 0)}</span>
-                  </div>
-                  <div class="grid grid-cols-2 gap-x-3 text-[10px]">
-                    <div>
-                      <span class="text-white/30 uppercase tracking-wider">OI </span>
-                      <span class="text-white/60">{(tick.oi ?? 0).toLocaleString("en-US", { maximumFractionDigits: 0 })}</span>
-                    </div>
-                    <div>
-                      <span class="text-white/30 uppercase tracking-wider">Funding </span>
-                      <span class="{(tick.funding ?? 0) > 0 ? 'text-rose-400' : 'text-emerald-400'}">
-                        {fmtFunding(tick.funding ?? 0)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              {/each}
-            </div>
-          </div>
-        {/if}
-
-        <!-- 3. Confluence Grid -->
-        {#if confluence.length > 0}
-          <div class="border border-white/10 bg-black/60 p-4 rounded-sm overflow-x-auto">
-            <div class="text-[10px] text-white/30 tracking-widest uppercase mb-3">
-              CONFLUÊNCIA · ALLIGATOR TREND
-            </div>
-            <table class="w-full font-mono min-w-[480px]">
-              <thead>
-                <tr>
-                  <th class="text-left text-[10px] text-white/20 tracking-widest pb-2 pr-4">SYMBOL</th>
-                  {#each TFS as tf}
-                    <th class="text-center text-[10px] text-white/20 tracking-widest pb-2 px-2 w-12">{tf}</th>
-                  {/each}
-                </tr>
-              </thead>
-              <tbody>
-                {#each confluence as row}
-                  <tr class="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
-                    <td class="py-2 pr-4 text-xs text-white/60 font-bold">{row.symbol}</td>
-                    {#each TFS as tf}
-                      {@const trend = row.timeframes[tf]}
-                      <td class="text-center py-2 px-2 text-xs font-bold {trendColor(trend ?? '')}">
-                        {trend ? trendGlyph(trend) : "—"}
-                      </td>
-                    {/each}
-                  </tr>
-                {/each}
-              </tbody>
-            </table>
-            <div class="flex gap-5 mt-3 font-mono text-[10px] text-white/30">
-              <span><span class="text-emerald-400">▲</span> BULLISH</span>
-              <span><span class="text-rose-400">▼</span> BEARISH</span>
-              <span><span class="text-white/20">·</span> SLEEPING</span>
-            </div>
-          </div>
-        {/if}
-
-        <!-- 4. Strategy FSM States -->
-        {#if sortedStrategies.length > 0}
-          <div class="border border-white/10 bg-black/60 p-4 rounded-sm">
-            <div class="text-[10px] text-white/30 tracking-widest uppercase mb-3">STRATEGY FSM</div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-              {#each sortedStrategies as [, ev]}
-                <div class="border border-white/5 bg-black/40 p-3 rounded-sm font-mono">
-                  <div class="flex justify-between items-center mb-1">
-                    <span class="text-[10px] text-white/40">{ev.symbol}/{ev.tf}</span>
-                    <span class="text-[10px] text-accent font-bold tracking-wider">{ev.to_state}</span>
-                  </div>
-                  <div class="text-[10px] text-white/30">
-                    {ev.trigger ?? "—"}
-                    {#if ev.price}
-                      <span class="text-white/20"> · ${fmtPrice(ev.price)}</span>
-                    {/if}
-                  </div>
-                </div>
-              {/each}
-            </div>
-          </div>
-        {/if}
-
-        <!-- 5. Live Liquidation Feed -->
-        {#if liquidations.length > 0}
-          <div class="border border-white/10 bg-black/60 p-4 rounded-sm">
-            <div class="text-[10px] text-white/30 tracking-widest uppercase mb-3">
-              LIQUIDAÇÕES · LIVE
-            </div>
-            <div class="space-y-0.5 max-h-56 overflow-y-auto">
-              {#each liquidations as liq}
-                <div class="flex items-center gap-3 font-mono text-[10px] py-1 border-b border-white/[0.04]">
-                  <span class="w-3 flex-shrink-0 {liq.side === 'buy' || liq.side === 'BUY' ? 'text-rose-400' : 'text-emerald-400'}">
-                    {liq.side === "buy" || liq.side === "BUY" ? "▼" : "▲"}
-                  </span>
-                  <span class="text-white/50 w-20 flex-shrink-0">{liq.symbol}</span>
-                  <span class="text-white font-bold">{fmtUSD(liq.usd_value ?? 0)}</span>
-                  <span class="text-white/30">@ ${fmtPrice(liq.price ?? 0)}</span>
-                  <span class="text-white/20 ml-auto flex-shrink-0">{timeAgo(liq.ts)}</span>
-                </div>
-              {/each}
-            </div>
-          </div>
-        {/if}
-
-        <!-- Loading state -->
-        {#if !hasData}
-          <div class="flex flex-col items-center justify-center py-20 gap-4">
-            <div class="flex gap-1">
-              {#each Array(3) as _, i}
-                <div
-                  class="w-1.5 h-1.5 rounded-full bg-accent/50 animate-pulse"
-                  style="animation-delay: {i * 200}ms"
-                ></div>
-              {/each}
-            </div>
-            <span class="font-mono text-[10px] text-white/20 tracking-widest">
-              CONECTANDO AOS STREAMS...
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] text-white/40">NATS</span>
+            <span class="font-mono text-[10px] font-bold {natsOk === true ? 'text-emerald-400' : natsOk === false ? 'text-rose-400' : 'text-white/20'}">
+              {natsOk === true ? "OK" : natsOk === false ? "FAIL" : "—"}
             </span>
           </div>
-        {/if}
 
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] text-white/40">STREAMS</span>
+            <span class="font-mono text-[10px] text-white/60">
+              {streamsOnline > 0 ? streamsOnline : "—"}
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] text-white/40">ENGINE</span>
+            <span class="font-mono text-[10px] {natsOk === true ? 'text-emerald-400' : 'text-white/20'}">
+              {natsOk === true ? "RUNNING" : "—"}
+            </span>
+          </div>
+        </div>
+
+        <!-- Subtle data freshness bar -->
+        {#if btcUpdatedAt > 0}
+          <div class="mt-auto border-t border-white/5 pt-3">
+            <div class="font-mono text-[9px] text-white/15 tracking-wider">
+              ark-streams · bitget
+            </div>
+          </div>
+        {/if}
+      </div>
+
+    </div>
+
+    <!-- BTC Liquidations feed -->
+    {#if recentLiqs.length > 0}
+      <div class="mt-3 border border-white/5 bg-black/40 rounded-sm px-4 py-3">
+        <div class="font-mono text-[9px] text-white/20 tracking-widest uppercase mb-2">BTC LIQUIDAÇÕES RECENTES</div>
+        <div class="flex flex-wrap gap-x-4 gap-y-1">
+          {#each recentLiqs as liq}
+            <span class="font-mono text-[10px] {liq.side === 'buy' || liq.side === 'BUY' ? 'text-rose-400/70' : 'text-emerald-400/70'}">
+              {liq.side === "buy" || liq.side === "BUY" ? "▼" : "▲"} {fmtUSD(liq.usd_value)}
+            </span>
+          {/each}
+        </div>
       </div>
     {/if}
+
   </div>
 </section>
+{/if}

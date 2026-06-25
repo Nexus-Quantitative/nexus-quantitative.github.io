@@ -45,6 +45,9 @@ jobs:
         run: npm run e2e
         
       - name: Build application
+        env:
+          VITE_ARK_API_URL: ${{ secrets.VITE_ARK_API_URL }}
+          VITE_ARK_API_KEY: ${{ secrets.VITE_ARK_API_KEY }}
         run: npm run build
         
       - name: Setup Pages
