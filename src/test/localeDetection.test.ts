@@ -18,13 +18,13 @@ describe('detectBestLocale', () => {
     it('should ignore localStorage if not supported', () => {
         localStorage.setItem('preferred-locale', 'fr'); // fr not supported
         // navigator fallback to verify we skip the invalid local storage
-        Object.defineProperty(window.navigator, 'languages', { value: ['es'], configurable: true });
-        expect(detectBestLocale()).toBe('es');
+        Object.defineProperty(window.navigator, 'languages', { value: ['pt'], configurable: true });
+        expect(detectBestLocale()).toBe('pt');
     });
 
     it('should use navigator.languages exact match', () => {
-        Object.defineProperty(window.navigator, 'languages', { value: ['ru'], configurable: true });
-        expect(detectBestLocale()).toBe('ru');
+        Object.defineProperty(window.navigator, 'languages', { value: ['pt'], configurable: true });
+        expect(detectBestLocale()).toBe('pt');
     });
 
     it('should use navigator.languages prefix match (e.g. pt-BR -> pt)', () => {
@@ -38,20 +38,20 @@ describe('detectBestLocale', () => {
     });
 
     it('should handle complex prioritization (stored > exact nav > prefix nav)', () => {
-        // Scenario: User prefers 'de' (stored), browser is 'pt-BR', exact browser is 'ru' (unlikely scenario but tests priority)
+        // Scenario: User prefers 'en' (stored), browser is 'pt-BR', exact browser is 'pt'
 
         // Case 1: Stored wins
-        localStorage.setItem('preferred-locale', 'de');
+        localStorage.setItem('preferred-locale', 'en');
         Object.defineProperty(window.navigator, 'languages', { value: ['pt-BR'], configurable: true });
-        expect(detectBestLocale()).toBe('de');
+        expect(detectBestLocale()).toBe('en');
 
         // Case 2: No stored, exact browser wins
         localStorage.removeItem('preferred-locale');
-        Object.defineProperty(window.navigator, 'languages', { value: ['zh', 'en'], configurable: true });
-        expect(detectBestLocale()).toBe('zh');
+        Object.defineProperty(window.navigator, 'languages', { value: ['pt', 'en'], configurable: true });
+        expect(detectBestLocale()).toBe('pt');
 
         // Case 3: No stored, no exact, prefix wins
-        Object.defineProperty(window.navigator, 'languages', { value: ['uk-UA'], configurable: true });
-        expect(detectBestLocale()).toBe('uk');
+        Object.defineProperty(window.navigator, 'languages', { value: ['pt-BR'], configurable: true });
+        expect(detectBestLocale()).toBe('pt');
     });
 });

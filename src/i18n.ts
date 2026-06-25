@@ -781,7 +781,7 @@ addMessages('ja', ja);
 addMessages('de', de);
 
 
-const supportedLocales = ['en', 'pt', 'es', 'ru', 'uk', 'zh', 'ja', 'de'];
+const supportedLocales = ['en', 'pt'];
 
 export function detectBestLocale(): string {
     if (typeof window === 'undefined') return 'en';

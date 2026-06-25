@@ -4,12 +4,6 @@
     const allLanguages = [
         { code: "en", name: "English" },
         { code: "pt", name: "Português" },
-        { code: "es", name: "Español" },
-        { code: "ru", name: "Русский" },
-        { code: "uk", name: "Українська" },
-        { code: "zh", name: "中文" },
-        { code: "ja", name: "日本語" },
-        { code: "de", name: "Deutsch" },
     ];
 
     /** When provided, only these language codes are shown. */
