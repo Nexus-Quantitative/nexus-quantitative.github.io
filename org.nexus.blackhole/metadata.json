@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            { "Name": "Nexus Quant Team", "Email": "contact@nexusquant.com" }
+        ],
+        "Category": "Plasma Look And Feel",
+        "Description": "Animated event horizon spacetime undulations splash screen matching the Nexus Quant visual identity",
+        "Id": "org.nexus.blackhole",
+        "License": "MIT",
+        "Name": "Nexus Quant Event Horizon",
+        "Version": "1.0"
+    }
+}
