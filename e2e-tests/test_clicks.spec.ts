@@ -4,8 +4,8 @@ test('verify timeframe switches on speedometer', async ({ page }) => {
   page.on('console', msg => console.log('BROWSER CONSOLE:', msg.text()));
   page.on('pageerror', err => console.log('BROWSER ERROR:', err.message));
 
-  console.log("Navigating to http://localhost:5174/#/terminal...");
-  await page.goto('http://localhost:5174/#/terminal');
+  console.log("Navigating to /#/terminal...");
+  await page.goto('/#/terminal');
   await page.waitForTimeout(3000); // wait for telemetry to load
 
   const getSpeedometerContent = async () => {
