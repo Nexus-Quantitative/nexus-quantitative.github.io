@@ -1,6 +1,7 @@
 <script lang="ts">
     import { t } from "svelte-i18n";
     import LanguageSwitcher from "./LanguageSwitcher.svelte";
+    import NexusPulse from "./NexusPulse.svelte";
 
     // Hero Section
     const scrollToPhilosophy = () => {
@@ -22,6 +23,10 @@
     <!-- Nav links (Desktop) -->
     <div class="hidden md:flex absolute top-8 right-8 items-center gap-6 font-mono text-xs">
         <a
+            href="#/terminal"
+            class="text-[#00FF94] hover:text-[#00F0FF] transition-colors duration-300 tracking-widest font-bold animate-pulse"
+        >{$t("nav.terminal")}</a>
+        <a
             href="#/ark-streams"
             class="text-white/40 hover:text-[#00F0FF] transition-colors duration-300 tracking-widest"
         >[ TECH TALK ]</a>
@@ -29,18 +34,14 @@
             href="#/relatorios"
             class="text-white/40 hover:text-accent transition-colors duration-300 tracking-widest"
         >{$t("nav.reports")}</a>
-        <div class="flex items-center gap-2 text-accent opacity-90 animate-pulse-glow">
-            <div class="w-2 h-2 rounded-full bg-accent"></div>
-            <span>{$t("hero.status")}</span>
-        </div>
+        <NexusPulse />
     </div>
 
     <!-- Status Badge (Mobile) -->
     <div
-        class="md:hidden absolute top-8 flex items-center gap-2 font-mono text-[10px] text-accent opacity-90 animate-pulse-glow"
+        class="md:hidden absolute top-8 z-20"
     >
-        <div class="w-1.5 h-1.5 rounded-full bg-accent"></div>
-        <span>{$t("hero.status")}</span>
+        <NexusPulse />
     </div>
 
     <!-- Content -->
@@ -68,6 +69,20 @@
 
         <!-- CTA -->
         <div class="flex flex-col md:flex-row gap-4">
+            <a
+                href="#/terminal"
+                class="group relative px-8 py-3 bg-transparent overflow-hidden border border-accent hover:border-accent hover:shadow-[0_0_25px_var(--color-quantum-cyan)] transition-all duration-300 flex items-center justify-center w-full md:w-auto"
+            >
+                <div
+                    class="absolute inset-0 w-0 bg-accent/10 transition-all duration-[250ms] ease-out group-hover:w-full"
+                ></div>
+                <span
+                    class="relative text-xs font-mono text-[#00FF94] group-hover:text-white tracking-wider text-center font-bold"
+                >
+                    {$t("hero.cta_terminal")}
+                </span>
+            </a>
+
             <button
                 on:click={scrollToPhilosophy}
                 class="group relative px-8 py-3 bg-transparent overflow-hidden border border-white/20 hover:border-accent hover:shadow-[0_0_20px_var(--color-quantum-cyan)] transition-all duration-300 w-full md:w-auto"

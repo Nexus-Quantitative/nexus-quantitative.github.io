@@ -12,13 +12,20 @@
   import Presentation from "./lib/Presentation.svelte";
   import ArkStreamsPresentation from "./lib/ArkStreamsPresentation.svelte";
   import OperationalReport from "./lib/OperationalReport.svelte";
+  import { startTelemetry, stopTelemetry } from "./lib/telemetry";
+  import WhaleWatch from "./lib/WhaleWatch.svelte";
+  import TerminalDashboard from "./lib/TerminalDashboard.svelte";
 
   let hash = window.location.hash;
 
   onMount(() => {
+    startTelemetry();
     const updateHash = () => (hash = window.location.hash);
     window.addEventListener("hashchange", updateHash);
-    return () => window.removeEventListener("hashchange", updateHash);
+    return () => {
+      window.removeEventListener("hashchange", updateHash);
+      stopTelemetry();
+    };
   });
 </script>
 
@@ -29,6 +36,7 @@
   <EventHorizonBackground />
 
   <AudioPlayer />
+  <WhaleWatch />
 
   {#if hash === "#/presentation"}
     <Presentation />
@@ -36,12 +44,14 @@
     <ArkStreamsPresentation />
   {:else if hash === "#/relatorios"}
     <OperationalReport />
+  {:else if hash === "#/terminal"}
+    <TerminalDashboard />
   {:else}
     <Hero />
     <Philosophy />
     <Stack />
     <Evolution />
-    <Metrics />
+    <Metrics showLink={true} />
     <Footer />
   {/if}
 </main>

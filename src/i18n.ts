@@ -7,7 +7,8 @@ const en = {
         loading: 'LOADING...'
     },
     nav: {
-        reports: '[ REPORTS ]'
+        reports: '[ REPORTS ]',
+        terminal: '[ LIVE TERMINAL ]'
     },
     report: {
         nav_back: '← NEXUS QUANT',
@@ -95,7 +96,8 @@ const en = {
         title: 'NEXUS QUANT',
         subtitle: 'Proprietary Quantitative Research & Automated Decision Systems.',
         cta: '[ VIEW PHILOSOPHY ]',
-        cta_ark: '[ ARK STREAMS PRESENTATION ]'
+        cta_ark: '[ ARK STREAMS PRESENTATION ]',
+        cta_terminal: '[ LIVE TERMINAL ]'
     },
     philosophy: {
         title: '>_ MISSION DIRECTIVE',
@@ -134,7 +136,8 @@ const en = {
             guarded: 'GUARDED',
             synced: 'SYNCED'
         },
-        ago: '{n}s ago'
+        ago: '{n}s ago',
+        enter_terminal: '[ ENTER FULL LIVE TERMINAL ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. All rights reserved.',
@@ -312,7 +315,8 @@ const pt = {
         loading: 'CARREGANDO...'
     },
     nav: {
-        reports: '[ RELATÓRIOS ]'
+        reports: '[ RELATÓRIOS ]',
+        terminal: '[ TERMINAL AO VIVO ]'
     },
     report: {
         nav_back: '← NEXUS QUANT',
@@ -400,7 +404,8 @@ const pt = {
         title: 'NEXUS QUANT',
         subtitle: 'Pesquisa Quantitativa Proprietária e Sistemas de Decisão Automatizados.',
         cta: '[ VER FILOSOFIA ]',
-        cta_ark: '[ APRESENTAÇÃO ARK STREAMS ]'
+        cta_ark: '[ APRESENTAÇÃO ARK STREAMS ]',
+        cta_terminal: '[ TERMINAL EM TEMPO REAL ]'
     },
     philosophy: {
         title: '>_ DIRETRIZ DA MISSÃO',
@@ -439,7 +444,8 @@ const pt = {
             guarded: 'PROTEGIDO',
             synced: 'SINCRONIZADO'
         },
-        ago: '{n}s atrás'
+        ago: '{n}s atrás',
+        enter_terminal: '[ ENTRAR NO TERMINAL AO VIVO ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. Todos os direitos reservados.',
@@ -529,7 +535,8 @@ const es = {
         status: 'SISTEMAS OPERATIVOS',
         title: 'NEXUS QUANT',
         subtitle: 'Investigación Cuantitativa Propietaria y Sistemas de Decisión Automatizados.',
-        cta: '[ VER FILOSOFÍA ]'
+        cta: '[ VER FILOSOFÍA ]',
+        cta_terminal: '[ TERMINAL EN VIVO ]'
     },
     philosophy: {
         title: '>_ DIRECTRIZ DE MISIÓN',
@@ -553,7 +560,8 @@ const es = {
             guarded: 'PROTEGIDO',
             synced: 'SINCRONIZADO'
         },
-        ago: 'hace {n}s'
+        ago: 'hace {n}s',
+        enter_terminal: '[ INGRESAR AL TERMINAL EN VIVO ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. Todos los derechos reservados.',
@@ -571,7 +579,8 @@ const ru = {
         status: 'СИСТЕМЫ РАБОТАЮТ',
         title: 'NEXUS QUANT',
         subtitle: 'Собственные количественные исследования и автоматизированные системы принятия решений.',
-        cta: '[ ПОСМОТРЕТЬ ФИЛОСОФИЮ ]'
+        cta: '[ ПОСМОТРЕТЬ ФИЛОСОФИЮ ]',
+        cta_terminal: '[ ЖИВОЙ ТЕРМИНАЛ ]'
     },
     philosophy: {
         title: '>_ ДИРЕКТИВА МИССИИ',
@@ -595,7 +604,8 @@ const ru = {
             guarded: 'ОХРАНЯЕТСЯ',
             synced: 'СИНХРОНИЗИРОВАНО'
         },
-        ago: '{n}с назад'
+        ago: '{n}с назад',
+        enter_terminal: '[ ОТКРЫТЬ РЕАЛ-ТАЙМ ТЕРМИНАЛ ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. Все права защищены.',
@@ -613,7 +623,8 @@ const uk = {
         status: 'СИСТЕМИ ПРАЦЮЮТЬ',
         title: 'NEXUS QUANT',
         subtitle: 'Власні кількісні дослідження та автоматизовані системи прийняття рішень.',
-        cta: '[ ПЕРЕГЛЯНУТИ ФІЛОСОФІЮ ]'
+        cta: '[ ПЕРЕГЛЯНУТИ ФІЛОСОФІЮ ]',
+        cta_terminal: '[ ЖИВИЙ ТЕРМІНАЛ ]'
     },
     philosophy: {
         title: '>_ ДИРЕКТИВА МІСІЇ',
@@ -637,7 +648,8 @@ const uk = {
             guarded: 'ОХОРОНЯЄТЬСЯ',
             synced: 'СИНХРОНІЗОВАНО'
         },
-        ago: '{n}с тому'
+        ago: '{n}с тому',
+        enter_terminal: '[ ВІДКРИТИ РЕАЛ-ТАЙМ ТЕРМІНАЛ ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. Всі права захищені.',
@@ -655,7 +667,8 @@ const zh = {
         status: '系统运行正常',
         title: 'NEXUS QUANT',
         subtitle: '专有定量研究和自动决策系统。',
-        cta: '[ 查看理念 ]'
+        cta: '[ 查看理念 ]',
+        cta_terminal: '[ 实时终端 ]'
     },
     philosophy: {
         title: '>_ 任务指令',
@@ -679,7 +692,8 @@ const zh = {
             guarded: '受保护',
             synced: '已同步'
         },
-        ago: '{n}秒前'
+        ago: '{n}秒前',
+        enter_terminal: '[ 进入实时交易终端 ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. 保留所有权利。',
@@ -697,7 +711,8 @@ const ja = {
         status: 'システム稼働中',
         title: 'NEXUS QUANT',
         subtitle: '独自の定量的研究および自動意思決定システム。',
-        cta: '[ 哲学を見る ]'
+        cta: '[ 哲学を見る ]',
+        cta_terminal: '[ ライブ端末 ]'
     },
     philosophy: {
         title: '>_ ミッション指令',
@@ -721,7 +736,8 @@ const ja = {
             guarded: '保護中',
             synced: '同期済み'
         },
-        ago: '{n}秒前'
+        ago: '{n}秒前',
+        enter_terminal: '[ リアルタイム端末に入る ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. 全著作権所有。',
@@ -739,7 +755,8 @@ const de = {
         status: 'SYSTEME BETRIEBSBEREIT',
         title: 'NEXUS QUANT',
         subtitle: 'Proprietäre quantitative Forschung & automatisierte Entscheidungssysteme.',
-        cta: '[ PHILOSOPHIE ANSEHEN ]'
+        cta: '[ PHILOSOPHIE ANSEHEN ]',
+        cta_terminal: '[ LIVE-TERMINAL ]'
     },
     philosophy: {
         title: '>_ MISSIONSDIREKTIVE',
@@ -763,7 +780,8 @@ const de = {
             guarded: 'GESCHÜTZT',
             synced: 'SYNCHRONISIERT'
         },
-        ago: 'vor {n}s'
+        ago: 'vor {n}s',
+        enter_terminal: '[ LIVE-TERMINAL ÖFFNEN ]'
     },
     footer: {
         rights: '© {year} Nexus Quant. Alle Rechte vorbehalten.',
