@@ -6,6 +6,8 @@
   // Formatting helper
   function fmtUSD(v: number): string {
     const abs = Math.abs(v);
+    if (abs >= 1_000_000_000_000) return `$${(abs / 1_000_000_000_000).toFixed(2)}T`;
+    if (abs >= 1_000_000_000) return `$${(abs / 1_000_000_000).toFixed(2)}B`;
     if (abs >= 1_000_000) return `$${(abs / 1_000_000).toFixed(2)}M`;
     if (abs >= 1_000) return `$${(abs / 1_000).toFixed(0)}K`;
     return `$${abs.toFixed(0)}`;

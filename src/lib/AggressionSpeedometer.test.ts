@@ -80,15 +80,15 @@ describe('AggressionSpeedometer Runes Reactivity Test', () => {
     expect(container.querySelector('.tracking-\\[0\\.25em\\]')?.textContent).toContain('ACTIVE // 1D');
 
     // Verify 1d metrics are displayed
-    // Buy Volume 1d: 11633855094.78 -> $11633.86M
-    // Sell Volume 1d: 11594868123.69 -> $11594.87M
+    // Buy Volume 1d: 11633855094.78 -> $11.63B
+    // Sell Volume 1d: 11594868123.69 -> $11.59B
     // Net Delta 1d: +38986971.09 -> +$38.99M
     // Ratio 1d: 1.00x
-    expect(screen.getByText('$11633.86M')).toBeInTheDocument();
-    expect(screen.getByText('$11594.87M')).toBeInTheDocument();
+    expect(screen.getByText('$11.63B')).toBeInTheDocument();
+    expect(screen.getByText('$11.59B')).toBeInTheDocument();
     expect(screen.getByText('+$38.99M')).toBeInTheDocument();
     expect(screen.getByText('1.00x')).toBeInTheDocument();
 
-    console.log("✅ Verified clicking 1D WINDOW updates dashboard reactively to $11633.86M Buy / $11594.87M Sell Volume!");
+    console.log("✅ Verified clicking 1D WINDOW updates dashboard reactively to $11.63B Buy / $11.59B Sell Volume!");
   });
 });
