@@ -51,7 +51,7 @@
 </script>
 
 {#if $telemetry.enabled}
-<section id="aggression-speedometer" class="py-24 px-4 bg-transparent font-mono select-none">
+<section id="aggression-speedometer" class="py-24 px-4 bg-transparent font-mono">
   <div class="max-w-4xl mx-auto w-full relative z-10">
 
     <!-- Section label -->

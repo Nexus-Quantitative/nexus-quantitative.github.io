@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 
+const BACKEND_URL_SOURCE = "https://raw.githubusercontent.com/nexus-quantitative/nexus-quantitative.github.io/main/backend-url.txt";
+
 export interface Liquidation {
   side: string;
   usd_value: number;
@@ -47,9 +49,21 @@ export interface TelemetryState {
   btcAggression: AggressionSnapshot | null;
 }
 
-const API_URL: string = import.meta.env.VITE_ARK_API_URL ?? "";
-const API_KEY: string = import.meta.env.VITE_ARK_API_KEY ?? "";
-const enabled = !!API_URL;
+const ENV_API_URL: string = import.meta.env.VITE_ARK_API_URL ?? "";
+let activeApiUrl = ENV_API_URL;
+export const apiUrl = writable<string>(ENV_API_URL);
+
+async function resolveApiUrl(): Promise<string> {
+  if (ENV_API_URL) return ENV_API_URL;
+  try {
+    const resp = await fetch(BACKEND_URL_SOURCE, { cache: "no-store" });
+    if (resp.ok) {
+      const url = (await resp.text()).trim();
+      if (url) return url;
+    }
+  } catch {}
+  return "";
+}
 
 // The standard set of collectors running on ark-streams
 const DEFAULT_STREAMS = [
@@ -137,7 +151,7 @@ function buildAggressionSnapshot(liqs: Liquidation[]): AggressionSnapshot | null
 }
 
 export const telemetry = writable<TelemetryState>({
-  enabled,
+  enabled: !!ENV_API_URL,
   natsOk: null,
   streamsOnline: 0,
   streamsTotal: 0,
@@ -167,9 +181,7 @@ function wsBase(url: string) {
 
 async function fetchHealth() {
   try {
-    const r = await fetch(`${API_URL}/api/health`, {
-      headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
-    });
+    const r = await fetch(`${activeApiUrl}/api/health`);
     const d = await r.json();
     const isOk = d.status === "ok";
     
@@ -191,11 +203,9 @@ async function fetchHealth() {
 }
 
 function connectWs(path: string, onMsg: (d: any) => void, options: { retry?: boolean } = {}) {
-  if (destroyed || !API_URL) return;
+  if (destroyed || !activeApiUrl) return;
   const shouldRetry = options.retry ?? true;
-  const sep = path.includes("?") ? "&" : "?";
-  const q = API_KEY ? `${sep}token=${encodeURIComponent(API_KEY)}` : "";
-  const url = `${wsBase(API_URL)}${path}${q}`;
+  const url = `${wsBase(activeApiUrl)}${path}`;
   console.log(`[Telemetry] Connecting WS to: ${path}`);
   const ws = new WebSocket(url);
   openSockets.push(ws);
@@ -227,14 +237,21 @@ function connectWs(path: string, onMsg: (d: any) => void, options: { retry?: boo
   };
 }
 
-export function startTelemetry() {
-  if (isStarted || !enabled) return;
+export async function startTelemetry() {
+  if (isStarted) return;
   isStarted = true;
   destroyed = false;
   aggressionLiveSeen = false;
-
-  // Clear active streams for a clean start
   activeStreams.clear();
+
+  const url = await resolveApiUrl();
+  if (!url || destroyed) {
+    isStarted = false;
+    return;
+  }
+  activeApiUrl = url;
+  apiUrl.set(url);
+  telemetry.update(s => ({ ...s, enabled: true }));
 
   // 1. Connection/System status
   connectWs("/ws/status", (raw) => {
@@ -296,9 +313,7 @@ export function startTelemetry() {
   });
 
   // Pre-seed recent liquidations from 24h history
-  fetch(`${API_URL}/api/liquidations/BTCUSDT?hours=24`, {
-    headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
-  })
+  fetch(`${activeApiUrl}/api/liquidations/BTCUSDT?hours=24`)
     .then((r) => r.json())
     .then((data) => {
       if (Array.isArray(data)) {
@@ -335,9 +350,7 @@ export function startTelemetry() {
     if (aggressionLiveSeen || destroyed) return;
 
     try {
-      const response = await fetch(`${API_URL}/api/liquidations/BTCUSDT?hours=24`, {
-        headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
-      });
+      const response = await fetch(`${activeApiUrl}/api/liquidations/BTCUSDT?hours=24`);
       const data = await response.json();
 
       if (!aggressionLiveSeen && Array.isArray(data)) {

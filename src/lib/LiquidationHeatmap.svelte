@@ -1,10 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { telemetry, type Liquidation } from "./telemetry";
-
-  const API_URL: string = import.meta.env.VITE_ARK_API_URL ?? "";
-  const API_KEY: string = import.meta.env.VITE_ARK_API_KEY ?? "";
-  const enabled = !!API_URL;
+  import { telemetry, apiUrl, type Liquidation } from "./telemetry";
 
   // Configuration
   let binSize = 250; // $250 price bins
@@ -26,11 +22,10 @@
 
   // Fetch 24h historical liquidations
   async function fetchHistory() {
-    if (!API_URL) return;
+    if (!$apiUrl) return;
     try {
       isLoading = true;
-      const headers: Record<string, string> = API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {};
-      const res = await fetch(`${API_URL}/api/liquidations/BTCUSDT?hours=24`, { headers });
+      const res = await fetch(`${$apiUrl}/api/liquidations/BTCUSDT?hours=24`);
       const data = await res.json();
       if (Array.isArray(data)) {
         rawHistLiqs = data;
@@ -159,8 +154,8 @@
   }
 </script>
 
-{#if enabled}
-<section id="liquidation-profile" class="py-24 px-4 bg-transparent font-mono select-none">
+{#if $telemetry.enabled}
+<section id="liquidation-profile" class="py-24 px-4 bg-transparent font-mono">
   <div class="max-w-4xl mx-auto w-full relative z-10">
 
     <!-- Section label -->
@@ -233,7 +228,7 @@
                 </span>
 
                 {#if isCurrentPriceBin}
-                  <span class="text-[10px] bg-accent text-black font-bold px-1.5 py-0.5 rounded-sm animate-pulse select-none">
+                  <span class="text-[10px] bg-accent text-black font-bold px-1.5 py-0.5 rounded-sm animate-pulse">
                     MARKET
                   </span>
                 {/if}
@@ -269,7 +264,7 @@
               <div class="col-span-2 text-right flex items-center justify-end gap-2 pr-1">
                 {#if isWall}
                   <span 
-                    class="text-[10px] border border-amber-500/40 bg-amber-500/10 text-amber-400 font-bold px-1.5 py-0.5 rounded-sm tracking-wide select-none animate-pulse-glow"
+                    class="text-[10px] border border-amber-500/40 bg-amber-500/10 text-amber-400 font-bold px-1.5 py-0.5 rounded-sm tracking-wide animate-pulse-glow"
                     title="Liquidity Wall Detected"
                   >
                     WALL
@@ -292,6 +287,22 @@
       <span>Total 24h Volume reference: {fmtUSD(bins.reduce((acc, b) => acc + b.totalValue, 0))}</span>
     </div>
 
+  </div>
+</section>
+{:else}
+<section id="liquidation-profile" class="py-24 px-4 bg-transparent font-mono">
+  <div class="max-w-4xl mx-auto w-full relative z-10">
+    <div class="font-mono text-base md:text-lg text-white/70 tracking-[0.2em] uppercase mb-8 flex items-center gap-3">
+      <span class="font-bold">:: LIQUIDATION PROFILE (24H)</span>
+      <div class="flex-1 h-px bg-white/10"></div>
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-white/20"></div>
+        <span class="text-sm text-white/40">OFFLINE</span>
+      </div>
+    </div>
+    <div class="border border-white/10 bg-black/40 backdrop-blur-md p-12 rounded-sm text-center">
+      <div class="font-mono text-white/30 text-sm uppercase tracking-widest">Aguardando conexão com ark-streams...</div>
+    </div>
   </div>
 </section>
 {/if}
