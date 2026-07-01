@@ -18,7 +18,6 @@ test('verify timeframe switches on speedometer', async ({ page }) => {
 
   console.log("--- Initial Content ---");
   console.log(await getSpeedometerContent());
-
   console.log("Clicking 5M WINDOW...");
   const btn5m = page.getByRole('button', { name: '5M WINDOW', exact: true });
   await btn5m.click();

@@ -74,7 +74,7 @@
             class="px-3 py-1 hover:bg-white/5 transition-colors cursor-pointer border-r border-white/10 last:border-0
               {activeWindow === tf ? 'bg-accent/15 text-accent font-bold shadow-[inset_0_0_0_1px_rgba(0,240,255,0.35)]' : 'text-white/40'}"
           >
-            {tf.toUpperCase()}<span class="hidden sm:inline"> WINDOW</span>
+            {tf.toUpperCase()}<span class="hidden sm:inline">{" "}WINDOW</span>
           </button>
         {/each}
       </div>
