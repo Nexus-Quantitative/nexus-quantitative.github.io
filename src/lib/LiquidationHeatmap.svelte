@@ -155,7 +155,7 @@
 </script>
 
 {#if $telemetry.enabled}
-<section id="liquidation-profile" class="py-24 px-4 bg-transparent font-mono">
+<section id="liquidation-profile" class="py-8 md:py-12 px-4 bg-transparent font-mono">
   <div class="max-w-4xl mx-auto w-full relative z-10">
 
     <!-- Section label -->
@@ -164,7 +164,7 @@
       <span class="px-2 py-1 rounded-sm border border-accent/20 bg-accent/5 text-xs tracking-[0.15em] text-accent/90 font-bold">
         SOURCE: NATS JETSTREAM (OKX & BITGET)
       </span>
-      <div class="flex-1 h-px bg-white/10"></div>
+      <div class="hidden sm:block flex-1 h-px bg-white/10"></div>
       
       <!-- Bin size controls -->
       <div class="flex items-center border border-white/10 rounded-sm overflow-hidden text-xs md:text-sm">
@@ -172,19 +172,19 @@
           on:click={() => changeBinSize(100)} 
           class="px-3 py-1 hover:bg-white/5 transition-colors cursor-pointer {binSize === 100 ? 'bg-accent/15 text-accent font-bold border-r border-white/10' : 'text-white/40 border-r border-white/10'}"
         >
-          $100 BIN
+          $100<span class="hidden sm:inline"> BIN</span>
         </button>
         <button 
           on:click={() => changeBinSize(250)} 
           class="px-3 py-1 hover:bg-white/5 transition-colors cursor-pointer {binSize === 250 ? 'bg-accent/15 text-accent font-bold border-r border-white/10' : 'text-white/40 border-r border-white/10'}"
         >
-          $250 BIN
+          $250<span class="hidden sm:inline"> BIN</span>
         </button>
         <button 
           on:click={() => changeBinSize(500)} 
           class="px-3 py-1 hover:bg-white/5 transition-colors cursor-pointer {binSize === 500 ? 'bg-accent/15 text-accent font-bold' : 'text-white/40'}"
         >
-          $500 BIN
+          $500<span class="hidden sm:inline"> BIN</span>
         </button>
       </div>
     </div>
@@ -218,24 +218,24 @@
             >
               
               <!-- Price Scale -->
-              <div class="col-span-3 flex items-center gap-2">
-                <span class="text-sm md:text-base font-semibold {isCurrentPriceBin ? 'text-accent' : 'text-white/80'}">
+              <div class="col-span-4 sm:col-span-3 flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
+                <span class="text-xs sm:text-sm md:text-base font-semibold {isCurrentPriceBin ? 'text-accent' : 'text-white/80'}">
                   ${fmtPrice(bin.priceStart)}
                 </span>
-                <span class="text-xs text-white/40 font-light">—</span>
-                <span class="text-xs md:text-sm text-white/60">
+                <span class="hidden sm:inline text-xs text-white/40 font-light">—</span>
+                <span class="hidden sm:inline text-xs md:text-sm text-white/60">
                   ${fmtPrice(bin.priceEnd)}
                 </span>
 
                 {#if isCurrentPriceBin}
-                  <span class="text-[10px] bg-accent text-black font-bold px-1.5 py-0.5 rounded-sm animate-pulse">
+                  <span class="text-[8px] sm:text-[10px] bg-accent text-black font-bold px-1 py-0.5 sm:px-1.5 sm:py-0.5 rounded-sm animate-pulse">
                     MARKET
                   </span>
                 {/if}
               </div>
 
               <!-- Heatmap Gauge bars -->
-              <div class="col-span-7 px-4 relative flex items-center h-5">
+              <div class="col-span-6 sm:col-span-7 px-2 sm:px-4 relative flex items-center h-5">
                 <!-- Center point line -->
                 <div class="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 z-0"></div>
 
@@ -290,11 +290,11 @@
   </div>
 </section>
 {:else}
-<section id="liquidation-profile" class="py-24 px-4 bg-transparent font-mono">
+<section id="liquidation-profile" class="py-8 md:py-12 px-4 bg-transparent font-mono">
   <div class="max-w-4xl mx-auto w-full relative z-10">
     <div class="font-mono text-base md:text-lg text-white/70 tracking-[0.2em] uppercase mb-8 flex items-center gap-3">
       <span class="font-bold">:: LIQUIDATION PROFILE (24H)</span>
-      <div class="flex-1 h-px bg-white/10"></div>
+      <div class="hidden sm:block flex-1 h-px bg-white/10"></div>
       <div class="flex items-center gap-2">
         <div class="w-2 h-2 rounded-full bg-white/20"></div>
         <span class="text-sm text-white/40">OFFLINE</span>

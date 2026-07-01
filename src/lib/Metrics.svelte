@@ -3,6 +3,7 @@
   import { telemetry } from "./telemetry";
 
   export let showLink = false;
+  export let compact = false;
 
   // ── Formatters ─────────────────────────────────────────────────────────────
   function fmtPrice(p: number): string {
@@ -40,7 +41,7 @@
 </script>
 
 {#if $telemetry.enabled}
-<section id="metrics" class="py-24 px-4 bg-transparent">
+<section id="metrics" class="{compact ? 'py-8 md:py-12' : 'py-24'} px-4 bg-transparent">
   <div class="max-w-4xl mx-auto w-full relative z-10">
 
     <!-- Section label -->
@@ -49,7 +50,7 @@
       <span class="px-2 py-1 rounded-sm border border-accent/20 bg-accent/5 text-xs tracking-[0.15em] text-accent/90 font-bold">
         SOURCE: BITGET TICKER WS & NATS
       </span>
-      <div class="flex-1 h-px bg-white/10"></div>
+      <div class="hidden sm:block flex-1 h-px bg-white/10"></div>
       <div class="flex items-center gap-2">
         <div class="w-2 h-2 rounded-full {$telemetry.natsOk === true ? 'bg-[#00FF94] animate-pulse' : $telemetry.natsOk === false ? 'bg-rose-400' : 'bg-white/30'}"></div>
         <span class="text-sm {$telemetry.natsOk === true ? 'text-[#00FF94]' : $telemetry.natsOk === false ? 'text-rose-400' : 'text-white/45'}">
@@ -79,20 +80,20 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-5">
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 border-t border-white/10 pt-5">
           <div>
-            <div class="font-mono text-xs md:text-sm text-white/50 uppercase tracking-wider mb-2">Open Interest</div>
-            <div class="font-mono text-lg font-semibold text-white/90">{$telemetry.btcOI > 0 ? fmtOI($telemetry.btcOI) : "—"}</div>
+            <div class="font-mono text-[10px] sm:text-xs md:text-sm text-white/50 uppercase tracking-wider mb-2">Open Interest</div>
+            <div class="font-mono text-sm sm:text-lg font-semibold text-white/90">{$telemetry.btcOI > 0 ? fmtOI($telemetry.btcOI) : "—"}</div>
           </div>
           <div>
-            <div class="font-mono text-xs md:text-sm text-white/50 uppercase tracking-wider mb-2">Funding Rate</div>
-            <div class="font-mono text-lg font-semibold {$telemetry.btcFunding !== 0 ? (fundingPositive ? 'text-rose-400' : 'text-emerald-400') : 'text-white/50'}">
+            <div class="font-mono text-[10px] sm:text-xs md:text-sm text-white/50 uppercase tracking-wider mb-2">Funding Rate</div>
+            <div class="font-mono text-sm sm:text-lg font-semibold {$telemetry.btcFunding !== 0 ? (fundingPositive ? 'text-rose-400' : 'text-emerald-400') : 'text-white/50'}">
               {$telemetry.btcFunding !== 0 ? fmtFunding($telemetry.btcFunding) : "—"}
             </div>
           </div>
           <div>
-            <div class="font-mono text-xs md:text-sm text-white/50 uppercase tracking-wider mb-2">Next Funding</div>
-            <div class="font-mono text-lg font-semibold text-white/70">{fmtNextFunding($telemetry.btcNextFunding)}</div>
+            <div class="font-mono text-[10px] sm:text-xs md:text-sm text-white/50 uppercase tracking-wider mb-2">Next Funding</div>
+            <div class="font-mono text-sm sm:text-lg font-semibold text-white/70">{fmtNextFunding($telemetry.btcNextFunding)}</div>
           </div>
         </div>
       </div>

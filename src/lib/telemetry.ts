@@ -174,9 +174,24 @@ let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
 let destroyed = false;
 let isStarted = false;
 let aggressionLiveSeen = false;
+let consecutiveHealthFailures = 0;
 
 function wsBase(url: string) {
   return url.replace(/^https/, "wss").replace(/^http/, "ws");
+}
+
+async function reconnectTelemetry() {
+  if (destroyed) return;
+  console.log("[Telemetry] Reconnecting telemetry... (Health check failures or backend change)");
+  openSockets.forEach((ws) => ws.close());
+  openSockets = [];
+  reconnectTimers.forEach(clearTimeout);
+  reconnectTimers = [];
+  clearInterval(healthTimer);
+  clearTimeout(fallbackTimer);
+  isStarted = false;
+  
+  await startTelemetry();
 }
 
 async function fetchHealth() {
@@ -185,20 +200,33 @@ async function fetchHealth() {
     const d = await r.json();
     const isOk = d.status === "ok";
     
-    // If healthy and we haven't tracked active streams yet, seed the default collectors
-    if (isOk && activeStreams.size === 0) {
-      DEFAULT_STREAMS.forEach(name => activeStreams.add(name));
-    }
+    if (isOk) {
+      consecutiveHealthFailures = 0;
+      // If healthy and we haven't tracked active streams yet, seed the default collectors
+      if (activeStreams.size === 0) {
+        DEFAULT_STREAMS.forEach(name => activeStreams.add(name));
+      }
 
-    telemetry.update(s => ({
-      ...s,
-      natsOk: isOk,
-      engineRunning: isOk,
-      streamsOnline: isOk ? activeStreams.size : 0,
-      streamsTotal: isOk ? Math.max(s.streamsTotal, activeStreams.size, DEFAULT_STREAMS.length) : 0
-    }));
-  } catch {
+      telemetry.update(s => ({
+        ...s,
+        natsOk: isOk,
+        engineRunning: isOk,
+        streamsOnline: isOk ? activeStreams.size : 0,
+        streamsTotal: isOk ? Math.max(s.streamsTotal, activeStreams.size, DEFAULT_STREAMS.length) : 0
+      }));
+    } else {
+      throw new Error("Invalid health status response");
+    }
+  } catch (err) {
+    console.warn("[Telemetry] Health check failed:", err);
+    consecutiveHealthFailures++;
+    
     telemetry.update(s => ({ ...s, natsOk: false, engineRunning: false }));
+    
+    if (consecutiveHealthFailures >= 3) {
+      consecutiveHealthFailures = 0;
+      reconnectTelemetry();
+    }
   }
 }
 
@@ -231,7 +259,10 @@ function connectWs(path: string, onMsg: (d: any) => void, options: { retry?: boo
     console.log(`[Telemetry] WS closed: ${path}`);
     openSockets = openSockets.filter((s) => s !== ws);
     if (!destroyed && shouldRetry) {
-      const t = setTimeout(() => connectWs(path, onMsg), 4000);
+      const t = setTimeout(() => {
+        reconnectTimers = reconnectTimers.filter((timer) => timer !== t);
+        connectWs(path, onMsg);
+      }, 4000);
       reconnectTimers.push(t);
     }
   };
@@ -247,6 +278,14 @@ export async function startTelemetry() {
   const url = await resolveApiUrl();
   if (!url || destroyed) {
     isStarted = false;
+    if (!destroyed) {
+      console.log("[Telemetry] resolveApiUrl failed. Retrying in 5 seconds...");
+      const t = setTimeout(() => {
+        reconnectTimers = reconnectTimers.filter((timer) => timer !== t);
+        startTelemetry();
+      }, 5000);
+      reconnectTimers.push(t);
+    }
     return;
   }
   activeApiUrl = url;

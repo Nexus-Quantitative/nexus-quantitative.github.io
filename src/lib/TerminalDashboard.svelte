@@ -7,14 +7,14 @@
   let showInfo = $state(true);
 </script>
 
-<div class="w-full relative z-10 pointer-events-auto text-white min-h-screen py-24 px-4">
+<div class="w-full relative z-10 pointer-events-auto text-white min-h-screen pt-24 pb-36 px-4">
   <!-- Back Button (Floating) -->
   <a 
     href="#/" 
-    class="fixed top-8 left-8 z-50 inline-flex items-center gap-2 text-accent font-mono hover:opacity-70 transition-opacity bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"
+    class="fixed top-4 left-4 md:top-8 md:left-8 z-50 inline-flex items-center gap-2 text-accent font-mono hover:opacity-70 transition-opacity bg-black/50 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 text-xs md:text-sm"
   >
     <ArrowLeft size={16} />
-    [ ← NEXUS QUANT ]
+    <span class="hidden sm:inline">[ NEXUS QUANT ]</span>
   </a>
 
   <div class="max-w-4xl mx-auto w-full space-y-8">
@@ -28,16 +28,23 @@
       </p>
     </div>
 
+    <!-- Live Telemetry Dashboard Panels -->
+    <Metrics compact={true} />
+
+    <AggressionSpeedometer />
+    
+    <LiquidationHeatmap />
+
     <!-- Transparency Layer / Data Source Disclosure -->
     <div class="border border-accent/20 bg-black/40 backdrop-blur-md p-6 rounded-sm shadow-[0_15px_45px_rgba(0,0,0,0.85)] font-mono">
-      <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4 mb-4">
         <div class="flex items-center gap-2.5 text-accent">
           <Info size={18} />
           <span class="text-sm font-bold tracking-widest uppercase">TRANSPARÊNCIA DA TELEMETRIA (FONTE DOS DADOS)</span>
         </div>
         <button 
           onclick={() => showInfo = !showInfo}
-          class="text-xs text-white/40 hover:text-white/80 transition-colors uppercase border border-white/15 px-2 py-1 rounded-sm bg-white/5 cursor-pointer"
+          class="text-xs text-white/40 hover:text-white/80 transition-colors uppercase border border-white/15 px-2 py-1 rounded-sm bg-white/5 cursor-pointer w-fit"
         >
           {showInfo ? "[ OCULTAR DETALHES ]" : "[ EXIBIR DETALHES ]"}
         </button>
@@ -82,12 +89,5 @@
         </div>
       {/if}
     </div>
-
-    <!-- Live Telemetry Dashboard Panels -->
-    <AggressionSpeedometer />
-    
-    <LiquidationHeatmap />
-
-    <Metrics />
   </div>
 </div>

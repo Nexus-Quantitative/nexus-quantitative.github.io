@@ -51,7 +51,7 @@
 </script>
 
 {#if $telemetry.enabled}
-<section id="aggression-speedometer" class="py-24 px-4 bg-transparent font-mono">
+<section id="aggression-speedometer" class="py-8 md:py-12 px-4 bg-transparent font-mono">
   <div class="max-w-4xl mx-auto w-full relative z-10">
 
     <!-- Section label -->
@@ -60,7 +60,7 @@
       <span class="px-2 py-1 rounded-sm border border-accent/20 bg-accent/5 text-xs tracking-[0.15em] text-accent/90 font-bold">
         SOURCE: OKX & BYBIT LIVE TRADES
       </span>
-      <div class="flex-1 h-px bg-white/10"></div>
+      <div class="hidden sm:block flex-1 h-px bg-white/10"></div>
       <span class="px-2 py-1 rounded-sm border border-white/10 bg-white/5 text-xs tracking-[0.25em] text-white/70">
         ACTIVE // {activeWindowLabel}
       </span>
@@ -74,7 +74,7 @@
             class="px-3 py-1 hover:bg-white/5 transition-colors cursor-pointer border-r border-white/10 last:border-0
               {activeWindow === tf ? 'bg-accent/15 text-accent font-bold shadow-[inset_0_0_0_1px_rgba(0,240,255,0.35)]' : 'text-white/40'}"
           >
-            {tf.toUpperCase()} WINDOW
+            {tf.toUpperCase()}<span class="hidden sm:inline"> WINDOW</span>
           </button>
         {/each}
       </div>

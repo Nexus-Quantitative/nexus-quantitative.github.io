@@ -61,9 +61,12 @@
 
 <div class="w-full relative z-10 pointer-events-auto text-white">
     <!-- Back Button (Floating) -->
-    <a href="#/" class="fixed top-8 left-8 z-50 inline-flex items-center gap-2 text-accent font-mono hover:opacity-70 transition-opacity bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+    <a 
+        href="#/" 
+        class="fixed top-4 left-4 md:top-8 md:left-8 z-50 inline-flex items-center gap-2 text-accent font-mono hover:opacity-70 transition-opacity bg-black/50 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 text-xs md:text-sm"
+    >
         <ArrowLeft size={16} />
-        [ {$t("report.nav_back")} ]
+        <span class="hidden sm:inline">[ {$t("report.nav_back")} ]</span>
     </a>
 
     <!-- SLIDE 1: HERO -->

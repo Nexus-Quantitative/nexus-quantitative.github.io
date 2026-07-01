@@ -15,8 +15,14 @@
     id="hero"
     class="h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden"
 >
-    <!-- Language Switcher -->
-    <div class="absolute top-24 md:top-8 left-1/2 -translate-x-1/2 z-20">
+    <!-- Header/Top Bar (Mobile) -->
+    <div class="md:hidden absolute top-6 left-6 right-6 flex items-center justify-between z-20">
+        <LanguageSwitcher />
+        <NexusPulse />
+    </div>
+
+    <!-- Language Switcher (Desktop) -->
+    <div class="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 z-20">
         <LanguageSwitcher />
     </div>
 
@@ -34,13 +40,6 @@
             href="#/relatorios"
             class="text-white/40 hover:text-accent transition-colors duration-300 tracking-widest"
         >{$t("nav.reports")}</a>
-        <NexusPulse />
-    </div>
-
-    <!-- Status Badge (Mobile) -->
-    <div
-        class="md:hidden absolute top-8 z-20"
-    >
         <NexusPulse />
     </div>
 

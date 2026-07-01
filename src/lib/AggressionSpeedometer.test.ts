@@ -46,15 +46,15 @@ describe('AggressionSpeedometer Runes Reactivity Test', () => {
     // Sell Volume (Aggressive) 1h: 626425076.10 -> $626.43M
     // Net Delta 1h: +34387205.09 -> +$34.39M
     // Buy / Sell Ratio 1h: 1.05 -> 1.05x
-    expect(screen.getByText('$660.81M')).toBeInTheDocument();
-    expect(screen.getByText('$626.43M')).toBeInTheDocument();
-    expect(screen.getByText('+$34.39M')).toBeInTheDocument();
-    expect(screen.getByText('1.05x')).toBeInTheDocument();
+    expect(screen.getByText('$660.81M')).toBeDefined();
+    expect(screen.getByText('$626.43M')).toBeDefined();
+    expect(screen.getByText('+$34.39M')).toBeDefined();
+    expect(screen.getByText('1.05x')).toBeDefined();
 
     console.log("✅ Verified initial 1H window displaying exactly $660.81M Buy and $626.43M Sell Volume!");
 
     // 3. Click 5M WINDOW button
-    const btn5m = screen.getByRole('button', { name: '5M WINDOW', exact: true });
+    const btn5m = screen.getByRole('button', { name: /5M/i });
     await fireEvent.click(btn5m);
 
     // Verify active window changed to 5M
@@ -65,15 +65,15 @@ describe('AggressionSpeedometer Runes Reactivity Test', () => {
     // Sell Volume 5m: 337057105.41 -> $337.06M
     // Net Delta 5m: +62981536.28 -> +$62.98M
     // Ratio 5m: 1.19x
-    expect(screen.getByText('$400.04M')).toBeInTheDocument();
-    expect(screen.getByText('$337.06M')).toBeInTheDocument();
-    expect(screen.getByText('+$62.98M')).toBeInTheDocument();
-    expect(screen.getByText('1.19x')).toBeInTheDocument();
+    expect(screen.getByText('$400.04M')).toBeDefined();
+    expect(screen.getByText('$337.06M')).toBeDefined();
+    expect(screen.getByText('+$62.98M')).toBeDefined();
+    expect(screen.getByText('1.19x')).toBeDefined();
 
     console.log("✅ Verified clicking 5M WINDOW updates dashboard reactively to $400.04M Buy / $337.06M Sell Volume!");
 
     // 4. Click 1D WINDOW button
-    const btn1d = screen.getByRole('button', { name: '1D WINDOW', exact: true });
+    const btn1d = screen.getByRole('button', { name: /1D/i });
     await fireEvent.click(btn1d);
 
     // Verify active window changed to 1D
@@ -84,10 +84,10 @@ describe('AggressionSpeedometer Runes Reactivity Test', () => {
     // Sell Volume 1d: 11594868123.69 -> $11.59B
     // Net Delta 1d: +38986971.09 -> +$38.99M
     // Ratio 1d: 1.00x
-    expect(screen.getByText('$11.63B')).toBeInTheDocument();
-    expect(screen.getByText('$11.59B')).toBeInTheDocument();
-    expect(screen.getByText('+$38.99M')).toBeInTheDocument();
-    expect(screen.getByText('1.00x')).toBeInTheDocument();
+    expect(screen.getByText('$11.63B')).toBeDefined();
+    expect(screen.getByText('$11.59B')).toBeDefined();
+    expect(screen.getByText('+$38.99M')).toBeDefined();
+    expect(screen.getByText('1.00x')).toBeDefined();
 
     console.log("✅ Verified clicking 1D WINDOW updates dashboard reactively to $11.63B Buy / $11.59B Sell Volume!");
   });
