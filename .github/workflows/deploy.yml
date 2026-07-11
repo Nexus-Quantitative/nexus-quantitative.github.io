@@ -48,7 +48,23 @@ jobs:
         env:
           HOME: /root
         run: npm run e2e
-        
+
+      - name: Checkout ark-terminal
+        uses: actions/checkout@v4
+        with:
+          repository: Nexus-Quantitative/ark-terminal
+          token: ${{ secrets.ARK_TERMINAL_PAT }}
+          path: ark-terminal
+
+      - name: Build ark-terminal (web)
+        working-directory: ark-terminal/frontend
+        run: |
+          npm ci
+          npx vite build --base=/terminal/
+
+      - name: Copy ark-terminal into dist/terminal
+        run: cp -r ark-terminal/frontend/dist dist/terminal
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
