@@ -552,14 +552,15 @@
             <div class="text-[10px] text-[#00FF94] tracking-widest uppercase font-bold mb-2">
               ● {isPt ? "PROVA AO VIVO · ALPHA_SHADOW.JSONL (16:12 UTC)" : "LIVE PRODUCTION PROOF · ALPHA_SHADOW (16:12 UTC)"}
             </div>
-            <pre class="text-[11px] leading-relaxed text-[#4CC9F0]/90 overflow-x-auto bg-white/[0.02] p-3 border border-white/10 rounded-sm">{`SOLUSDT | MKRatio: 2.77x
-liq5m: $417,877 >= P95 $144,217
-close: $73.131 -> bid: $70.8416
-depth: -313.05 bps (z=7, H=60m)
-──────────────────────────────
-NEARUSDT | MKRatio: 2.77x
-liq5m: $70,595 >= P95 $68,122
-close: $3.1975 -> bid: $3.0974`}</pre>
+            <pre class="text-[11px] leading-relaxed text-[#4CC9F0]/90 overflow-x-auto bg-white/[0.02] p-3 border border-white/10 rounded-sm">{`SOLUSDT | Strat: AltCascadeDeepBid (F1)
+Side: LONG (Maker BUY) vs LONG LIQ (SELL)
+MKRatio: 2.77x | liq5m: $417,877 >= $144,217
+close: $73.131 -> bid: $70.8416 (-313 bps)
+───────────────────────────────────────────
+NEARUSDT | Strat: AltCascadeDeepBid (F1)
+Side: LONG (Maker BUY) vs LONG LIQ (SELL)
+MKRatio: 2.77x | liq5m: $70,595 >= $68,122
+close: $3.1975 -> bid: $3.0974 (-313 bps)`}</pre>
           </div>
           <p class="font-sans text-xs text-white/55 leading-relaxed">
             {isPt
@@ -917,6 +918,43 @@ close: $3.1975 -> bid: $3.0974`}</pre>
           </h3>
         </div>
 
+        <!-- Visual Polarity Callout: Operation vs Strategy vs Target Liquidation -->
+        <div class="grid md:grid-cols-3 gap-3 border border-[#00F0FF]/25 bg-[#00F0FF]/[0.03] p-4 rounded-sm text-xs">
+          <div class="space-y-1">
+            <div class="text-[10px] text-rose-400 tracking-widest uppercase font-bold">
+              {isPt ? "1. LIQUIDAÇÃO ALVO (FLUXO DA CORRETORA)" : "1. TARGET LIQUIDATION FLOW"}
+            </div>
+            <div class="font-bold text-white">LONG LIQ · <span class="text-rose-300">Forced Market SELL</span></div>
+            <p class="font-sans text-[11px] text-white/60 leading-snug">
+              {isPt
+                ? "Compradores alavancados liquidados à força pela engine de margem da OKX via venda a mercado."
+                : "Over-leveraged longs forcibly closed by OKX's risk engine via market SELL orders."}
+            </p>
+          </div>
+          <div class="space-y-1 md:border-l md:border-white/10 md:pl-4">
+            <div class="text-[10px] text-[#00F0FF] tracking-widest uppercase font-bold">
+              {isPt ? "2. ESTRATÉGIA ACIONADA" : "2. TRIGGERED STRATEGY"}
+            </div>
+            <div class="font-bold text-white">MajorCascadeStinkBid <span class="text-[#00F0FF]/80">(>= P99 30d)</span></div>
+            <p class="font-sans text-[11px] text-white/60 leading-snug">
+              {isPt
+                ? "Monitoramento causal de 30 dias nos Core 4 Majors (BTC, ETH, XRP, XAU) com deduplicação 30m."
+                : "Causal 30-day rolling P99 monitor across Core 4 Majors (BTC, ETH, XRP, XAU) with 30m cooldown."}
+            </p>
+          </div>
+          <div class="space-y-1 md:border-l md:border-white/10 md:pl-4">
+            <div class="text-[10px] text-[#00FF94] tracking-widest uppercase font-bold">
+              {isPt ? "3. NOSSA OPERAÇÃO (CONTRAPARTE)" : "3. OUR EXECUTED TRADE SIDE"}
+            </div>
+            <div class="font-bold text-[#00FF94]">LONG · Post-Only Limit BUY <span class="text-white/75">(-15/-30 bps → +30m)</span></div>
+            <p class="font-sans text-[11px] text-white/60 leading-snug">
+              {isPt
+                ? "Compramos passivamente contra o pânico de venda forçada e encerramos no repique de equilíbrio."
+                : "Passively absorb forced long-liquidation selling and exit 30 minutes later into equilibrium."}
+            </p>
+          </div>
+        </div>
+
         <!-- Formula + Compounded vs Taker Comparison -->
         <div class="grid lg:grid-cols-3 gap-4">
           <div class="border border-white/10 bg-white/[0.02] p-5 rounded-sm space-y-3 font-sans text-xs text-white/75 leading-relaxed">
@@ -1052,10 +1090,12 @@ close: $3.1975 -> bid: $3.0974`}</pre>
                 <th class="py-2.5 px-2.5">Sig #</th>
                 <th class="py-2.5 px-2.5">UTC</th>
                 <th class="py-2.5 px-2.5">{isPt ? "Ativo" : "Asset"}</th>
+                <th class="py-2.5 px-2.5">{isPt ? "Estratégia" : "Strategy"}</th>
+                <th class="py-2.5 px-2.5">{isPt ? "Liquidação Alvo" : "Target Liq"}</th>
+                <th class="py-2.5 px-2.5">{isPt ? "Operação" : "Side"}</th>
                 <th class="py-2.5 px-2.5 text-right">Liq 5m</th>
                 <th class="py-2.5 px-2.5 text-right">P99 Causal</th>
                 <th class="py-2.5 px-2.5 text-right">Mult</th>
-                <th class="py-2.5 px-2.5 text-right">close[t]</th>
                 <th class="py-2.5 px-2.5 text-right">L1 (-15) / L2 (-30)</th>
                 <th class="py-2.5 px-2.5">Status</th>
                 <th class="py-2.5 px-2.5 text-right">L1 / L2 Net</th>
@@ -1066,19 +1106,27 @@ close: $3.1975 -> bid: $3.0974`}</pre>
             </thead>
             <tbody class="divide-y divide-white/5">
               {#each filteredOosSignals as r (r.sigId)}
-                <tr class="hover:bg-white/[0.03] transition-colors {r.tradeId === null ? 'opacity-60' : ''}">
+                <tr class="hover:bg-white/[0.03] transition-colors {r.tradeId === null ? 'opacity-65' : ''}">
                   <td class="py-2 px-2.5 font-bold {r.tradeId !== null ? 'text-white' : 'text-white/30'}">
                     {r.tradeId !== null ? `#${r.tradeId}` : "—"}
                   </td>
                   <td class="py-2 px-2.5 text-white/45">#{r.sigId}</td>
                   <td class="py-2 px-2.5 whitespace-nowrap text-white/85">{r.ts}</td>
                   <td class="py-2 px-2.5 font-bold text-[#00F0FF]">{r.symbol}</td>
+                  <td class="py-2 px-2.5 whitespace-nowrap text-white/75">{r.strategy}</td>
+                  <td class="py-2 px-2.5 whitespace-nowrap text-rose-300/90">{r.liqType}</td>
+                  <td class="py-2 px-2.5 whitespace-nowrap">
+                    <span class="px-1.5 py-0.5 rounded-sm border font-bold text-[10px] {r.tradeId !== null
+                      ? 'border-emerald-400/40 bg-emerald-400/10 text-emerald-300'
+                      : 'border-white/10 bg-white/5 text-white/45'}">
+                      {r.tradeId !== null ? r.tradeSide : isPt ? "LONG (Cancelada)" : "LONG (Cancelled)"}
+                    </span>
+                  </td>
                   <td class="py-2 px-2.5 text-right text-white">{fmtUsdInt(r.usd5m)}</td>
                   <td class="py-2 px-2.5 text-right text-white/55">{fmtUsdInt(r.p99)}</td>
                   <td class="py-2 px-2.5 text-right font-semibold {r.ratio >= 2.0 ? 'text-amber-300' : 'text-white/75'}">
                     {r.ratio.toFixed(2)}x
                   </td>
-                  <td class="py-2 px-2.5 text-right text-white/80">{fmtOosPrice(r.symbol, r.closeT)}</td>
                   <td class="py-2 px-2.5 text-right whitespace-nowrap text-[#4CC9F0]/80">
                     {fmtOosPrice(r.symbol, r.limit1)} / {fmtOosPrice(r.symbol, r.limit2)}
                   </td>
@@ -1100,8 +1148,8 @@ close: $3.1975 -> bid: $3.0974`}</pre>
                   <td class="py-2 px-2.5 text-right font-bold {r.tradeId === null ? 'text-white/35' : r.netRet >= 0 ? 'text-[#00FF94]' : 'text-rose-400'}">
                     {r.tradeId !== null ? fmtSignedPct(r.netRet, 3) : "0.000%"}
                   </td>
-                  <td class="py-2 px-2.5 text-right font-bold text-[#00FF94]">
-                    +{r.cumCompPct.toFixed(2)}%
+                  <td class="py-2 px-2.5 text-right font-bold {r.cumCompPct >= 0 ? 'text-[#00FF94]' : 'text-rose-400'}">
+                    {fmtSignedPct(r.cumCompPct, 2)}
                   </td>
                 </tr>
               {/each}
