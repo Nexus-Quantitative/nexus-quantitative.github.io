@@ -39,9 +39,9 @@
                     <span class="border border-white/10 px-2 py-1">Python</span>
                     <span class="border border-white/10 px-2 py-1">Pandas</span>
                     <span class="border border-white/10 px-2 py-1"
-                        >Freqtrade</span
+                        >Walk-Forward OOS</span
                     >
-                    <span class="border border-white/10 px-2 py-1">SciPy</span>
+                    <span class="border border-white/10 px-2 py-1">Microstructure</span>
                 </div>
             </div>
 
@@ -69,9 +69,9 @@
                     class="flex flex-wrap gap-2 font-mono text-[10px] text-secondary tracking-wide uppercase"
                 >
                     <span class="border border-white/10 px-2 py-1">Go</span>
-                    <span class="border border-white/10 px-2 py-1">NATS</span>
+                    <span class="border border-white/10 px-2 py-1">NATS JetStream</span>
                     <span class="border border-white/10 px-2 py-1"
-                        >Wails</span
+                        >Post-Only Maker</span
                     >
                     <span class="border border-white/10 px-2 py-1">Svelte</span>
                 </div>

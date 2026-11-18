@@ -7,96 +7,27 @@ const en = {
         loading: 'LOADING...'
     },
     nav: {
-        reports: '[ REPORTS ]',
+        reports: '[ QUANT REPORT ]',
         terminal: '[ LIVE TERMINAL ]'
     },
-    report: {
-        nav_back: '← NEXUS QUANT',
-        nav_title: 'OPERATIONAL REPORTS',
-        nav_week: 'WEEK',
-        generated_label: 'GENERATED',
-        page_title: 'Trading Desk',
-        methodology_label: 'METHODOLOGY',
-        indicators_label: 'INDICATORS',
-        font_decrease: 'A−',
-        font_increase: 'A+',
-
-        warning_title: 'Data validity:',
-        warning_text: 'Revalidate all prices, moving averages, and oscillators at the weekly open before arming any order. This report is a risk-defined decision framework — not a forecast or guarantee of results. Only trade on a <strong>closed bar</strong> of the relevant screen.',
-
-        priority_title: 'Monitoring Queue · by Priority',
-        scoreboard_title: 'Bias Scoreboard · Triple Screen',
-
-        role_primary: 'PRIMARY',
-        role_macro: 'MACRO',
-
-        impulse_red: '● RED',
-        impulse_green: '● GREEN',
-        impulse_blue_red: '◑ BLUE → RED',
-
-        zone_neutral_up: 'Neutral rising',
-        zone_rising_overbought: 'Rising → overbought',
-        zone_overbought: 'Overbought',
-        zone_low_k_below_d: 'Low, K < D',
-        zone_rising: 'Rising',
-        zone_oversold: 'Oversold',
-
-        btc_note: 'Pending impulse confirmation. Conditional short.',
-        xau_note: 'Short maturing. Stochastic at resistance.',
-        sp_note: 'Await pullback to 7,369. No buying overbought.',
-        bovespa_note: 'Cleanest trend. Both screens aligned.',
-        usdbrl_note: 'Sell bounce near 5.11 (weekly EMA underside).',
-        brent_note: 'Do not sell oversold. Await bounce to 101.',
-
-        playbook_title: 'BTC/USD — Primary Playbook',
-        tide_label: 'TIDE (WEEKLY)',
-        wave_label: 'WAVE (DAILY)',
-        tide_text: 'Price <span class="text-white">75,708.00</span> below MME(17) <span class="text-rose-400">76,533.35</span>. MACD histogram positive but decelerating — new weekly bar lower than previous (lower high). Impulse <span class="text-amber-400">blue in transition</span>; turns red when histogram confirms weekly close.',
-        wave_text: 'Price below descending MME. Stochastic %K <span class="text-[#4CC9F0]">42.08</span> / %D <span class="text-[#4CC9F0]">28.63</span>, rising (upper band 89.03). Counter-trend bounce in progress — <strong class="text-white">not yet overbought</strong>. Conviction scales to FULL after red weekly close.',
-        trigger_label: 'TRIGGER',
-        action_label: 'ACTION',
-        stop_label: 'STOP',
-        sc_a_name: 'SELL THE BOUNCE',
-        sc_a_condition: 'Price retraces to zone 76,533–76,606 + 1h stochastic overbought and turning + breaks prior 15m low',
-        sc_a_target_label: 'SUPPORT',
-        sc_b_name: 'CONTINUATION SELL',
-        sc_b_condition: 'Close below 73,936 + rejected retest from below + breaks prior 15m low',
-        sc_b_target_label: 'PARTIAL → RUNNER',
-        sc_c_label: 'NO TRADE',
-        sc_c_text: 'Condition: tide turns non-bearish <strong>or</strong> reclaim/close above 76,533. Action: <span class="text-[#00F0FF]/60">CancelSetups</span> — pull pending orders, remain ARMED with no entries.',
-        sc_a_invalidation: 'Close above 76,533',
-        sc_b_invalidation: 'Recovers and closes back above 73,936',
-
-        macro_implication_title: 'MACRO IMPLICATION',
-        macro_implication_text: 'The bearish BTC bias lacks broad macro risk-off support (strong S&P is the counterweight). Treat the short as a <strong class="text-white">correction within trend</strong>, not the start of a macro bear: modest targets, heightened vigilance on invalidation by reclaim.',
-
-        risk_title: 'Risk Management · Non-Negotiable Rules',
-        rule_2pct_id: '2%',
-        rule_2pct_title: 'THE 2% RULE',
-        rule_2pct_body: 'Never risk more than 2% of account per trade. Define the stop first; size the position from the stop.',
-        rule_6pct_id: '6%',
-        rule_6pct_title: 'THE 6% RULE',
-        rule_6pct_body: 'If monthly losses reach 6% of account, close all operations until month-end.',
-        rule_conv_id: 'CONV',
-        rule_conv_title: 'CONVICTION & SIZE',
-        rule_conv_body: 'HALF = half size (unconfirmed weekly impulse). FULL = full size (confirmed weekly impulse).',
-        rule_hier_id: 'HIER',
-        rule_hier_title: 'SCREEN HIERARCHY',
-        rule_hier_body: 'Never trade against the tide. Long only where tide is bullish. Stop defined at entry — non-negotiable.',
-
-        legend_armed: 'active permission; awaiting trigger',
-        legend_standby: 'no permission; do not trade',
-        legend_in_position: 'open position (runtime)',
-        legend_full: 'confirmed weekly impulse · full size',
-        legend_half: 'week in transition · half size',
-        zone_label: 'ZONE',
+    research: {
+        section_title: '>_ FEATURED QUANT RESEARCH',
+        badge: 'QUANT-RES-2026-11 // 18 NOV 2026',
+        eyebrow: 'MICROSTRUCTURE MONOGRAPH · OKX PERPETUALS & ARK STREAMS',
+        title: 'Systemic Liquidation Cascades, Passive Liquidity Provision & Automated Quant Doctrine',
+        summary: 'Empirical dissection of the 24+ systemic deleveraging clusters (Oct 20 → Nov 18, 2026) across BTC ($82.2k → $62.6k) and 1,061 instruments, out-of-sample validation of Post-Only Stink-Bid ladders (+18.20% OOS, Sharpe +5.34), and instant 30d cold-start hardening deployed in production.',
+        kpi_peak: 'Peak $10.12M (11.33x)',
+        kpi_symbols: 'OKX pairs warmed',
+        meta_line: 'COMPLETE 24-CLUSTER CHRONOLOGY · LIVE ALPHA_SHADOW AUDIT · PRs #78–#80',
+        cta: '[ READ FULL ARTICLE & TELEMETRY → ]'
     },
     hero: {
         status: 'SYSTEMS OPERATIONAL',
         title: 'NEXUS QUANT',
         subtitle: 'Proprietary Quantitative Research & Automated Decision Systems.',
-        cta: '[ VIEW PHILOSOPHY ]',
-        cta_ark: '[ ARK STREAMS PRESENTATION ]',
+        cta: '[ OVERVIEW ]',
+        cta_reports: '[ QUANT RESEARCH & REPORT ]',
+        cta_ark: '[ ARK STREAMS DECK ]',
         cta_terminal: '[ LIVE TERMINAL ]'
     },
     philosophy: {
@@ -108,9 +39,9 @@ const en = {
     },
     stack: {
         title: '>_ ARCHITECTURE',
-        card1: { title: 'QUANTITATIVE ANALYSIS', text: 'Rapid hypothesis testing, statistical modeling, and backtesting using the Python data science ecosystem.' },
-        card2: { title: 'PRODUCTION RUNTIME', text: 'Our proprietary event-driven intelligence platform. Built in Go and powered by NATS JetStream to ensure ultra-low latency, native persistence, and seamless scalability.' },
-        card3: { title: 'IMMUTABLE LEDGER', text: 'Full traceability of every decision state. We utilize time-travel database capabilities for rigorous post-trade auditing.' }
+        card1: { title: 'QUANTITATIVE RESEARCH', text: 'Statistical modeling, causal 30d quantile calibration, and 111-day walk-forward out-of-sample validation across 1.5M+ liquidation microstructure events.' },
+        card2: { title: 'PRODUCTION RUNTIME', text: 'Built in Go over NATS JetStream: 25 autonomous 1m strategy engines (MajorCascadeStinkBid + AltCascadeDeepBid F1) with 30d instant archive warmup and Post-Only No-Chase execution.' },
+        card3: { title: 'IMMUTABLE LEDGER', text: 'Full decision state traceability across LIQUIDATIONS_ARCHIVE (279k+ events), STRATEGY_STATE KV buckets, and forensically reconciled alpha_shadow ledgers.' }
     },
     evolution: {
         title: '>_ SYSTEM EVOLUTION',
@@ -118,13 +49,13 @@ const en = {
             period: '2023 - 2025',
             name: 'Phase 1: Functional Foundation',
             tech: 'Clojure / JVM / Polylith',
-            description: 'Focus on mathematical correctness, immutable data structures, and REPL-driven development. Proved the viability of our Bill Williams-based strategy logic.'
+            description: 'Focus on mathematical correctness, immutable data structures, and REPL-driven development. Established deterministic state-machine discipline.'
         },
         phase2: {
             period: '2026 - Present',
-            name: 'Phase 2: Hybrid Ecosystem',
-            tech: 'Go / NATS JetStream / Wails',
-            description: 'Expansion to a high-concurrency, low-latency hybrid architecture. Integrating Go for production edge nodes while maintaining Clojure for strategy modeling, unified by a persistent NATS event bus.'
+            name: 'Phase 2: Event-Driven Microstructure',
+            tech: 'Go / NATS JetStream / Post-Only Maker',
+            description: 'Production cluster monitoring 1,061+ perpetual instruments in real time. Replaced lagging directional indicators with causal systemic liquidation tracking (MKRatio), passive Stink-Bid ladders, and stale-replay hardening.'
         }
     },
     metrics: {
@@ -315,95 +246,26 @@ const pt = {
         loading: 'CARREGANDO...'
     },
     nav: {
-        reports: '[ RELATÓRIOS ]',
+        reports: '[ RELATÓRIO QUANT ]',
         terminal: '[ TERMINAL AO VIVO ]'
     },
-    report: {
-        nav_back: '← NEXUS QUANT',
-        nav_title: 'RELATÓRIOS OPERACIONAIS',
-        nav_week: 'SEMANA',
-        generated_label: 'GERADO',
-        page_title: 'Mesa de Operações',
-        methodology_label: 'METODOLOGIA',
-        indicators_label: 'INDICADORES',
-        font_decrease: 'A−',
-        font_increase: 'A+',
-
-        warning_title: 'Validade dos dados:',
-        warning_text: 'Revalidar todos os preços, médias e osciladores na abertura semanal antes de armar qualquer ordem. Este relatório é um framework de decisão com risco definido — não previsão nem garantia de resultado. Somente operar em <strong>barra fechada</strong> do screen relevante.',
-
-        priority_title: 'Fila de Monitoramento · por Prioridade',
-        scoreboard_title: 'Scoreboard de Viés · Triple Screen',
-
-        role_primary: 'PRIMÁRIO',
-        role_macro: 'MACRO',
-
-        impulse_red: '● VERMELHO',
-        impulse_green: '● VERDE',
-        impulse_blue_red: '◑ AZUL → VERMELHO',
-
-        zone_neutral_up: 'Neutro subindo',
-        zone_rising_overbought: 'Subindo → sobrecompra',
-        zone_overbought: 'Sobrecomprado',
-        zone_low_k_below_d: 'Baixo, K < D',
-        zone_rising: 'Subindo',
-        zone_oversold: 'Sobrevendido',
-
-        btc_note: 'Impulso pendente confirmação. Short condicional.',
-        xau_note: 'Short amadurecendo. Estocástico na resistência.',
-        sp_note: 'Aguardar pullback a 7.369. Não comprar sobrecompra.',
-        bovespa_note: 'Tendência mais limpa. Duas telas alinhadas.',
-        usdbrl_note: 'Vender repique perto de 5,11 (EMA semanal underside).',
-        brent_note: 'Não vender sobrevendido. Aguardar repique a 101.',
-
-        playbook_title: 'BTC/USD — Playbook Primário',
-        tide_label: 'MARÉ (SEMANAL)',
-        wave_label: 'ONDA (DIÁRIO)',
-        tide_text: 'Preço <span class="text-white">75.708,00</span> abaixo da MME(17) <span class="text-rose-400">76.533,35</span>. Histograma MACD positivo porém desacelerando — barra semanal nova menor que a anterior (topo mais baixo). Impulso <span class="text-amber-400">azul em transição</span>; vira vermelho quando histograma confirmar fechamento semanal.',
-        wave_text: 'Preço abaixo da MME descendente. Estocástico %K <span class="text-[#4CC9F0]">42,08</span> / %D <span class="text-[#4CC9F0]">28,63</span>, subindo (banda sup. 89,03). Repique contra-tendência em curso — <strong class="text-white">ainda não sobrecomprado</strong>. Convicção escala para FULL após fechamento semanal vermelho.',
-        trigger_label: 'GATILHO',
-        action_label: 'AÇÃO',
-        stop_label: 'STOP',
-        sc_a_name: 'VENDA NO REPIQUE',
-        sc_a_condition: 'Preço repica à zona 76.533–76.606 + estocástico 1h sobrecomprado e virando + rompe mínima 15m',
-        sc_a_target_label: 'SUPORTE',
-        sc_b_name: 'VENDA NA CONTINUAÇÃO',
-        sc_b_condition: 'Fechamento abaixo de 73.936 + reteste por baixo rejeitado + rompe mínima 15m',
-        sc_b_target_label: 'PARCIAL → RUNNER',
-        sc_c_label: 'SEM TRADE',
-        sc_c_text: 'Condição: maré deixa de ser baixista <strong>ou</strong> reclaim/fechamento acima de 76.533. Ação: <span class="text-[#00F0FF]/60">CancelSetups</span> — puxar ordens pendentes, seguir ARMED sem entradas.',
-        sc_a_invalidation: 'Fechamento acima de 76.533',
-        sc_b_invalidation: 'Recompõe e fecha de volta acima de 73.936',
-
-        macro_implication_title: 'IMPLICAÇÃO MACRO',
-        macro_implication_text: 'O viés vendedor do BTC não tem risk-off macro amplo por trás (S&P forte é o contrapeso). Tratar o short como <strong class="text-white">correção dentro de tendência</strong>, não início de bear macro: alvos mais modestos, vigilância redobrada na invalidação por reclaim.',
-
-        risk_title: 'Gestão de Risco · Regras Não-Negociáveis',
-        rule_2pct_id: '2%',
-        rule_2pct_title: 'REGRA DOS 2%',
-        rule_2pct_body: 'Nunca arriscar mais que 2% da conta por trade. Definir o stop primeiro; dimensionar a posição pelo stop.',
-        rule_6pct_id: '6%',
-        rule_6pct_title: 'REGRA DOS 6%',
-        rule_6pct_body: 'Se as perdas do mês atingirem 6% da conta, encerrar o operacional até virar o mês.',
-        rule_conv_id: 'CONV',
-        rule_conv_title: 'CONVICÇÃO & TAMANHO',
-        rule_conv_body: 'HALF = meia mão (impulso não confirmado). FULL = mão cheia (impulso semanal confirmado).',
-        rule_hier_id: 'HIER',
-        rule_hier_title: 'HIERARQUIA DE TELAS',
-        rule_hier_body: 'Nunca operar contra a maré. Long somente onde a maré é de alta. Stop definido na entrada — não-negociável.',
-
-        legend_armed: 'permissão ativa; aguardando gatilho',
-        legend_standby: 'sem permissão; não operar',
-        legend_in_position: 'posição aberta (runtime)',
-        legend_full: 'impulso semanal confirmado · mão cheia',
-        legend_half: 'semana em transição · meia mão',
-        zone_label: 'ZONA',
+    research: {
+        section_title: '>_ PESQUISA QUANT EM DESTAQUE',
+        badge: 'QUANT-RES-2026-11 // 18 NOV 2026',
+        eyebrow: 'MONOGRAFIA DE MICROESTRUTURA · PERPÉTUOS OKX & ARK STREAMS',
+        title: 'Cascatas Sistêmicas de Liquidação, Provisão Passiva de Liquidez e o Proceder Quant',
+        summary: 'Dissecação empírica dos 24+ clusters sistêmicos (20/Out → 18/Nov/2026) no BTC ($82,2k → $62,6k) e em 1.061 ativos, validação OOS das escadas Post-Only Stink-Bid (+18,20% líquido, Sharpe +5,34) e hardening com warmup instantâneo de 30 dias em produção.',
+        kpi_peak: 'Pico $10,12M (11,33x)',
+        kpi_symbols: 'ativos OKX aquecidos',
+        meta_line: 'CRONOLOGIA COMPLETA 24 EVENTOS · AUDITORIA ALPHA_SHADOW · PRs #78–#80',
+        cta: '[ LER ARTIGO & TELEMETRIA COMPLETA → ]'
     },
     hero: {
         status: 'SISTEMAS OPERACIONAIS',
         title: 'NEXUS QUANT',
         subtitle: 'Pesquisa Quantitativa Proprietária e Sistemas de Decisão Automatizados.',
-        cta: '[ VER FILOSOFIA ]',
+        cta: '[ VISÃO GERAL ]',
+        cta_reports: '[ PESQUISA & RELATÓRIO QUANT ]',
         cta_ark: '[ APRESENTAÇÃO ARK STREAMS ]',
         cta_terminal: '[ TERMINAL EM TEMPO REAL ]'
     },
@@ -416,9 +278,9 @@ const pt = {
     },
     stack: {
         title: '>_ ARQUITETURA',
-        card1: { title: 'ANÁLISE QUANTITATIVA', text: 'Teste rápido de hipóteses, modelagem estatística e backtesting usando o ecossistema de ciência de dados Python.' },
-        card2: { title: 'RUNTIME DE PRODUÇÃO', text: 'Nossa plataforma proprietária de inteligência orientada a eventos. Construída em Go e movida por NATS JetStream para garantir latência ultra-baixa, persistência nativa e escalabilidade contínua.' },
-        card3: { title: 'LEDGER IMUTÁVEL', text: 'Rastreabilidade total de cada estado de decisão. Utilizamos recursos de banco de dados de viagem no tempo para auditoria pós-trade rigorosa.' }
+        card1: { title: 'PESQUISA QUANTITATIVA', text: 'Modelagem estatística, calibração de quantis causais de 30 dias e validação walk-forward OOS de 111 dias sobre 1,5M+ eventos de liquidação.' },
+        card2: { title: 'RUNTIME DE PRODUÇÃO', text: 'Construído em Go sobre NATS JetStream: 25 motores autônomos 1m (MajorCascadeStinkBid + AltCascadeDeepBid F1) com warmup instantâneo de 30d e execução Post-Only No-Chase.' },
+        card3: { title: 'LEDGER IMUTÁVEL', text: 'Rastreabilidade integral de cada decisão em LIQUIDATIONS_ARCHIVE (279k+ eventos), KV STRATEGY_STATE e livros auditáveis em alpha_shadow.' }
     },
     evolution: {
         title: '>_ EVOLUÇÃO DO SISTEMA',
@@ -426,13 +288,13 @@ const pt = {
             period: '2023 - 2025',
             name: 'Fase 1: Fundação Funcional',
             tech: 'Clojure / JVM / Polylith',
-            description: 'Foco em corretude matemática, estruturas de dados imutáveis e desenvolvimento orientado a REPL. Provou a viabilidade da nossa lógica de estratégia baseada em Bill Williams.'
+            description: 'Foco em corretude matemática, estruturas de dados imutáveis e desenvolvimento orientado a REPL. Consolidou a disciplina determinística de máquina de estados.'
         },
         phase2: {
-            period: '2026 - Present',
-            name: 'Fase 2: Ecossistema Híbrido',
-            tech: 'Go / NATS JetStream / Wails',
-            description: 'Expansão para uma arquitetura híbrida de alta concorrência e baixa latência. Integração de Go para nós de borda em produção, mantendo Clojure para modelagem de estratégias, unificados por um barramento NATS persistente.'
+            period: '2026 - Presente',
+            name: 'Fase 2: Microestrutura Orientada a Eventos',
+            tech: 'Go / NATS JetStream / Post-Only Maker',
+            description: 'Cluster em produção monitorando 1.061+ contratos perpétuos em tempo real. Substituição de indicadores defasados por rastreamento causal sistêmico (MKRatio), escadas Stink-Bid passivas e bloqueio de replay obsoleto.'
         }
     },
     metrics: {

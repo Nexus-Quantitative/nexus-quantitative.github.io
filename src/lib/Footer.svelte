@@ -20,9 +20,9 @@
             >
             <a
                 href="#/relatorios"
-                aria-label="Relatórios Operacionais"
+                aria-label="Quant Research Reports"
                 class="hover:text-accent transition-colors duration-300"
-                >[ RELATÓRIOS ]</a
+                >{$t("nav.reports")}</a
             >
         </div>
 

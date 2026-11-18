@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import EventHorizonBackground from "./lib/EventHorizonBackground.svelte";
   import Hero from "./lib/Hero.svelte";
+  import FeaturedResearch from "./lib/FeaturedResearch.svelte";
   import Philosophy from "./lib/Philosophy.svelte";
   import Stack from "./lib/Stack.svelte";
   import Evolution from "./lib/Evolution.svelte";
@@ -48,6 +49,7 @@
     <TerminalDashboard />
   {:else}
     <Hero />
+    <FeaturedResearch />
     <Philosophy />
     <Stack />
     <Evolution />
