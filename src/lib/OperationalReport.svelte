@@ -3,6 +3,12 @@
   import { onMount, onDestroy } from "svelte";
   import { locale } from "svelte-i18n";
   import LanguageSwitcher from "./LanguageSwitcher.svelte";
+  import {
+    oosSignals,
+    oosSummary,
+    type OOSSignalRecord,
+    type OOSCoreSymbol,
+  } from "./oosSignalsData";
 
   // ── Font size control ─────────────────────────────────────────────────────
   let fontSize = 15;
@@ -12,6 +18,12 @@
   // ── Cascade filter state ──────────────────────────────────────────────────
   type CascadeFilter = "all" | "mega" | "climax" | "moderate";
   let cascadeFilter: CascadeFilter = "all";
+
+  // ── OOS Proof ledger filter state ─────────────────────────────────────────
+  type OosStatusFilter = "filled" | "all" | "full" | "partial" | "expired";
+  type OosSymbolFilter = "ALL" | OOSCoreSymbol;
+  let oosStatusFilter: OosStatusFilter = "filled";
+  let oosSymbolFilter: OosSymbolFilter = "ALL";
 
   $: isPt = ($locale ?? "").startsWith("pt");
 
@@ -43,6 +55,7 @@
     { id: "sec-fisica", num: "02", pt: "FÍSICA & RÉGUA 30D", en: "LIQUIDATION PHYSICS" },
     { id: "sec-cronologia", num: "03", pt: "24 CASCATAS", en: "24 CASCADES" },
     { id: "sec-sistema", num: "04", pt: "ARK STREAMS", en: "SYSTEM ARCHITECTURE" },
+    { id: "sec-oos-proof", num: "04B", pt: "PROVA OOS (133 SINAIS)", en: "OOS PROOF (133 SIGNALS)" },
     { id: "sec-hardening", num: "05", pt: "HARDENING PROD", en: "PROD HARDENING" },
     { id: "sec-doutrina", num: "06", pt: "DOUTRINA QUANT", en: "QUANT DOCTRINE" },
   ];
@@ -228,6 +241,104 @@
     { labelPt: "Estresse -5 bps Extras / Perna", labelEn: "Extra -5 bps Stress per Leg", n: 55, ret: "+15.76%", sharpe: "+4.84", pf: "4.85" },
     { labelPt: "Estresse -10 bps Extras / Perna", labelEn: "Extra -10 bps Stress per Leg", n: 55, ret: "+13.37%", sharpe: "+4.29", pf: "3.78" },
   ];
+
+  // ── Section 4B: OOS 133-Signal / 55-Trade Proof Ledger Helpers & Equity SVG ─
+  const filledOosTrades = oosSignals.filter((r) => r.tradeId !== null);
+
+  function buildEquityCurvePoints(trades: OOSSignalRecord[]) {
+    const W = 800;
+    const H = 200;
+    const PAD_L = 44;
+    const PAD_R = 54;
+    const PAD_T = 16;
+    const PAD_B = 26;
+    const plotW = W - PAD_L - PAD_R;
+    const plotH = H - PAD_T - PAD_B;
+    const minY = -2;
+    const maxY = 20;
+
+    const toX = (i: number) => PAD_L + (i / trades.length) * plotW;
+    const toY = (v: number) => PAD_T + ((maxY - v) / (maxY - minY)) * plotH;
+
+    let sumSimple = 0;
+    const compPts: string[] = [`${toX(0).toFixed(1)},${toY(0).toFixed(1)}`];
+    const simplePts: string[] = [`${toX(0).toFixed(1)},${toY(0).toFixed(1)}`];
+
+    trades.forEach((tr, idx) => {
+      sumSimple += tr.netRet;
+      compPts.push(`${toX(idx + 1).toFixed(1)},${toY(tr.cumCompPct).toFixed(1)}`);
+      simplePts.push(`${toX(idx + 1).toFixed(1)},${toY(sumSimple).toFixed(1)}`);
+    });
+
+    const lastComp = trades[trades.length - 1]?.cumCompPct ?? 0;
+    const areaPts = [
+      ...compPts,
+      `${toX(trades.length).toFixed(1)},${toY(0).toFixed(1)}`,
+      `${toX(0).toFixed(1)},${toY(0).toFixed(1)}`,
+    ].join(" ");
+
+    return {
+      W,
+      H,
+      PAD_L,
+      PAD_R,
+      zeroY: toY(0),
+      yTicks: [0, 5, 10, 15, 18.2].map((v) => ({ v, y: toY(v) })),
+      compPolyline: compPts.join(" "),
+      simplePolyline: simplePts.join(" "),
+      areaPolygon: areaPts,
+      endX: toX(trades.length),
+      endY: toY(lastComp),
+      endPct: lastComp,
+    };
+  }
+
+  const equitySvg = buildEquityCurvePoints(filledOosTrades);
+
+  $: filteredOosSignals = oosSignals.filter((r) => {
+    if (oosSymbolFilter !== "ALL" && r.symbol !== oosSymbolFilter) return false;
+    if (oosStatusFilter === "filled") return r.tradeId !== null;
+    if (oosStatusFilter === "full") return r.status === "FULL";
+    if (oosStatusFilter === "partial") return r.status === "PARTIAL";
+    if (oosStatusFilter === "expired") return r.status === "EXPIRED";
+    return true;
+  });
+
+  $: filteredOosStats = (() => {
+    const filled = filteredOosSignals.filter((r) => r.tradeId !== null);
+    const wins = filled.filter((r) => r.netRet > 0).length;
+    const sumPct = filled.reduce((acc, r) => acc + r.netRet, 0);
+    const takerSum = filteredOosSignals.reduce((acc, r) => acc + r.takerNet30, 0);
+    return {
+      signals: filteredOosSignals.length,
+      filled: filled.length,
+      wins,
+      losses: filled.length - wins,
+      wr: filled.length > 0 ? (wins / filled.length) * 100 : 0,
+      sumPct,
+      takerSum,
+    };
+  })();
+
+  function fmtOosPrice(sym: OOSCoreSymbol, p: number): string {
+    return sym === "XRPUSDT"
+      ? `$${p.toLocaleString("en-US", { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`
+      : `$${p.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  function fmtUsdInt(v: number): string {
+    return `$${Math.round(v).toLocaleString("en-US")}`;
+  }
+
+  function fmtSignedPct(v: number, decimals = 3): string {
+    return `${v >= 0 ? "+" : ""}${v.toFixed(decimals)}%`;
+  }
+
+  function statusBadgeClass(st: OOSSignalRecord["status"]): string {
+    if (st === "FULL") return "border-[#00FF94]/40 bg-[#00FF94]/10 text-[#00FF94]";
+    if (st === "PARTIAL") return "border-[#00F0FF]/40 bg-[#00F0FF]/10 text-[#00F0FF]";
+    return "border-white/15 bg-white/5 text-white/45";
+  }
 </script>
 
 <div class="min-h-screen bg-black/85 text-white font-mono relative z-10" in:fade={{ duration: 300 }}>
@@ -789,6 +900,225 @@ close: $3.1975 -> bid: $3.0974`}</pre>
     │   (t > window & filled == 0 : No-Chase Cancel @ $0 fee) ─────────┤
     │                                                                  ▼
     └────────(t >= HoldHorizon + 1m : Time-Stop Exit)───────── [IN_POSITION]`}</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Sub-section 04B: Forensic OOS Proof Ledger (All 133 Signals & 55 Trades) ── -->
+      <div id="sec-oos-proof" class="scroll-mt-28 pt-6 space-y-5">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="px-2 py-0.5 bg-[#00FF94]/15 border border-[#00FF94]/40 text-[#00FF94] text-[10px] font-bold tracking-widest rounded-sm">
+            04B // {isPt ? "PROVA AUDITÁVEL DO +18,20% OOS" : "AUDITABLE +18.20% OOS PROOF"}
+          </span>
+          <h3 class="text-lg md:text-xl font-bold text-white">
+            {isPt
+              ? "Ledger Completo dos 133 Sinais Emitidos & 55 Trades Executados (Core 4 Majors · Jul–Out/2026)"
+              : "Complete 133 Emitted Signals & 55 Executed Trades Ledger (Core 4 Majors · Jul–Oct 2026)"}
+          </h3>
+        </div>
+
+        <!-- Formula + Compounded vs Taker Comparison -->
+        <div class="grid lg:grid-cols-3 gap-4">
+          <div class="border border-white/10 bg-white/[0.02] p-5 rounded-sm space-y-3 font-sans text-xs text-white/75 leading-relaxed">
+            <div class="font-mono text-[10px] text-[#00F0FF] tracking-widest font-bold uppercase">
+              {isPt ? "METODOLOGIA EXATA DO SCRIPT WALK-FORWARD" : "EXACT WALK-FORWARD METHODOLOGY"}
+            </div>
+            <p>
+              {#if isPt}
+                Cada linha abaixo vem diretamente do dataset causal virgem (<code class="text-[#00FF94]">bounce_oos_clusters_p99.csv</code>) e reproduz bit-a-bit o validador <code class="text-white">major_cascade_stink_bid_walkforward.py</code>:
+              {:else}
+                Every row below comes directly from the virgin causal OOS dataset (<code class="text-[#00FF94]">bounce_oos_clusters_p99.csv</code>) and reproduces <code class="text-white">major_cascade_stink_bid_walkforward.py</code> bit-for-bit:
+              {/if}
+            </p>
+            <ul class="space-y-1.5 text-[11px]">
+              <li>• <strong class="text-white">133</strong> {isPt ? "clusters >= P99 (dedup 30m): " : "deduplicated P99 triggers: "} <span class="text-[#4CC9F0]">BTC 40 · ETH 49 · XRP 25 · XAU 19</span></li>
+              <li>• <strong class="text-white">55</strong> {isPt ? "trades preenchidos (41,4%): " : "executed trades (41.4%): "} <span class="text-[#00FF94]">29 FULL (-15 & -30 bps) + 26 PARTIAL (-15 bps)</span></li>
+              <li>• <strong class="text-white">78</strong> {isPt ? "sinais expirados sem toque (58,6%): " : "No-Chase expirations (58.6%): "} <span class="text-white/60">custo $0,00 · impacto 0,00%</span></li>
+              <li>• <strong class="text-white">{isPt ? "Contrafactual Taker nos 133 sinais:" : "Counterfactual Taker (all 133):"}</strong> <span class="text-amber-300 font-bold">+{oosSummary.takerAll133SumPct.toFixed(2)}%</span> vs <span class="text-[#00FF94] font-bold">+{oosSummary.compoundedNetPct.toFixed(2)}%</span> Stink-Bid</li>
+            </ul>
+          </div>
+
+          <!-- SVG Compounded Equity Curve -->
+          <div class="lg:col-span-2 border border-white/10 bg-black/80 p-5 rounded-sm space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-[10px] tracking-widest uppercase">
+              <span class="text-[#00FF94] font-bold">
+                {isPt ? "CURVA DE EQUITY OOS (55 TRADES PREENCHIDOS · CAPITAL 1X)" : "OOS EQUITY CURVE (55 FILLED TRADES · 1X CAPITAL)"}
+              </span>
+              <div class="flex items-center gap-4 text-[10px]">
+                <span class="text-[#00FF94]">━━ Composto: +18.20%</span>
+                <span class="text-[#4CC9F0]/75">╌╌ Soma Simples: +16.90%</span>
+                <span class="text-white/45">MaxDD: 0.89%</span>
+              </div>
+            </div>
+
+            <svg viewBox="0 0 {equitySvg.W} {equitySvg.H}" class="w-full h-44 overflow-visible">
+              {#each equitySvg.yTicks as tick}
+                <line
+                  x1={equitySvg.PAD_L}
+                  y1={tick.y}
+                  x2={equitySvg.W - equitySvg.PAD_R}
+                  y2={tick.y}
+                  stroke={tick.v === 0 ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.07)"}
+                  stroke-dasharray={tick.v === 0 ? undefined : "3 4"}
+                />
+                <text
+                  x={equitySvg.PAD_L - 8}
+                  y={tick.y + 3}
+                  text-anchor="end"
+                  fill="rgba(255,255,255,0.45)"
+                  font-size="10"
+                  font-family="monospace"
+                >
+                  +{tick.v.toFixed(tick.v === 18.2 ? 1 : 0)}%
+                </text>
+              {/each}
+
+              <polygon points={equitySvg.areaPolygon} fill="rgba(0,255,148,0.08)" />
+              <polyline
+                points={equitySvg.simplePolyline}
+                fill="none"
+                stroke="rgba(76,201,240,0.65)"
+                stroke-width="1.5"
+                stroke-dasharray="4 3"
+              />
+              <polyline
+                points={equitySvg.compPolyline}
+                fill="none"
+                stroke="#00FF94"
+                stroke-width="2.2"
+              />
+              <circle cx={equitySvg.endX} cy={equitySvg.endY} r="4" fill="#00FF94" />
+              <text
+                x={equitySvg.endX + 6}
+                y={equitySvg.endY + 3}
+                fill="#00FF94"
+                font-size="11"
+                font-weight="bold"
+                font-family="monospace"
+              >
+                +{equitySvg.endPct.toFixed(2)}%
+              </text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border border-white/10 bg-white/[0.015] p-3 rounded-sm text-[11px]">
+          <div class="flex flex-wrap gap-1.5">
+            {#each [
+              { id: "filled", label: isPt ? "EXECUTADOS (55)" : "FILLED TRADES (55)" },
+              { id: "all", label: isPt ? "TODOS SINAIS (133)" : "ALL SIGNALS (133)" },
+              { id: "full", label: "FULL -15 & -30 (29)" },
+              { id: "partial", label: "PARTIAL -15 (26)" },
+              { id: "expired", label: "NO-CHASE EXPIRED (78)" },
+            ] as sf}
+              <button
+                on:click={() => (oosStatusFilter = sf.id as OosStatusFilter)}
+                class="px-2.5 py-1 rounded-sm border transition-colors {oosStatusFilter === sf.id
+                  ? 'border-[#00FF94] bg-[#00FF94]/15 text-[#00FF94] font-bold'
+                  : 'border-white/10 text-white/55 hover:text-white'}"
+              >
+                {sf.label}
+              </button>
+            {/each}
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            {#each [
+              { id: "ALL", label: "ALL CORE 4" },
+              { id: "BTCUSDT", label: "BTC (18/40)" },
+              { id: "ETHUSDT", label: "ETH (22/49)" },
+              { id: "XRPUSDT", label: "XRP (13/25)" },
+              { id: "XAUUSDT", label: "XAU (2/19)" },
+            ] as symF}
+              <button
+                on:click={() => (oosSymbolFilter = symF.id as OosSymbolFilter)}
+                class="px-2.5 py-1 rounded-sm border transition-colors {oosSymbolFilter === symF.id
+                  ? 'border-[#00F0FF] bg-[#00F0FF]/15 text-[#00F0FF] font-bold'
+                  : 'border-white/10 text-white/55 hover:text-white'}"
+              >
+                {symF.label}
+              </button>
+            {/each}
+          </div>
+        </div>
+
+        <!-- Audit Ledger Table -->
+        <div class="border border-white/10 bg-black/85 rounded-sm overflow-x-auto max-h-[560px] overflow-y-auto">
+          <table class="w-full text-left border-collapse text-[11px] tabular-nums">
+            <thead class="sticky top-0 z-10 bg-black/95 border-b border-white/15 text-[10px] text-[#00F0FF]/80 uppercase tracking-wider">
+              <tr>
+                <th class="py-2.5 px-2.5">Trade #</th>
+                <th class="py-2.5 px-2.5">Sig #</th>
+                <th class="py-2.5 px-2.5">UTC</th>
+                <th class="py-2.5 px-2.5">{isPt ? "Ativo" : "Asset"}</th>
+                <th class="py-2.5 px-2.5 text-right">Liq 5m</th>
+                <th class="py-2.5 px-2.5 text-right">P99 Causal</th>
+                <th class="py-2.5 px-2.5 text-right">Mult</th>
+                <th class="py-2.5 px-2.5 text-right">close[t]</th>
+                <th class="py-2.5 px-2.5 text-right">L1 (-15) / L2 (-30)</th>
+                <th class="py-2.5 px-2.5">Status</th>
+                <th class="py-2.5 px-2.5 text-right">L1 / L2 Net</th>
+                <th class="py-2.5 px-2.5 text-right">Taker +30m</th>
+                <th class="py-2.5 px-2.5 text-right">Trade Net</th>
+                <th class="py-2.5 px-2.5 text-right">Equity Comp.</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+              {#each filteredOosSignals as r (r.sigId)}
+                <tr class="hover:bg-white/[0.03] transition-colors {r.tradeId === null ? 'opacity-60' : ''}">
+                  <td class="py-2 px-2.5 font-bold {r.tradeId !== null ? 'text-white' : 'text-white/30'}">
+                    {r.tradeId !== null ? `#${r.tradeId}` : "—"}
+                  </td>
+                  <td class="py-2 px-2.5 text-white/45">#{r.sigId}</td>
+                  <td class="py-2 px-2.5 whitespace-nowrap text-white/85">{r.ts}</td>
+                  <td class="py-2 px-2.5 font-bold text-[#00F0FF]">{r.symbol}</td>
+                  <td class="py-2 px-2.5 text-right text-white">{fmtUsdInt(r.usd5m)}</td>
+                  <td class="py-2 px-2.5 text-right text-white/55">{fmtUsdInt(r.p99)}</td>
+                  <td class="py-2 px-2.5 text-right font-semibold {r.ratio >= 2.0 ? 'text-amber-300' : 'text-white/75'}">
+                    {r.ratio.toFixed(2)}x
+                  </td>
+                  <td class="py-2 px-2.5 text-right text-white/80">{fmtOosPrice(r.symbol, r.closeT)}</td>
+                  <td class="py-2 px-2.5 text-right whitespace-nowrap text-[#4CC9F0]/80">
+                    {fmtOosPrice(r.symbol, r.limit1)} / {fmtOosPrice(r.symbol, r.limit2)}
+                  </td>
+                  <td class="py-2 px-2.5">
+                    <span class="px-1.5 py-0.5 border rounded-sm text-[10px] font-bold {statusBadgeClass(r.status)}">
+                      {r.status}
+                    </span>
+                  </td>
+                  <td class="py-2 px-2.5 text-right whitespace-nowrap text-white/70">
+                    {#if r.tradeId !== null}
+                      {fmtSignedPct(r.retL1, 2)} / {fmtSignedPct(r.retL2, 2)}
+                    {:else}
+                      0.00% / 0.00%
+                    {/if}
+                  </td>
+                  <td class="py-2 px-2.5 text-right {r.takerNet30 >= 0 ? 'text-emerald-400/70' : 'text-rose-400/75'}">
+                    {fmtSignedPct(r.takerNet30, 2)}
+                  </td>
+                  <td class="py-2 px-2.5 text-right font-bold {r.tradeId === null ? 'text-white/35' : r.netRet >= 0 ? 'text-[#00FF94]' : 'text-rose-400'}">
+                    {r.tradeId !== null ? fmtSignedPct(r.netRet, 3) : "0.000%"}
+                  </td>
+                  <td class="py-2 px-2.5 text-right font-bold text-[#00FF94]">
+                    +{r.cumCompPct.toFixed(2)}%
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Summary bar for filtered selection -->
+        <div class="border border-white/10 bg-white/[0.02] px-4 py-3 rounded-sm flex flex-wrap items-center justify-between gap-3 text-xs tabular-nums">
+          <div class="flex flex-wrap gap-4 text-white/75">
+            <span>{isPt ? "Exibindo:" : "Showing:"} <strong class="text-white">{filteredOosStats.signals}</strong> {isPt ? "sinais" : "signals"}</span>
+            <span>{isPt ? "Preenchidos:" : "Filled:"} <strong class="text-white">{filteredOosStats.filled}</strong> ({filteredOosStats.wins}W / {filteredOosStats.losses}L · WR <strong class="text-[#00FF94]">{filteredOosStats.wr.toFixed(1)}%</strong>)</span>
+            <span>{isPt ? "Soma Líquida:" : "Net Sum:"} <strong class={filteredOosStats.sumPct >= 0 ? 'text-[#00FF94]' : 'text-rose-400'}>{fmtSignedPct(filteredOosStats.sumPct, 2)}</strong></span>
+            <span>{isPt ? "Contrafactual Taker:" : "Taker Counterfactual:"} <strong class="text-amber-300">{fmtSignedPct(filteredOosStats.takerSum, 2)}</strong></span>
+          </div>
+          <div class="text-[11px] text-white/45">
+            {isPt ? "Carteira Completa (111 dias):" : "Full Portfolio (111 days):"} <strong class="text-[#00FF94]">+18.20%</strong> (Sharpe +5.34 · PF 6.31 · MaxDD 0.89%)
           </div>
         </div>
       </div>
