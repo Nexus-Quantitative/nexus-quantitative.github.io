@@ -137,7 +137,7 @@ O sistema roda continuamente em produção (`ark_stream`, `ark_executor`, `ark_n
 - **Bid Profundo por Volatilidade:** Ordem única `100%` com profundidade $\text{depth}_{\text{bps}} = 7 \cdot \sigma_{1\text{m}} \cdot \sqrt{5}$, janela passiva de `30 minutos`, *hold horizon* de `+60 minutos`, preenchimento estrito (`low < P_limit`) e contabilidade contínua em `/app/logs/shadow/alpha_shadow.jsonl` (com tiers de atrito de `12 bps` e `20 bps` em alocações de `$1k`, `$10k` e `$50k`).
 
 
-### 4.1 Prova Forense Auditável: Todos os 133 Sinais Emitidos & 55 Trades Executados no OOS (`2026-07-04 → 2026-10-22`)
+### 4.1 Prova Forense Auditável: Todos os 133 Sinais Emitidos & 55 Trades Executados no OOS (`SIMULAÇÃO WALK-FORWARD OOS · DADOS HISTÓRICOS OKX (JUL–OUT/2026)`)
 
 - **Operação Executada (Contraparte):** sempre **`LONG` (`Post-Only Limit BUY` em `-15 bps` / `-30 bps`, saída após `+30m`)** — compramos passivamente na absorção do vácuo de liquidez.
 - **Contra Qual Estratégia:** **`MajorCascadeStinkBid`** (Core 4 Majors: `BTCUSDT`, `ETHUSDT`, `XRPUSDT`, `XAUUSDT`, gatilho `>= P99` causal 30d + dedup 30m).

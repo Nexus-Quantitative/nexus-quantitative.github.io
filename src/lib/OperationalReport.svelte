@@ -549,6 +549,11 @@
         <!-- Live Shadow Excerpt Box -->
         <div class="border border-[#00FF94]/30 bg-black/80 p-5 rounded-sm flex flex-col justify-between space-y-3">
           <div>
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-[10px] font-bold tracking-widest rounded-sm uppercase">
+                ● {isPt ? "EXECUÇÃO AO VIVO · SHADOW MODE (18/NOV/2026)" : "LIVE EXECUTION · SHADOW MODE (NOV 18, 2026)"}
+              </span>
+            </div>
             <div class="text-[10px] text-[#00FF94] tracking-widest uppercase font-bold mb-2">
               ● {isPt ? "PROVA AO VIVO · ALPHA_SHADOW.JSONL (16:12 UTC)" : "LIVE PRODUCTION PROOF · ALPHA_SHADOW (16:12 UTC)"}
             </div>
@@ -911,6 +916,9 @@ close: $3.1975 -> bid: $3.0974 (-313 bps)`}</pre>
           <span class="px-2 py-0.5 bg-[#00FF94]/15 border border-[#00FF94]/40 text-[#00FF94] text-[10px] font-bold tracking-widest rounded-sm">
             04B // {isPt ? "PROVA AUDITÁVEL DO +18,20% OOS" : "AUDITABLE +18.20% OOS PROOF"}
           </span>
+          <span class="px-2 py-0.5 bg-amber-400/15 border border-amber-400/50 text-amber-300 text-[10px] font-bold tracking-widest rounded-sm uppercase">
+            {isPt ? "SIMULAÇÃO WALK-FORWARD OOS · DADOS HISTÓRICOS OKX (JUL–OUT/2026)" : "HISTORICAL OOS SIMULATION · OKX HISTORICAL DATA (JUL–OCT/2026)"}
+          </span>
           <h3 class="text-lg md:text-xl font-bold text-white">
             {isPt
               ? "Ledger Completo dos 133 Sinais Emitidos & 55 Trades Executados (Core 4 Majors · Jul–Out/2026)"
@@ -958,6 +966,9 @@ close: $3.1975 -> bid: $3.0974 (-313 bps)`}</pre>
         <!-- Formula + Compounded vs Taker Comparison -->
         <div class="grid lg:grid-cols-3 gap-4">
           <div class="border border-white/10 bg-white/[0.02] p-5 rounded-sm space-y-3 font-sans text-xs text-white/75 leading-relaxed">
+            <span class="inline-block px-2 py-0.5 bg-amber-400/15 border border-amber-400/40 text-amber-300 text-[10px] font-bold tracking-widest rounded-sm uppercase mb-1">
+              {isPt ? "SIMULAÇÃO WALK-FORWARD OOS · DADOS HISTÓRICOS OKX (JUL–OUT/2026)" : "HISTORICAL OOS SIMULATION · OKX HISTORICAL DATA (JUL–OCT/2026)"}
+            </span>
             <div class="font-mono text-[10px] text-[#00F0FF] tracking-widest font-bold uppercase">
               {isPt ? "METODOLOGIA EXATA DO SCRIPT WALK-FORWARD" : "EXACT WALK-FORWARD METHODOLOGY"}
             </div>
@@ -1158,12 +1169,17 @@ close: $3.1975 -> bid: $3.0974 (-313 bps)`}</pre>
         </div>
 
         <!-- Summary bar for filtered selection -->
-        <div class="border border-white/10 bg-white/[0.02] px-4 py-3 rounded-sm flex flex-wrap items-center justify-between gap-3 text-xs tabular-nums">
-          <div class="flex flex-wrap gap-4 text-white/75">
-            <span>{isPt ? "Exibindo:" : "Showing:"} <strong class="text-white">{filteredOosStats.signals}</strong> {isPt ? "sinais" : "signals"}</span>
-            <span>{isPt ? "Preenchidos:" : "Filled:"} <strong class="text-white">{filteredOosStats.filled}</strong> ({filteredOosStats.wins}W / {filteredOosStats.losses}L · WR <strong class="text-[#00FF94]">{filteredOosStats.wr.toFixed(1)}%</strong>)</span>
-            <span>{isPt ? "Soma Líquida:" : "Net Sum:"} <strong class={filteredOosStats.sumPct >= 0 ? 'text-[#00FF94]' : 'text-rose-400'}>{fmtSignedPct(filteredOosStats.sumPct, 2)}</strong></span>
-            <span>{isPt ? "Contrafactual Taker:" : "Taker Counterfactual:"} <strong class="text-amber-300">{fmtSignedPct(filteredOosStats.takerSum, 2)}</strong></span>
+        <div data-testid="oos-summary-bar" class="border border-white/10 bg-white/[0.02] px-4 py-3 rounded-sm flex flex-wrap items-center justify-between gap-3 text-xs tabular-nums">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="px-2 py-0.5 bg-amber-400/15 border border-amber-400/40 text-amber-300 text-[10px] font-bold tracking-widest rounded-sm uppercase">
+              {isPt ? "SIMULAÇÃO WALK-FORWARD OOS · DADOS HISTÓRICOS OKX (JUL–OUT/2026)" : "HISTORICAL OOS SIMULATION · OKX HISTORICAL DATA (JUL–OCT/2026)"}
+            </span>
+            <div class="flex flex-wrap gap-4 text-white/75">
+              <span>{isPt ? "Exibindo:" : "Showing:"} <strong class="text-white">{filteredOosStats.signals}</strong> {isPt ? "sinais" : "signals"}</span>
+              <span>{isPt ? "Preenchidos:" : "Filled:"} <strong class="text-white">{filteredOosStats.filled}</strong> ({filteredOosStats.wins}W / {filteredOosStats.losses}L · WR <strong class="text-[#00FF94]">{filteredOosStats.wr.toFixed(1)}%</strong>)</span>
+              <span>{isPt ? "Soma Líquida:" : "Net Sum:"} <strong class={filteredOosStats.sumPct >= 0 ? 'text-[#00FF94]' : 'text-rose-400'}>{fmtSignedPct(filteredOosStats.sumPct, 2)}</strong></span>
+              <span>{isPt ? "Contrafactual Taker:" : "Taker Counterfactual:"} <strong class="text-amber-300">{fmtSignedPct(filteredOosStats.takerSum, 2)}</strong></span>
+            </div>
           </div>
           <div class="text-[11px] text-white/45">
             {isPt ? "Carteira Completa (111 dias):" : "Full Portfolio (111 days):"} <strong class="text-[#00FF94]">+18.20%</strong> (Sharpe +5.34 · PF 6.31 · MaxDD 0.89%)
